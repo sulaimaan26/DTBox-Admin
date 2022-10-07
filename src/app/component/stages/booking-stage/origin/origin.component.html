@@ -1,0 +1,157 @@
+<form [formGroup]="originFormGroup" >
+  <div class="booking-col">
+    <p class="bt">
+      <a
+        class=""
+        data-toggle="collapse"
+        href="#collapse1"
+        role="button"
+        aria-expanded="true"
+        aria-controls="collapse1"
+      >
+        <b>ORIGIN</b>
+      </a>
+    </p>
+
+    <div class="div-box form-margin comp collapse" id="collapse1">
+      <div class="row">
+        <div class="col-sm-3">
+
+          <div class="form-group">
+
+            <label>SHIPPER CODE</label>
+            <input
+              formControlName="ShipperCode"
+              type="text"
+              class="form-control"
+              placeholder="Shipper Code"
+            />
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>SHIPPER NAME</label>
+            <input
+              formControlName="ShipperName"
+              type="text"
+              class="form-control"
+              placeholder="Shipper Name"
+            />
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>TRANSPORTER CODE</label>
+            <input
+              formControlName="TransporterCode"
+              type="text"
+              class="form-control"
+              placeholder="Transporter Code"
+            />
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>TRANSPORTER NAME</label>
+            <input
+              type="text"
+              formControlName="TransporterName"
+              class="form-control"
+              placeholder="Transporter Name"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>CUSTOMS AGENT CODE</label>
+            <input
+              formControlName="CustomsAgentCode"
+              type="text"
+              class="form-control"
+              placeholder="Customs Agent Code"
+            />
+          </div>
+        </div>
+
+
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>CUSTOMS AGENT NAME</label>
+            <input
+            formControlName="CustomerAgentName"
+            type="text"
+            class="form-control"
+            placeholder="Customs Agent Name"
+          />
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>&nbsp;&nbsp;AGENT CODE (CUSTOMER) &nbsp;&nbsp;</label>
+
+            <input
+              formControlName="CustomerAgentCode"
+              type="text"
+              class="form-control"
+              placeholder="Customs Agent Code"
+            />
+          </div>
+
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>AGENT NAME (CUSTOMER)</label>
+
+            <input
+              formControlName="CustomerAgentName"
+              type="text"
+              class="form-control"
+              placeholder=" Agent Name Commondisplay"
+            />
+          </div>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>AGENT CODE (VENDOR)</label>
+
+            <input
+              formControlName="VendorAgentCode"
+              type="text"
+              class="form-control"
+              placeholder="Agent Code Vendor"
+            />
+          </div>
+
+        </div>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>AGENT NAME (VENDOR)</label>
+
+            <input
+              formControlName="VendorAgentName"
+              type="text"
+              class="form-control"
+              placeholder=" Agent Name Vendor"
+            />
+
+          </div>
+
+
+
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+  </div>
+</form>

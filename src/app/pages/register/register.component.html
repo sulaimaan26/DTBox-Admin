@@ -1,0 +1,154 @@
+
+
+<section class="hold-transition register-page">
+  <!-- <app-toast-message [message]="'User Created Successfully'"></app-toast-message> -->
+<div class="register-box">
+  <div class="card card-outline card-primary">
+    <div class="card-header text-center">
+      <span class="h1">
+        <b >Den</b>to
+      </span>
+    </div>
+
+    <div class="card-body">
+      <p class="login-box-msg">Register as a new user</p>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="input-group">
+          <input [class.is-invalid]="f.username.errors && submitted" type="text" class="form-control" formControlName="username" placeholder="Full name">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <app-validationmsg
+          *ngIf="f.username.errors"
+        [message]="'Name is required'"
+        [isSubmitted]= "submitted"
+        [error] = "f.username.errors.required"
+        >
+        </app-validationmsg>
+
+        <app-validationmsg
+        *ngIf="f.username.errors"
+        [message]="'Name should be greater than 3 characters'"
+        [isSubmitted]= "submitted"
+        [error] = "f.username.errors.minlength"
+        >
+        </app-validationmsg>
+
+        <app-validationmsg
+        *ngIf="f.username.errors"
+        [message]="'Name should be lesser than 20 characters'"
+        [isSubmitted]= "submitted"
+        [error] = "f.username.errors.maxlength"
+        >
+        </app-validationmsg>
+
+        <app-validationmsg
+        *ngIf="f.username.errors"
+        [message]="'Please enter valid name'"
+        [isSubmitted]= "submitted"
+        [error] = "(f.username.errors.maxlength === undefined) && (f.username.errors.minlength === undefined) && f.username.errors.invalidName"
+        >
+        </app-validationmsg>
+
+        </div>
+
+
+        <div class="input-group" >
+          <input [class.is-invalid]="f.emailid.errors && submitted" type="email" class="form-control" formControlName="emailid" placeholder="Email">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <app-validationmsg
+          *ngIf="f.emailid.errors"
+        [message]="'Email is required'"
+        [isSubmitted]= "submitted"
+        [error] = "f.emailid.errors.required"
+        >
+        </app-validationmsg>
+
+        <app-validationmsg
+        *ngIf="f.emailid.errors"
+      [message]="'Please enter valid email'"
+      [isSubmitted]= "submitted"
+      [error] = "f.emailid.errors.pattern"
+      >
+      </app-validationmsg>
+
+        </div>
+
+        <div class="input-group">
+          <input [class.is-invalid]="f.password.errors && submitted" type="password" class="form-control" formControlName="password" placeholder="Password">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <app-validationmsg *ngIf="f.password.errors"
+        [message]="'Password is required'"
+        [isSubmitted]= "submitted"
+        [error] = "f.password.errors.required"
+        >
+        </app-validationmsg>
+
+        <app-validationmsg *ngIf="f.password.errors"
+        [message]="'Password should be minimum 6 characters'"
+        [isSubmitted]= "submitted"
+        [error] = "f.password.errors.minlength"
+        >
+        </app-validationmsg>
+        </div>
+
+
+        <!-- <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="Retype password">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div> -->
+
+
+            <!-- <div class="icheck-primary">
+              <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+              <label for="agreeTerms">
+               I agree to the <a href="#">terms</a>
+              </label>
+            </div> -->
+
+          <!-- /.col -->
+
+            <div class="social-auth-links text-center">
+              <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </div>
+
+
+          <!-- /.col -->
+
+      </form>
+
+
+
+      <a routerLink="/login" class="text-center">Already have a account? Sign In</a>
+    </div>
+    <!-- /.form-box -->
+  </div><!-- /.card -->
+</div>
+<!-- /.register-box -->
+
+
+</section>
+

@@ -1,0 +1,25 @@
+.logout {
+  position: absolute;
+  right: 20px;
+  padding: 10px;
+}
+
+.fa-sign-out {
+  font-size: 20px;
+}
+
+.breadcrumb {
+  background-color: transparent;
+  line-height: 1.8rem;
+  margin-bottom: 0;
+  padding: 0;
+  color: #fff;
+}
+
+.breadcrumb a {
+  color: #fff !important;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  color: #fff !important;
+}

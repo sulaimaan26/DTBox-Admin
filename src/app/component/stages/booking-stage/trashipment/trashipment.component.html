@@ -1,0 +1,123 @@
+<div class="booking-col" Id="LCL">
+  <p class="bt">
+    <a
+      class=""
+      data-toggle="collapse"
+      href="#collapse7"
+      role="button"
+      aria-expanded="false"
+      aria-controls="collapse7"
+    >
+      <b>TRANSHIPMENT</b>
+    </a>
+  </p>
+
+  <div class="div-box form-margin comp  collapse" id="collapse7">
+    <div class="row">
+      <div class="table-header">
+        <!--          <div>-->
+        <!--            <i>First Name is required | Must have a valid Email Address</i>-->
+        <!--          </div>-->
+        <div>
+          <!--            <button-->
+          <!--              class="button-remove-rows"-->
+          <!--              mat-button-->
+          <!--              (click)="removeSelectedRows()"-->
+          <!--            >-->
+          <!--              Remove Rows-->
+          <!--            </button>-->
+          <button [disabled]="isEditActive" class="button-add-row btn btn-primary" mat-button (click)="addRow()">
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row table-section">
+      <div class="col-12 ">
+
+
+
+
+        <table mat-table [dataSource]="dataSource">
+          <ng-container [matColumnDef]="col.key" [stickyEnd]="col.key == 'isEdit'"   *ngFor="let col of columnsSchema">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ col.label }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div [ngSwitch]="col.type"  *ngIf="!element.isEdit">
+                <!--                <ng-container *ngSwitchCase="'isSelected'">-->
+                <!--                  <mat-checkbox-->
+                <!--                    (change)="element.isSelected = $event.checked"-->
+                <!--                  ></mat-checkbox>-->
+                <!--                </ng-container>-->
+                <div class="btn-edit" *ngSwitchCase="'isEdit'">
+                  <button mat-button  class="btn btn-primary btn-sm" (click)="element.isEdit = !element.isEdit; isEditActive =true ">
+                    <i class=" fas fa-edit"></i>
+                  </button>
+                  <button
+                    mat-button
+                    class="btn btn-danger btn-sm"
+                    (click)="removeRow(element._id)"
+                  >
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+                <span *ngSwitchCase="'date'">
+          {{ element[col.key] | date: 'mediumDate' }}
+        </span>
+                <span *ngSwitchDefault>
+          {{ element[col.key] }}
+        </span>
+              </div>
+              <div [ngSwitch]="col.type" *ngIf="element.isEdit">
+                <div *ngSwitchCase="'isSelected'"></div>
+                <div  *ngSwitchCase="'isEdit'">
+                  <button
+                    mat-button
+                    (click)="editRow(element)"
+
+                    class="btn btn-success btn-sm"
+                  >
+                    <i class="fas fa-check"></i>
+                  </button>
+                </div>
+                <mat-form-field
+                  class="form-input"
+                  *ngSwitchCase="'date'"
+                >
+
+                  <input
+                    matInput
+                    type="date"
+                    [value]="helperService.getCurrentDate()"
+                    [(ngModel)]="element[col.key]"
+                  />
+<!--                  <mat-datepicker-toggle-->
+<!--                    matSuffix-->
+<!--                    [for]="picker"-->
+<!--                  ></mat-datepicker-toggle>-->
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="form-input" *ngSwitchDefault>
+                  <input
+                    matInput
+                    [required]="col.required"
+                    [pattern]="col.pattern"
+                    [type]="col.type"
+                    [(ngModel)]="element[col.key]"
+                    (change)="inputHandler($event, element._id, col.key)"
+                  />
+                </mat-form-field>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

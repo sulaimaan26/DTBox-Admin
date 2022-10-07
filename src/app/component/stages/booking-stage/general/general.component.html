@@ -1,0 +1,110 @@
+<form [formGroup]="generalFormGroup">
+  <div class="booking-col">
+    <p class="bt">
+      <a
+        class="collapsed"
+        data-toggle="collapse"
+        href="#collapse"
+        role="button"
+        aria-expanded="true"
+        aria-controls="collapse"
+      >
+        <b>GENERAL</b>
+      </a>
+    </p>
+    <div class="div-box form-margin comp collapse show" id="collapse">
+      <div class="row">
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label> ORDER TYPE </label>
+            <select class="form-control" formControlName="OrderType">
+              <option value="">Select ORDER TYPE</option>
+              <option value="Direct">Direct</option>
+              <option value="Nomination">Nomination</option>
+            </select>
+          </div>
+        </div>
+
+
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>JOB ORDER NO.</label>
+            <app-numberseries-generator
+              [numberSeriesList]="jobCardNumberSeriesList"
+              (generatedId)="getJobOrderGeneratedId($event)"
+            >
+            </app-numberseries-generator>
+            <input
+              formControlName="JobOrderNo"
+              type="text"
+              class="form-control"
+              placeholder="Job Order No."
+            />
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>SHIPMENT TYPE</label>
+            <input
+              formControlName="ShipmentType"
+              type="text"
+              class="form-control"
+              placeholder="Shipment Type"
+            />
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>Order DATE </label>
+            <input formControlName="OrderDate"
+                   min="2000-01-01" max="2030-12-31" type="date" class="form-control datetimepicker-input"
+                   data-target="#reservationdate">
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>Posting DATE </label>
+            <input formControlName="PostingDate"
+                   min="2000-01-01" max="2030-12-31" type="date" class="form-control datetimepicker-input"
+                   data-target="#reservationdate">
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label> BOOKING STATUS</label>
+            <select class="form-control" formControlName="BookingStatus">
+              <option value="">Select Booking Status</option>
+              <option value="Open">Open</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Pending">Pending</option>
+              <option value="Cancelled">Cancelled</option>
+              <option value="Confirmed with Multi-BL">Confirmed with Multi-BL</option>
+            </select>
+          </div>
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+</form>

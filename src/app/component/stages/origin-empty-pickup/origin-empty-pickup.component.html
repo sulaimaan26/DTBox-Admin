@@ -1,0 +1,45 @@
+<div class="container-fluid scrollable-body-in-stage">
+  <mat-accordion *ngIf="fields.includes('emptycargo')" class="example-headers-align" multi>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Empty Cargo
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="card-body">
+        <app-form-list-input-table *ngIf="EmptyCargoData" [newRow]="newRowsEmptyCargo"
+                                   [optionList]="$dropdowns"
+                                   (sendTableData)="getEmptyCargoData($event)"
+                                   [Columns]="EmptyCargoColumns"
+                                   [formTableData]="EmptyCargoData"></app-form-list-input-table>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <br>
+  <mat-accordion *ngIf="fields.includes('emptypickup')" class="example-headers-align" multi>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Empty Pickup
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="card-body">
+        <app-form-list-input-table *ngIf="EmptyPickupData" [newRow]="newRowsEmptyPickup"
+                                   [optionList]="$dropdowns"
+                                   (sendTableData)="getEmptyPickupData($event)"
+                                   [Columns]="EmptyPickupColumns"
+                                   [formTableData]="EmptyPickupData"></app-form-list-input-table>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+
+  <button type="submit" hidden #btn></button>
+</div>
+<div class="card-footer">
+  <button routerLink="/master/list/customer/" class="btn btn-cancel btn-dark ">Cancel</button>
+  <span style="padding: 5px"></span>
+  <button (click)="onSubmit()" type="submit"
+          class="btn btn-custom btn-primary">{{jobId ? 'Update & Proceed' : 'Create & Proceed'}}</button>
+</div>

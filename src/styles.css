@@ -1,0 +1,196 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .4);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(255, 255, 255, .4);
+}
+
+
+/* Angular material */
+.mat-success {
+  background-color: green;
+  color: #fff;
+}
+
+/*Mandatory symbol*/
+.mandatory {
+  color: #dc3545;
+  font-size: 15px;
+}
+
+:root {
+  --main-accordion-color: #5da3fa36;
+  --default-bg-color: #03203c;
+  --default-bg-hover-color: #000204;
+  --defaul-secondary-color: #207398;
+  --default-table-hover-color: #bbbbbb29;
+  --table-head-font-size: 18px;
+}
+
+.card-footer {
+  background-color: unset !important;
+  float: right;
+}
+
+.btn-custom {
+  background-color: var(--default-bg-color) !important;
+  border-color: var(--default-bg-color) !important;
+}
+
+.btn-cancel {
+  background-color: rgb(9, 30, 66, 0.08) !important;
+  border-color: rgb(9, 30, 66, 0.08) !important;
+  color: #344563 !important;
+}
+
+.btn-cancel:hover {
+  background-color: rgb(9, 30, 66, 0.12) !important;
+  border-color: rgb(9, 30, 66, 0.12) !important;
+}
+
+.btn-custom:hover {
+  background-color: var(--default-bg-hover-color) !important;
+  border-color: var(--default-bg-hover-color) !important;
+}
+
+mat-panel-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #0c2c48;
+}
+
+.scrollable-body {
+  margin-top: 5px;
+  max-height: 80vh;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+/*.card-footer {*/
+/*  padding-bottom: 0 !important;*/
+/*  padding-right: 12px !important;*/
+/*}*/
+
+label {
+  font-weight: 500 !important;
+  color: #172b4d !important;
+}
+
+
+.mat-expansion-panel-header.mat-expanded {
+  height: 36px;
+}
+
+.mat-progress-bar-fill::after {
+  background: var(--default-bg-color);
+}
+
+.container-fluid {
+  padding-top: 5px;
+}
+
+.mat-expansion-panel .mat-expansion-panel-header, .mat-expansion-panel .mat-expansion-panel-header:hover {
+  background: var(--main-accordion-color);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.mat-expansion-panel .card-body {
+  padding: 20px 0px 0px 0px;
+}
+
+.input-group-text {
+  background-color: var(--main-accordion-color) !important;
+}
+
+
+.table-with-checkbox {
+  padding-left: 10px;
+}
+
+.table-with-checkbox input[type=checkbox] {
+  accent-color: var(--default-bg-color);
+
+}
+
+input[type="checkbox" i]:disabled {
+  accent-color: var(--default-bg-color);
+  background-color: var(--default-bg-color);
+  opacity: 1;
+}
+
+.read-only {
+  cursor: not-allowed;
+}
+
+
+input[type=checkbox], .mat-pseudo-checkbox-checked {
+  accent-color: var(--default-bg-color) !important;
+  background: var(--default-bg-color) !important;
+}
+
+
+.cdk-overlay-container {
+  z-index: 100000;
+}
+
+
+.view-only-select {
+  appearance: none  !important;
+  border: unset !important;
+  background-color: unset !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.disable-field{
+  pointer-events: none;
+}
+
+.scrollable-body-in-stage{
+  margin-top: 5px;
+  max-height: 67vh;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.card-title {
+  float: left !important;
+  font-size: 1.1rem !important;;
+  font-weight: 400 !important;;
+  margin: 0 !important;;
+}
+
+
+

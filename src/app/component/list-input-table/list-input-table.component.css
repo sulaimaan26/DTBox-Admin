@@ -1,0 +1,90 @@
+/* Structure */
+.example-container {
+  position: relative;
+}
+
+.example-table-container {
+  position: relative;
+  min-height: 100px;
+  max-height: 78vh;
+  overflow: auto;
+}
+
+td{
+  cursor: pointer;
+}
+
+th{
+  background-color: var(--main-accordion-color);
+  font-size: var(--table-head-font-size);
+}
+
+/*tr:hover{*/
+/*  background-color: var(--default-table-hover-color);*/
+/*}*/
+
+table {
+  width: 100%;
+}
+
+.example-loading-shade {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  /*background: rgba(0, 0, 0, 0.15);*/
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-rate-limit-reached {
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Column Widths */
+.mat-column-number,
+.mat-column-state {
+  max-width: 64px;
+}
+
+.mat-column-created {
+  max-width: 124px;
+}
+
+.dropdown-section{
+  display: flex;
+  justify-content: flex-end;
+  margin: 5px 10px 0px 5px;
+}
+.mat-header-row {
+  position: sticky;
+  top: 0;
+  background-color: inherit;
+}
+
+.input-group-text{
+  background-color: var(--main-accordion-color);
+  cursor: pointer;
+}
+
+
+td {
+  padding-right: 10px !important;
+  max-width: 10px;
+}
+
+
+
+.input-group-text{
+  background-color: var(--main-accordion-color);
+  cursor: pointer;
+}
+
+input[type="checkbox"]{
+  width: 20px;
+  height: 17px;
+}

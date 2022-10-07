@@ -1,0 +1,75 @@
+<div class="dropdown-section">
+  <div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span routerLink="{{createPageLink | async}}" class="input-group-text">
+          <i class="fas fa-plus"> </i>
+        </span>
+        <span class="input-group-text">
+          <i class="fas fa-search"> </i>
+        </span>
+      </div>
+      <input #search (input)="performSearch($event)" type="text" class="form-control" placeholder="Search..">
+    </div>
+  </div>
+
+</div>
+
+
+
+<div class="container-fluid">
+  <div class="example-container mat-elevation-z8">
+    <div class="example-loading-shade"
+         *ngIf="isLoadingResults || isRateLimitReached">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+
+    </div>
+
+    <div class="example-loading-shade"
+         *ngIf="showMessage$ | async">
+      <div class="example-rate-limit-reached" >
+        No data found.
+      </div>
+    </div>
+
+
+
+    <div class="example-table-container">
+
+      <table mat-table [dataSource]="dataSource" class="example-table"
+             matSort matSortActive="{{columns[0].key}}" matSortDisableClear matSortDirection="desc">
+        <!-- customerno Column -->
+        <ng-container *ngFor="let col of columns" [matColumnDef]="col.key" >
+          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>{{col.label | titlecase}}</th>
+
+            <td (click)="whenRowClicked(row)"  [routerLink]="isOptionSelector ? undefined : (detailPageLink | async) +'/'+row.id" mat-cell *matCellDef="let row">
+              <div [ngSwitch]="col.type" >
+
+              <span *ngSwitchCase="'dropdown'">
+                  <select disabled class="view-only-select form-control " [(ngModel)]="row[col.key]">
+                  <option  [value]="''"> Select {{col.label}}</option>
+                  <option *ngFor="let option of getDropDownOptions(col.dropdownkey) | async" [value]="option.id">{{option.value ?? option.code | titlecase}}</option>
+                </select>
+              </span>
+
+              <span  *ngSwitchDefault> {{row[col.key]}} </span>
+              </div>
+            </td>
+
+
+        </ng-container>
+
+        <tr mat-header-row  *matHeaderRowDef="displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <mat-paginator
+      (page)="pageEvent = $event"
+      [length]="resultsLength"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Select page">
+    </mat-paginator>
+  </div>
+</div>

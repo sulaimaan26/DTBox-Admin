@@ -1,0 +1,537 @@
+<div class="container-fluid scrollable-body-in-stage">
+
+  <form [formGroup]="generalFormGroup"  *ngIf="fields.includes('general')" (ngSubmit)="onSubmit()">
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            General
+          </mat-panel-title>
+
+        </mat-expansion-panel-header>
+        <div class="card-body">
+          <div class="row">
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label> Order Type </label>
+                <app-searchdropdown placeholder="Select OrderType"
+                                    (selectedOptionId)="setFormField('OrderType',$event,generalFormGroup)"
+                                    [selectedOption]="generalFormGroup.get('OrderType').value" [dropDowns]="$dropdowns"
+                                    [dropdownKey]="'ordertype'"></app-searchdropdown>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Booking No. </label>
+                <app-numberseries-generator *ngIf="!isUpdate"
+                                            [numberSeriesList]="(getDropdowns('bookingnumberseries') | async)"
+                                            (generatedId)="getBookingGeneratedId($event)"
+                >
+
+                </app-numberseries-generator>
+                <input
+                  [class.disable-field]="isUpdate"
+                  [class.is-invalid]="submitted && f.BookingNo.errors"
+                  formControlName="BookingNo"
+                  type="text"
+                  class="form-control"
+                  placeholder="Booking No."
+                />
+                <span *ngIf="submitted && f.BookingNo.errors"
+                      class="error invalid-feedback">Booking number is required</span>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Job Order No. </label>
+                <app-numberseries-generator *ngIf="!generalFormGroup.get('JobOrderNo').value"
+                                            [numberSeriesList]="(getDropdowns('jobcardnumberseries') | async)"
+                                            (generatedId)="getJobOrderGeneratedId($event)"
+                >
+
+                </app-numberseries-generator>
+                <input
+                  [class.disable-field]="generalFormGroup.get('JobOrderNo').value"
+                  formControlName="JobOrderNo"
+                  type="text"
+                  class="form-control"
+                  placeholder="Job Order No."
+                />
+
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Shipment Remarks</label>
+                <input
+                  formControlName="ShipmentRemarks"
+                  type="text"
+                  class="form-control"
+                  placeholder="Shipment Remarks"
+                />
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Document Date </label>
+                <input formControlName="DocumentDate"
+                       min="2000-01-01" max="2030-12-31" type="date" class="form-control datetimepicker-input"
+                       data-target="#reservationdate">
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Order Date </label>
+                <input formControlName="OrderDate"
+                       min="2000-01-01" max="2030-12-31" type="date" class="form-control datetimepicker-input"
+                       data-target="#reservationdate">
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Posting Date </label>
+                <input formControlName="PostingDate"
+                       min="2000-01-01" max="2030-12-31" type="date" class="form-control datetimepicker-input"
+                       data-target="#reservationdate">
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <button type="submit" hidden #btn></button>
+  </form>
+  <br>
+
+  <mat-accordion *ngIf="fields.includes('partiesinvolved')" class="example-headers-align" multi>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Parties Involved
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="card-body">
+        <app-form-list-input-table [optionList]="$dropdowns" *ngIf="partiesInvolvedData" [newRow]="partiesInvolvedNewRows"
+                                   (sendTableData)="getPartiesInvolvedTableData($event)"
+                                   [Columns]="partiesInvolvedColumns"
+                                   [formTableData]="partiesInvolvedData"></app-form-list-input-table>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <br>
+
+
+  <mat-accordion *ngIf="fields.includes('cargo')" class="example-headers-align" multi>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Cargo
+        </mat-panel-title>
+
+      </mat-expansion-panel-header>
+      <div class="card-body">
+        <app-form-list-input-table *ngIf="cargoData" [optionList]="$dropdowns" [newRow]="cargoNewRows" (sendTableData)="getCargoTableData($event)"
+                                   [Columns]="cargoColumns" [formTableData]="cargoData"></app-form-list-input-table>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <br>
+
+  <form *ngIf="fields.includes('precarriagerelated')" [formGroup]="preCarriageRelatedFormGroup" (ngSubmit)="onSubmit()">
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Pre Carriage Related
+          </mat-panel-title>
+
+        </mat-expansion-panel-header>
+        <div class="card-body">
+          <div class="row">
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Bonded Ware house</label>
+                <app-searchdropdown placeholder="Select Bonded Ware house"
+                                    [TableSelector]="true" [parentService]="vendorService"
+                                    (selectedOptionId)="setFormField('BondedWarehouse',$event,preCarriageRelatedFormGroup)"
+                                    [selectedOption]="preCarriageRelatedFormGroup.get('BondedWarehouse').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'vendor'"></app-searchdropdown>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Cargo Handover Location</label>
+                <app-searchdropdown placeholder="Select Cargo Handover Location"
+                                    (selectedOptionId)="setFormField('CargoHandoverLocation',$event,preCarriageRelatedFormGroup)"
+                                    [selectedOption]="preCarriageRelatedFormGroup.get('CargoHandoverLocation').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'city'"></app-searchdropdown>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Cargo Pickup Location</label>
+                <app-searchdropdown placeholder="Select Cargo Pickup Location"
+                                    (selectedOptionId)="setFormField('CargoPickupLocation',$event,preCarriageRelatedFormGroup)"
+                                    [selectedOption]="preCarriageRelatedFormGroup.get('CargoPickupLocation').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'city'"></app-searchdropdown>
+
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Empty Pickup Location</label>
+                <app-searchdropdown placeholder="Select Empty Pickup Location"
+                                    (selectedOptionId)="setFormField('EmptyPickupLocation',$event,preCarriageRelatedFormGroup)"
+                                    [selectedOption]="preCarriageRelatedFormGroup.get('EmptyPickupLocation').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'city'"></app-searchdropdown>
+
+              </div>
+            </div>
+
+<!--            <div class="col-sm-3">-->
+<!--              <div class="form-group">-->
+<!--                <label>Export Customs Clearance</label>-->
+<!--                <app-searchdropdown placeholder="Select Export Customs Clearance"-->
+<!--                                    [TableSelector]="true" [parentService]="vendorService"-->
+<!--                                    (selectedOptionId)="setFormField('ExportCustomsClearance',$event,preCarriageRelatedFormGroup)"-->
+<!--                                    [selectedOption]="preCarriageRelatedFormGroup.get('ExportCustomsClearance').value"-->
+<!--                                    [dropDowns]="$dropdowns" [dropdownKey]="'vendor'"></app-searchdropdown>-->
+
+<!--              </div>-->
+<!--            </div>-->
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <button type="submit" hidden #btn></button>
+  </form>
+  <br>
+
+  <form  *ngIf="fields.includes('freightrelated')" [formGroup]="freightRelatedFormGroup" (ngSubmit)="onSubmit()">
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Freight Related
+          </mat-panel-title>
+
+        </mat-expansion-panel-header>
+        <div class="card-body">
+          <div class="row">
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Place Of Receipt</label>
+                <app-searchdropdown placeholder="Select Place Of Receipt"
+                                    (selectedOptionId)="setFormField('PlaceOfReceipt',$event,freightRelatedFormGroup)"
+                                    [selectedOption]="freightRelatedFormGroup.get('PlaceOfReceipt').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'city'"></app-searchdropdown>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Origin Inland Haulage</label>
+                <app-searchdropdown placeholder="Select Origin Inland Haulage"
+                                    (selectedOptionId)="setFormField('OriginInlandHaulage',$event,freightRelatedFormGroup)"
+                                    [selectedOption]="freightRelatedFormGroup.get('OriginInlandHaulage').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'origininlandhaulage'"></app-searchdropdown>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Loading Port Terminal</label>
+                <app-searchdropdown placeholder="Select Loading Port Terminal"
+                                    (selectedOptionId)="setFormField('LoadingPortTerminal',$event,freightRelatedFormGroup)"
+                                    [selectedOption]="freightRelatedFormGroup.get('LoadingPortTerminal').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'city'"></app-searchdropdown>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Discharge Port Terminal</label>
+                <app-searchdropdown placeholder="Select Discharge Port Terminal"
+                                    (selectedOptionId)="setFormField('DischargePortTerminal',$event,freightRelatedFormGroup)"
+                                    [selectedOption]="freightRelatedFormGroup.get('DischargePortTerminal').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'city'"></app-searchdropdown>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Destination Inland Haulage</label>
+                <app-searchdropdown placeholder="Select Destination Inland Haulage"
+                                    (selectedOptionId)="setFormField('DestinationInlandHaulage',$event,freightRelatedFormGroup)"
+                                    [selectedOption]="freightRelatedFormGroup.get('DestinationInlandHaulage').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'destinationinlandhaulage'"></app-searchdropdown>
+              </div>
+            </div>
+
+<!--            <div class="col-sm-3">-->
+<!--              <div class="form-group">-->
+<!--                <label>Place Of Receipt Code</label>-->
+<!--                <app-searchdropdown placeholder="Select Place Of Receipt Code"-->
+<!--                                    (selectedOptionId)="setFormField('PlaceOfReceiptCode',$event,freightRelatedFormGroup)"-->
+<!--                                    [selectedOption]="freightRelatedFormGroup.get('PlaceOfReceiptCode').value"-->
+<!--                                    [dropDowns]="$dropdowns" [dropdownKey]="'city'"></app-searchdropdown>-->
+<!--              </div>-->
+<!--            </div>-->
+
+<!--            <div class="col-sm-3">-->
+<!--              <div class="form-group">-->
+<!--                <label>Port Of Discharge Code</label>-->
+<!--                <app-searchdropdown placeholder="Select Port Of Receipt Code"-->
+<!--                                    (selectedOptionId)="setFormField('PortOfDischargeCode',$event,freightRelatedFormGroup)"-->
+<!--                                    [selectedOption]="freightRelatedFormGroup.get('PortOfDischargeCode').value"-->
+<!--                                    [dropDowns]="$dropdowns" [dropdownKey]="'city'"></app-searchdropdown>-->
+<!--              </div>-->
+<!--            </div>-->
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Final Destination</label>
+                <app-searchdropdown placeholder="Select Final Destination"
+                                    (selectedOptionId)="setFormField('FinalDestination',$event,freightRelatedFormGroup)"
+                                    [selectedOption]="freightRelatedFormGroup.get('FinalDestination').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'city'"></app-searchdropdown>
+              </div>
+            </div>
+
+<!--            <div class="col-sm-3">-->
+<!--              <div class="form-group">-->
+<!--                <label>Final Place Of Delivery Code</label>-->
+<!--                <app-searchdropdown placeholder="Select Final Place Of Delivery Code"-->
+<!--                                    (selectedOptionId)="setFormField('FinalPlaceOfDeliveryCode',$event,freightRelatedFormGroup)"-->
+<!--                                    [selectedOption]="freightRelatedFormGroup.get('FinalPlaceOfDeliveryCode').value"-->
+<!--                                    [dropDowns]="$dropdowns" [dropdownKey]="'city'"></app-searchdropdown>-->
+<!--              </div>-->
+<!--            </div>-->
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Place Of Delivery</label>
+                <app-searchdropdown placeholder="Select Place Of Delivery"
+                                    (selectedOptionId)="setFormField('PlaceOfDelivery',$event,freightRelatedFormGroup)"
+                                    [selectedOption]="freightRelatedFormGroup.get('PlaceOfDelivery').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'city'"></app-searchdropdown>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Freight Terms</label>
+                <app-searchdropdown placeholder="Select Freight Terms"
+                                    (selectedOptionId)="setFormField('FreightTerms',$event,freightRelatedFormGroup)"
+                                    [selectedOption]="freightRelatedFormGroup.get('FreightTerms').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'freightterms'"></app-searchdropdown>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Buy Freight Rate</label>
+                <input
+                  formControlName="BuyFreightRate"
+                  type="number"
+                  step="0.01"
+                  class="form-control"
+                  placeholder="Buy Freight Rate"
+                />
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Buy Freight Currency</label>
+                <app-searchdropdown placeholder="Select Buy Freight Currency"
+                                    [inputTableSelector]="true"
+                                    [inputTableParentService]="currencycodeService"
+                                    (selectedOptionId)="setFormField('BuyFreightCurrency',$event,freightRelatedFormGroup)"
+                                    [selectedOption]="freightRelatedFormGroup.get('BuyFreightCurrency').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'currency'"></app-searchdropdown>
+
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Sell Freight Rate</label>
+                <input
+                  formControlName="SellFreightRate"
+                  type="number"
+                  step="0.01"
+                  class="form-control"
+                  placeholder="Sell Freight Rate"
+                />
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Sell Freight Currency</label>
+                <app-searchdropdown placeholder="Select Sell Freight Currency"
+                                    [inputTableSelector]="true"
+                                    [inputTableParentService]="currencycodeService"
+                                    (selectedOptionId)="setFormField('SellFreightCurrency',$event,freightRelatedFormGroup)"
+                                    [selectedOption]="freightRelatedFormGroup.get('SellFreightCurrency').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'currency'"></app-searchdropdown>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <button type="submit" hidden #btn></button>
+  </form>
+  <br>
+
+  <form *ngIf="fields.includes('oncarriagerelated')" [formGroup]="onCarriageRelatedFormGroup" (ngSubmit)="onSubmit()">
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            On Carriage Related
+          </mat-panel-title>
+
+        </mat-expansion-panel-header>
+        <div class="card-body">
+          <div class="row">
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Bonded Ware house</label>
+                <app-searchdropdown placeholder="Select Bonded Ware house"
+                                    [TableSelector]="true" [parentService]="vendorService"
+                                    (selectedOptionId)="setFormField('BondedWarehouse',$event,onCarriageRelatedFormGroup)"
+                                    [selectedOption]="onCarriageRelatedFormGroup.get('BondedWarehouse').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'vendor'"></app-searchdropdown>
+
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Cargo Handover Location</label>
+                <app-searchdropdown placeholder="Select Cargo Handover Location"
+                                    (selectedOptionId)="setFormField('CargoHandoverLocation',$event,onCarriageRelatedFormGroup)"
+                                    [selectedOption]="onCarriageRelatedFormGroup.get('CargoHandoverLocation').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'city'"></app-searchdropdown>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Cargo Pickup Location</label>
+                <app-searchdropdown placeholder="Select Cargo Pickup Location"
+                                    (selectedOptionId)="setFormField('CargoPickupLocation',$event,onCarriageRelatedFormGroup)"
+                                    [selectedOption]="onCarriageRelatedFormGroup.get('CargoPickupLocation').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'city'"></app-searchdropdown>
+
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Empty Return Location</label>
+                <app-searchdropdown placeholder="Select Empty Pickup Location"
+                                    (selectedOptionId)="setFormField('EmptyReturnLocation',$event,onCarriageRelatedFormGroup)"
+                                    [selectedOption]="onCarriageRelatedFormGroup.get('EmptyReturnLocation').value"
+                                    [dropDowns]="$dropdowns" [dropdownKey]="'city'"></app-searchdropdown>
+              </div>
+            </div>
+
+<!--            <div class="col-sm-3">-->
+<!--              <div class="form-group">-->
+<!--                <label>Export Customs Clearance</label>-->
+<!--                <app-searchdropdown placeholder="Select Export Customs Clearance"-->
+<!--                                    [TableSelector]="true" [parentService]="vendorService"-->
+<!--                                    (selectedOptionId)="setFormField('ExportCustomsClearance',$event,onCarriageRelatedFormGroup)"-->
+<!--                                    [selectedOption]="onCarriageRelatedFormGroup.get('ExportCustomsClearance').value"-->
+<!--                                    [dropDowns]="$dropdowns" [dropdownKey]="'vendor'"></app-searchdropdown>-->
+<!--              </div>-->
+<!--            </div>-->
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <button type="submit" hidden #btn></button>
+  </form>
+  <br>
+
+
+  <mat-accordion *ngIf="fields.includes('fcl')" class="example-headers-align" multi>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          FCL
+        </mat-panel-title>
+
+      </mat-expansion-panel-header>
+      <div class="card-body">
+        <app-form-list-input-table *ngIf="fullContainerLoad" [optionList]="$dropdowns"  [newRow]="fullContainerLoadNewRows"
+                                   (sendTableData)="getFCLFormData($event)" [Columns]="fullContainerLoadColumns"
+                                   [formTableData]="fullContainerLoad"></app-form-list-input-table>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <br>
+
+  <mat-accordion *ngIf="fields.includes('lcl')" class="example-headers-align" multi>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          LCL
+        </mat-panel-title>
+
+      </mat-expansion-panel-header>
+      <div class="card-body">
+        <app-form-list-input-table *ngIf="lessContainerLoadData" [optionList]="$dropdowns" [newRow]="lessContainerLoadNewRows"
+                                   (sendTableData)="getLCLTableData($event)" [Columns]="lessContainerLoadColumns"
+                                   [formTableData]="lessContainerLoadData"></app-form-list-input-table>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <br>
+
+
+  <mat-accordion *ngIf="fields.includes('air')" class="example-headers-align" multi>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Air
+        </mat-panel-title>
+
+      </mat-expansion-panel-header>
+      <div class="card-body">
+        <app-form-list-input-table *ngIf="airData" [optionList]="$dropdowns" [newRow]="airNewRows" (sendTableData)="getAirFormData($event)"
+                                   [Columns]="airColumns" [formTableData]="airData"></app-form-list-input-table>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <br>
+</div>
+
+<div *ngIf="fields.includes('general')" class="card-footer">
+  <button routerLink="/master/list/customer/" class="btn btn-cancel btn-dark ">Cancel</button>
+  <span style="padding: 5px"></span>
+  <button (click)="onSubmit()" type="submit"
+          class="btn btn-custom btn-primary">{{isUpdate ? 'Update & Proceed' : 'Create & Proceed'}}</button>
+</div>

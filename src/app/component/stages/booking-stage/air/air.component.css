@@ -1,0 +1,101 @@
+.series-select{
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.custom-link{
+  display: inline-block;
+  margin-left: 2%;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+/* .dropdown-menu{
+  max-height: 300px;
+  overflow: scroll;
+} */
+
+li[class=dropdown-item]{
+  cursor: pointer;
+}
+
+li[class=dropdown-item]:hover{
+  background-color: #c2c7d0;
+}
+
+/*.form-control { padding: 2px 60px 2px 2px; }*/
+/* .form-control { padding: 2px 150px 2px 2px; }*/
+
+.comp {
+  padding: 12px;
+  border: solid 1px;
+  margin: 0px;}
+
+/*.comp {padding: 12px 65px;
+border: solid 1px;
+margin: 11px;
+color: #1f2d3d;}*/
+
+.booking-col{padding: 12px;}
+
+.bt{
+
+  background-color: #5da3fa36;
+  padding: 8px;}
+
+.bt a{
+  color:#0c2c48;
+}
+
+.btn-primary{
+  border-color: #f8f9fa;
+}
+
+
+/*b {*/
+/*  color: #0c2c48;*/
+/*}*/
+.dis{
+  display:none ;
+}
+table, td {
+  border: 1px solid black;
+}
+
+
+.series-select{
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.custom-link{
+  display: inline-block;
+  margin-left: 2%;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+/* .dropdown-menu{
+  max-height: 300px;
+  overflow: scroll;
+} */
+
+li[class=dropdown-item]{
+  cursor: pointer;
+}
+
+li[class=dropdown-item]:hover{
+  background-color: #c2c7d0;
+}
+
+/* .form-margin {
+   padding: 12px 20px;
+   border: solid 1px;
+}*/
+
+.card-main-header{
+  background-color: #207398;
+  color: #FFFFFF !important;
+}

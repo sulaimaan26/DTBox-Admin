@@ -1,0 +1,211 @@
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Common Display</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a>Dashboard</a></li>
+          <li class="breadcrumb-item active">Common Display</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+<form [formGroup]="commonDisplayForm" (submit)="onSubmit()">
+
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Message</h3>
+            </div>
+
+
+            <div class="card-body">
+              <div class="form-group">
+                <label>Messages</label>
+                <input max="256" formControlName="messages" type="text" class="form-control"
+                       placeholder="Enter message">
+                <span class="mandatory" *ngIf="submitted && f.messages.errors">Message is required</span>
+              </div>
+              <div class="form-group">
+                <label>Message Duration</label>
+                <input formControlName="messageDuration" type="text" class="form-control"
+                       placeholder="message duration">
+              </div>
+
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Ad Info</h3>
+            </div>
+
+
+            <div class="card-body">
+
+              <div class="form-group">
+                <label>Terms And Condition</label>
+                <textarea formControlName="termsAndCondition" class="form-control" rows="4.8"
+                          placeholder="Enter ..."></textarea>
+              </div>
+              <div class="form-group">
+                <div class="form-check">
+                  <input formControlName="isActive" class="form-check-input" type="checkbox">
+                  <label style="margin-bottom: 0; margin-top: 2px" class="form-check-label">active</label>
+                </div>
+              </div>
+
+            </div>
+
+
+            <br>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Files</h3>
+            </div>
+
+
+            <div class="card-body">
+              <div class="form-group">
+                <label>Ad Duration</label>
+                <input formControlName="adDuration" type="text" class="form-control" placeholder="Enter ad duration">
+              </div>
+              <div class="form-group">
+                <!--                <label for="exampleInputFile">Ad File</label>-->
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input type="file" (change)="uploadAndProgress($event)" class="custom-file-input"
+                           id="exampleInputFile">
+                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                  </div>
+                  <div class="input-group-append">
+                    <span class="input-group-text">Upload</span>
+                  </div>
+                </div>
+                <div *ngIf="percentDone" style="margin-top: 10px">Upload Percent: {{percentDone}}%</div>
+                <div class="mandatory" *ngIf="percentDone && !uploadSuccess" style="margin-top: 10px">File Upload
+                  Failed!!!
+                </div>
+
+              </div>
+
+              <table *ngIf="fileData.length > 0" class="table">
+                <thead>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th>Files</th>
+                  <th></th>
+                  <th style="width: 40px">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let file of fileData; let i = index">
+                  <td>{{i + 1}}.</td>
+                  <td>{{file.fileName}}</td>
+                  <td>
+                    <!--                    <div class="progress progress-xs progress-striped active">-->
+                    <!--                      <div class="progress-bar bg-success" style="width: 90%"></div>-->
+                    <!--                    </div>-->
+                  </td>
+                  <td style="width: 80px">
+                    <span (click)="downLoadFile(file)" class=" file-action badge bg-success"><i
+                      class="fas fa-download"></i></span>
+                    <span (click)="deleteFile(file)" class=" file-action badge bg-danger"><i
+                      class="fas fa-trash-alt"></i></span>
+                  </td>
+                </tr>
+
+
+                </tbody>
+              </table>
+            </div>
+
+
+            <br>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Location</h3>
+              <span (click)="addLocation($event)" class="btn btn-primary addloc">
+                <i class="fas fa-plus"></i>
+              </span>
+            </div>
+
+
+            <div class="card-body">
+              <ng-container formArrayName="location">
+                <ng-container *ngFor="let loc of location.controls; let i = index">
+
+                  <div class="row" [formGroupName]="i">
+                    <div class="col-sm-5">
+
+                      <div class="form-group">
+                        <label>Display For</label>
+                        <select formControlName="displayFor" class="form-control">
+                          <option value="">Select DisplayFor</option>
+                          <option *ngFor="let options of (dropdown | async).key" [value]="options">{{options | titlecase}}</option>
+                        </select>
+
+                      </div>
+                      <span *ngIf="location.controls[i].invalid" class="mandatory">Field is Required</span>
+                    </div>
+
+                    <div class="col-sm-5">
+
+                      <div class="form-group">
+                        <label>values</label>
+                        <select formControlName="value" class="form-control">
+                          <option value="">Select {{location.at(i).get('displayFor').value | titlecase}}</option>
+                          <option *ngFor="let option of (dropdown | async)[location.at(i).get('displayFor').value]" [value]="option">{{option}}</option>
+                        </select>
+<!--                        <input formControlName="value" type="text" class="form-control" placeholder="Enter values">-->
+                      </div>
+                    </div>
+
+                    <div class="col-sm-2">
+
+                      <div class="form-group">
+                        <div (click)="deleteLocation(i)" class="deleteloc">Delete</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                </ng-container>
+
+              </ng-container>
+            </div>
+
+
+            <br>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+  </section>
+
+  <div class="card-footer">
+    <button type="submit" class="btn btn-primary">{{ isUpdate ? 'Update' : 'Submit'}}</button>
+  </div>
+</form>
+
+
+
+

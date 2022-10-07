@@ -1,0 +1,10 @@
+<div *ngIf="numberSeriesList" class="custom-link input-group-prepend">
+  <a *ngIf="showButton" class="active" type="button" data-toggle="dropdown" aria-expanded="false">
+    Generate
+  </a>
+  <ul class="dropdown-menu" style="">
+    <li *ngFor="let numberseries of numberSeriesList" (click)="generateId(numberseries.id)" class="dropdown-item">{{numberseries.code}}</li>
+    <!-- <li *ngFor="let numberseries of numberSeriesList" class="dropdown-divider"></li> -->
+
+  </ul>
+</div>

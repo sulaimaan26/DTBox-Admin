@@ -1,0 +1,166 @@
+<div [formGroup]="airFormGroup" class="booking-col" id="AIR">
+  <p class="bt">
+    <a
+      class=""
+      data-toggle="collapse"
+      href="#collapse6"
+      role="button"
+      aria-expanded="false"
+      aria-controls="collapse6"
+    >
+      <b>AIR</b>
+    </a>
+  </p>
+
+  <div class="div-box form-margin comp  collapse" id="collapse6">
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label>CARGO VOLUME</label>
+
+          <input
+            formControlName="CargoVolume"
+            type="text"
+            class="form-control"
+            placeholder="Cargo Volume"
+          />
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label>PACKAGE COUNT</label>
+
+          <input
+            formControlName="PackageCount"
+            type="text"
+            class="form-control"
+            placeholder="Package Count"
+          />
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label>UNIT FOR EACH PACKAGE DIMENSION</label>
+          <select class="form-control" formControlName="UnitForEachPackageDimension">
+            <option value="">Select unit for each package</option>
+            <option value="Inch">Inch</option>
+            <option value="Metre">Metre</option>
+            <option value="CM">CM</option>
+          </select>
+
+
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label>EACH PACKAGE DIMENSION</label>
+
+          <input
+            formControlName="EachPackageDimension"
+            type="text"
+            class="form-control"
+            placeholder="L x B x H "
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label>FLIGHT CODE </label>
+
+
+          <input
+            formControlName="FlightCode"
+            type="text"
+            class="form-control"
+            placeholder="L x B x H "
+          />
+        </div>
+      </div>
+
+
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label>FLIGHT NO. </label>
+
+          <input
+            formControlName="FlightNo"
+            type="text"
+            class="form-control"
+            placeholder="Flight No."
+          />
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label>CARRIER AGENT BOOKING NO.</label>
+
+          <input
+            formControlName="CarrierAgentBookingNo"
+            type="text"
+            class="form-control"
+            placeholder="Carrier/ Consol / Iata agent Booking No."
+          />
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label>CARRIER BOOKING VALIDITY</label>
+
+          <input
+            formControlName="CarrierBookingValidity"
+            type="text"
+            class="form-control"
+            placeholder="Carrier Booking Validity"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label>CHARGEABLE WEIGHT</label>
+
+          <input
+            formControlName="ChargeableWeight"
+            type="number"
+            step="0.01"
+            class="form-control"
+            placeholder="Chargeable Weight"
+          />
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label>EACH PACKAGE GROSS WEIGHT</label>
+
+          <input
+            formControlName="EachPackageGrossWeight"
+            type="number"
+            step="0.01"
+            class="form-control"
+            placeholder="Gross Weight"
+          />
+        </div>
+      </div>
+
+
+      <div class="col-sm-3">
+        <div class="form-group">
+          <label>TRANSIT COUNT</label>
+
+          <input
+            formControlName="TransitCount"
+            type="number"
+            step="0.01"
+            class="form-control"
+            placeholder="Transit Count"
+          />
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

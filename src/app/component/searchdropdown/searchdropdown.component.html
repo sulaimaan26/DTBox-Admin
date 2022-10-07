@@ -1,0 +1,19 @@
+<div class="input-group mb-3">
+  <mat-select class="form-control" [formControl]="selectedOptionCtrl" [placeholder]="placeholder" #searchselect>
+    <mat-option>
+      <ngx-mat-select-search [noEntriesFoundLabel]="'No Data Found...'" [placeholderLabel]="'Search...'"
+                             [formControl]="shippingTypeFilterCtrl"></ngx-mat-select-search>
+    </mat-option>
+
+    <mat-option *ngFor="let options of filteredOptions | async" [value]="options">
+      {{options.code | titlecase}} {{ options.value ? ' - ' + options.value : ''}}
+    </mat-option>
+  </mat-select>
+  <div (click)="openDialog()" style="cursor: pointer" *ngIf="TableSelector" class="input-group-append">
+    <span class="input-group-text">...</span>
+  </div>
+
+  <div (click)="openDialog()" style="cursor: pointer" *ngIf="inputTableSelector" class="input-group-append">
+    <span class="input-group-text">...</span>
+  </div>
+</div>

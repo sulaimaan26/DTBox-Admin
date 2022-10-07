@@ -1,0 +1,21 @@
+<div class="container-fluid scrollable-body-in-stage">
+  <mat-accordion *ngIf="fields.includes('origincargopickup')" class="example-headers-align" multi>
+    <mat-expansion-panel [expanded]="true">
+      <div class="card-body">
+        <app-form-list-input-table *ngIf="OriginCargoPickupData" [newRow]="OriginCargoPickupNewRows"
+                                   [optionList]="$dropdowns"
+                                   (sendTableData)="getOriginCargoPickupData($event)"
+                                   [Columns]="OriginCargoPickupColumns"
+                                   [formTableData]="OriginCargoPickupData"></app-form-list-input-table>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <br>
+  <button type="submit" hidden #btn></button>
+</div>
+<div class="card-footer">
+  <button routerLink="/master/list/customer/" class="btn btn-cancel btn-dark ">Cancel</button>
+  <span style="padding: 5px"></span>
+  <button (click)="onSubmit()" type="submit"
+          class="btn btn-custom btn-primary">{{jobId ? 'Update & Proceed' : 'Create & Proceed'}}</button>
+</div>
