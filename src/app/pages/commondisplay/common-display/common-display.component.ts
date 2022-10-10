@@ -52,8 +52,10 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.commonDisplayForm = this.formBuilder.group({
       messages: ['', Validators.required],
-      messageDuration: [''],
-      adDuration: [''],
+      messageStartTimeStamp: [''],
+      messageEndTimeStamp: [''],
+      adStartTimeStamp: [''],
+      adEndTimeStamp: [''],
       termsAndCondition: [''],
       directoryId: [uuid.v4()],
       isActive: [true],

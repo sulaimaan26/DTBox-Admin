@@ -47,7 +47,7 @@ export class AuthenticationService {
 
   login(username, password) {
     return this.http
-      .post<any>(`${this.apiUrl}/user/login`, { username, password })
+      .post<any>(`${this.apiUrl}/admin/login`, { username, password })
       .pipe(
         tap(console.log),
         map((user:UserAuth) => {
