@@ -55,24 +55,29 @@ export class CommonDiplayService implements CRUDOperationV2<CommonDisplay> {
         label: 'Id',
       },
       {
-        key: 'messages',
+        key: 'Title',
         type: 'text',
-        label: 'messages',
+        label: 'Title',
       },
       {
-        key: 'messageDuration',
+        key: 'Description',
         type: 'text',
-        label: 'message Duration',
+        label: 'Description',
       },
       {
-        key: 'adDuration',
+        key: 'AdStartDate',
         type: 'text',
-        label: 'Ad Duration',
+        label: 'AdStartDate',
       },
       {
-        key: 'isActive',
+        key: 'AdEndDate',
         type: 'text',
-        label: 'is Active',
+        label: 'AdEndDate',
+      },
+      {
+        key: 'IsActive',
+        type: 'text',
+        label: 'Active',
       }
 
     ]

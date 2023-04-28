@@ -21,39 +21,24 @@
         <div class="col-md-6">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Message</h3>
+              <h3 class="card-title">Info</h3>
             </div>
 
 
             <div class="card-body">
               <div class="form-group">
-                <label>Messages</label>
-                <input max="256" formControlName="messages" type="text" class="form-control"
-                       placeholder="Enter message">
-                <span class="mandatory" *ngIf="submitted && f.messages.errors">Message is required</span>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Message Start Time</label>
-                    <input formControlName="messageStartTimeStamp" type="datetime-local" class="form-control"
-                           placeholder="message duration">
-                  </div>
-
-                </div>
-
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Message End Time</label>
-                    <input formControlName="messageEndTimeStamp" type="datetime-local" class="form-control"
-                           placeholder="message duration">
-                  </div>
-
-                </div>
-
+                <label>Title</label>
+                <input max="256" formControlName="Title" type="text" class="form-control"
+                       placeholder="Enter Title">
+                <span class="mandatory" *ngIf="submitted && f.Title.errors">Title is required</span>
               </div>
 
-
+              <div class="form-group">
+                <label>Description</label>
+                <input max="256" formControlName="Description" type="text" class="form-control"
+                       placeholder="Enter Description">
+                <span class="mandatory" *ngIf="submitted && f.Description.errors">Description is required</span>
+              </div>
             </div>
             <br>
           </div>
@@ -69,12 +54,12 @@
 
               <div class="form-group">
                 <label>Terms And Condition</label>
-                <textarea formControlName="termsAndCondition" class="form-control" rows="4.8"
+                <textarea formControlName="TermsAndCondition" class="form-control" rows="4.8"
                           placeholder="Enter ..."></textarea>
               </div>
               <div class="form-group">
                 <div class="form-check">
-                  <input formControlName="isActive" class="form-check-input" type="checkbox">
+                  <input formControlName="IsActive" class="form-check-input" type="checkbox">
                   <label style="margin-bottom: 0; margin-top: 2px" class="form-check-label">active</label>
                 </div>
               </div>
@@ -96,15 +81,15 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label>Ad Start Time</label>
-                    <input formControlName="adStartTimeStamp" type="datetime-local" class="form-control" >
+                    <label>Start Date</label>
+                    <input formControlName="AdStartDate" type="date" class="form-control" >
                   </div>
                 </div>
 
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label>Ad End Time</label>
-                    <input formControlName="adEndTimeStamp" type="datetime-local" class="form-control">
+                    <label>End Date</label>
+                    <input formControlName="AdEndDate" type="date" class="form-control">
                   </div>
                 </div>
               </div>
@@ -182,7 +167,7 @@
 
                       <div class="form-group">
                         <label>Display For</label>
-                        <select formControlName="displayFor" class="form-control">
+                        <select formControlName="DisplayFor" class="form-control">
                           <option value="">Select DisplayFor</option>
                           <option *ngFor="let options of (dropdown | async).key" [value]="options">{{options | titlecase}}</option>
                         </select>
@@ -195,9 +180,9 @@
 
                       <div class="form-group">
                         <label>values</label>
-                        <select formControlName="value" class="form-control">
-                          <option value="">Select {{location.at(i).get('displayFor').value | titlecase}}</option>
-                          <option *ngFor="let option of (dropdown | async)[location.at(i).get('displayFor').value]" [value]="option">{{option}}</option>
+                        <select formControlName="Value" class="form-control">
+                          <option value="">Select {{location.at(i).get('DisplayFor').value | titlecase}}</option>
+                          <option *ngFor="let option of (dropdown | async)[location.at(i).get('DisplayFor').value]" [value]="option.id">{{option.code}}</option>
                         </select>
 <!--                        <input formControlName="value" type="text" class="form-control" placeholder="Enter values">-->
                       </div>
@@ -207,6 +192,63 @@
 
                       <div class="form-group">
                         <div (click)="deleteLocation(i)" class="deleteloc">Delete</div>
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                </ng-container>
+
+              </ng-container>
+            </div>
+
+
+            <br>
+          </div>
+        </div>
+
+
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Time Slot</h3>
+              <span (click)="addTimeSlot($event)" class="btn btn-primary addloc">
+                <i class="fas fa-plus"></i>
+              </span>
+            </div>
+
+
+            <div class="card-body">
+              <ng-container formArrayName="timeslot">
+                <ng-container *ngFor="let loc of timeslot.controls; let i = index">
+
+                  <div class="row" [formGroupName]="i">
+
+                    <div class="col-sm-5">
+
+                      <div class="form-group">
+                        <label>Start Hour</label>
+                        <input type="time"  formControlName="StartHour" class="form-control" >
+                      </div>
+                      <span *ngIf="timeslot.controls[i].invalid" class="mandatory">Field is Required</span>
+                    </div>
+
+                    <div class="col-sm-5">
+
+                      <div class="form-group">
+                        <label>End Hour</label>
+                        <input type="time"  formControlName="EndHour" class="form-control" >
+                      </div>
+                      <!-- <span *ngIf="timeslot.controls[i].invalid" class="mandatory">Field is Required</span> -->
+                    </div>
+
+
+
+                    <div class="col-sm-2">
+
+                      <div class="form-group">
+                        <div (click)="deleteTimeSlot(i)" class="deleteloc">Delete</div>
                       </div>
                     </div>
 

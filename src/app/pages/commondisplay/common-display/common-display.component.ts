@@ -10,6 +10,7 @@ import {pluck, tap} from "rxjs/operators";
 import {CommonDisplay, DropdownCommonDisplay, fileUploadRes} from "../../../_model/commondisplay";
 import {saveAs} from 'file-saver/dist/FileSaver'
 import {Observable} from "rxjs";
+import { ErrorResponse } from 'src/app/_model/response/ErrorResponse';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -51,15 +52,17 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.commonDisplayForm = this.formBuilder.group({
-      messages: ['', Validators.required],
-      messageStartTimeStamp: [''],
+      Title: ['', Validators.required],
+      Description: ['', Validators.required],
       messageEndTimeStamp: [''],
-      adStartTimeStamp: [''],
-      adEndTimeStamp: [''],
-      termsAndCondition: [''],
-      directoryId: [uuid.v4()],
-      isActive: [true],
-      location: this.formBuilder.array([])
+      AdStartDate: [''],
+      AdEndDate: [''],
+      TermsAndCondition: [''],
+      ThumbNail:[''],
+      DirectoryId: [uuid.v4()],
+      IsActive: [true],
+      location: this.formBuilder.array([]),
+      timeslot:this.formBuilder.array([],Validators.required),
     })
 
     this.location.valueChanges.subscribe((d)=>{
@@ -82,6 +85,12 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
 
             this.location.at(i).patchValue(loc)
           })
+
+          requiredData.timeslot.forEach((timeslot, i) => {
+            this.addTimeSlot()
+
+            this.timeslot.at(i).patchValue(timeslot)
+          })
           this.commonDisplayData = requiredData
           this.fileData = requiredData.file
         }
@@ -99,8 +108,17 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
     return this.commonDisplayForm.controls["location"] as FormArray;
   }
 
+  get timeslot() {
+    return this.commonDisplayForm.controls["timeslot"] as FormArray;
+  }
+
   onSubmit() {
     this.submitted = true;
+    if(this.timeslot.invalid){
+      alert('Timeslot is required');
+      return;
+    }
+
     if (this.commonDisplayForm.invalid) {
       return;
     }
@@ -114,15 +132,16 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
         this.router.navigate(['/admin/list/commondisplay'])
         return
       }, (err) => {
-        this.notificationService.showError("Common Display Updation failed!!", "Failed")
+        alert(err);
         return
       })
     } else {
       this.commonDiplayService.create(payload).subscribe((res) => {
         this.notificationService.showSuccess("Common Display Created successfully!!", "Success")
         this.router.navigate(['/admin/list/commondisplay'])
-      }, (err) => {
-        this.notificationService.showError("Common Display Creation failed!!", "Failed")
+      }, (err:ErrorResponse) => {
+        alert(err);
+        return
       })
     }
 
@@ -139,7 +158,7 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
         return
       }
       formData.append('files', f)
-      formData.append('pathId', this.commonDisplayForm.get('directoryId').value)
+      formData.append('pathId', this.commonDisplayForm.get('DirectoryId').value)
     });
 
     this.commonDiplayService.uploadFile(formData).subscribe((event) => {
@@ -157,6 +176,7 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
       }
     }, (err) => {
       this.uploadSuccess = false;
+      alert('File upload failed!')
     })
 
 
@@ -176,8 +196,8 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
   addLocation($event = null) {
 
     const locationForm = this.formBuilder.group({
-      displayFor: ['', Validators.required],
-      value: ['', Validators.required]
+      DisplayFor: ['', Validators.required],
+      Value: ['', Validators.required]
     });
 
     this.location.push(locationForm);
@@ -185,6 +205,20 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
 
   deleteLocation(index) {
     this.location.removeAt(index)
+  }
+
+  addTimeSlot($event = null) {
+
+    const timeSlotForm = this.formBuilder.group({
+      StartHour: ['', Validators.required],
+      EndHour: ['', Validators.required]
+    });
+
+    this.timeslot.push(timeSlotForm);
+  }
+
+  deleteTimeSlot(index) {
+    this.timeslot.removeAt(index)
   }
 
 

@@ -86,6 +86,7 @@ export interface CommonDisplay {
   directoryId: null;
   file?: fileUploadRes[]
   location?:locationUploadRes[]
+  timeslot:TimeSlotRes[]
   termsAndCondition: string;
   isActive: boolean;
   createdBy: string;
@@ -104,11 +105,30 @@ export interface locationUploadRes {
   value: string
 }
 
+export interface TimeSlotRes {
+  id?:         number;
+  StartHour:  string;
+  EndHour:    string;
+  MapId?:      number;
+  ModuleName?: string;
+  CreatedAt?:  string;
+  UpdatedAt?:  string;
+}
+
+
 
 export interface DropdownCommonDisplay{
   key:string[]
-  pincode:number[]
-  city: string[],
-  state: string[],
-  country: string[]
+  pincode:Dropdown[]
+  city: Dropdown[],
+  state: Dropdown[],
+  country: Dropdown[]
 }
+
+export interface Dropdown{
+  id:number
+  code:string
+}
+
+
+
