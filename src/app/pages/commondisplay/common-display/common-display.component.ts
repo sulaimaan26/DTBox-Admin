@@ -33,6 +33,7 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
   percentDone
   uploadSuccess = false
   fileData: fileUploadRes[] = []
+  thumNailDileData: fileUploadRes
   valueOption:string[]
   dropdown: Observable<DropdownCommonDisplay>
   $subscription
@@ -57,12 +58,13 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
       messageEndTimeStamp: [''],
       AdStartDate: [''],
       AdEndDate: [''],
+      AdType:[''],
       TermsAndCondition: [''],
       ThumbNail:[''],
       DirectoryId: [uuid.v4()],
       IsActive: [true],
       location: this.formBuilder.array([]),
-      timeslot:this.formBuilder.array([],Validators.required),
+      timeslot:this.formBuilder.array([],Validators.required)
     })
 
     this.location.valueChanges.subscribe((d)=>{
@@ -80,6 +82,7 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
           let requiredData = data.details as CommonDisplay
           this.isUpdate = true
           this.commonDisplayForm.patchValue(requiredData)
+          this.setThubmnailFile()
           requiredData.location.forEach((loc, i) => {
             this.addLocation()
 
@@ -132,7 +135,7 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
         this.router.navigate(['/admin/list/commondisplay'])
         return
       }, (err) => {
-        alert(err);
+        alert("Common Display exist!!\n Exist Data \n"+ JSON.stringify(err));
         return
       })
     } else {
@@ -140,7 +143,7 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
         this.notificationService.showSuccess("Common Display Created successfully!!", "Success")
         this.router.navigate(['/admin/list/commondisplay'])
       }, (err:ErrorResponse) => {
-        alert(err);
+        alert("Common Display exist!!\n Exist Data \n"+ JSON.stringify(err));
         return
       })
     }
@@ -152,6 +155,12 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
   uploadAndProgress($event) {
     let files: File[] = $event.target.files
     let formData = new FormData();
+    let adType = this.commonDisplayForm.get('AdType').value
+
+    if(adType == 'video' && this.fileData.length>0){
+      alert("Video's can't be a multiple file")
+      return
+    }
     Array.from(files).forEach((f) => {
       if (this.fileData.filter(fs => fs.fileName == f.name).length > 0) {
         alert('Same file uploaded!!!')
@@ -159,6 +168,7 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
       }
       formData.append('files', f)
       formData.append('pathId', this.commonDisplayForm.get('DirectoryId').value)
+      formData.append('path', 'commondisplay')
     });
 
     this.commonDiplayService.uploadFile(formData).subscribe((event) => {
@@ -182,6 +192,46 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
 
   }
 
+  uploadThumbnail($event) {
+    let files: File[] = $event.target.files
+    let formData = new FormData();
+    Array.from(files).forEach((f) => {
+      formData.append('files', f)
+      formData.append('pathId', this.commonDisplayForm.get('DirectoryId').value)
+      formData.append('path','commondisplay/thumbnail')
+    });
+
+    this.commonDiplayService.uploadFile(formData).subscribe((event) => {
+      if (event.type === HttpEventType.UploadProgress) {
+        this.percentDone = Math.round((100 * event.loaded) / event.total);
+      } else if (event instanceof HttpResponse) {
+        let fileRes: fileUploadRes[] = event.body
+        console.log(fileRes)
+        this.thumNailDileData = fileRes[0]
+        this.commonDisplayForm.patchValue({ThumbNail:this.thumNailDileData.fileURL})
+        // fileRes.forEach(f => this.thumNailDileData = f)
+        // console.table(this.fileData)
+        // setTimeout(() => {
+        //   this.percentDone = ''
+        // }, 5000)
+        this.uploadSuccess = true;
+      }
+    }, (err) => {
+      this.uploadSuccess = false;
+      alert('File upload failed!')
+    })
+
+
+  }
+
+  setThubmnailFile(){
+    let fileURL = this.commonDisplayForm.get('ThumbNail').value
+    this.thumNailDileData =  {
+      fileName:fileURL.split('/')[fileURL.split('/').length-1],
+      fileURL
+    }
+  }
+
   downLoadFile(files: fileUploadRes) {
     this.commonDiplayService.downloadFile(files.fileURL).subscribe(blob => {
       let url = window.URL.createObjectURL(blob)
@@ -191,6 +241,11 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
 
   deleteFile(files: fileUploadRes) {
     this.fileData = this.fileData.filter((f) => f.fileName !== files.fileName)
+  }
+
+  deleteThumbnail() {
+    this.thumNailDileData = undefined
+    this.commonDisplayForm.patchValue({ThumbNail:''})
   }
 
   addLocation($event = null) {

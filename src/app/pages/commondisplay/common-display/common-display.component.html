@@ -14,7 +14,6 @@
   </div>
 </section>
 <form [formGroup]="commonDisplayForm" (submit)="onSubmit()">
-
   <section class="content">
     <div class="container-fluid">
       <div class="row">
@@ -24,23 +23,38 @@
               <h3 class="card-title">Info</h3>
             </div>
 
-
             <div class="card-body">
               <div class="form-group">
                 <label>Title</label>
-                <input max="256" formControlName="Title" type="text" class="form-control"
-                       placeholder="Enter Title">
-                <span class="mandatory" *ngIf="submitted && f.Title.errors">Title is required</span>
+                <input
+                  max="256"
+                  formControlName="Title"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Title"
+                />
+                <span class="mandatory" *ngIf="submitted && f.Title.errors"
+                  >Title is required</span
+                >
               </div>
 
               <div class="form-group">
                 <label>Description</label>
-                <input max="256" formControlName="Description" type="text" class="form-control"
-                       placeholder="Enter Description">
-                <span class="mandatory" *ngIf="submitted && f.Description.errors">Description is required</span>
+                <input
+                  max="256"
+                  formControlName="Description"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Description"
+                />
+                <span
+                  class="mandatory"
+                  *ngIf="submitted && f.Description.errors"
+                  >Description is required</span
+                >
               </div>
             </div>
-            <br>
+            <br />
           </div>
         </div>
         <div class="col-md-6">
@@ -49,233 +63,375 @@
               <h3 class="card-title">Ad Info</h3>
             </div>
 
-
             <div class="card-body">
-
               <div class="form-group">
                 <label>Terms And Condition</label>
-                <textarea formControlName="TermsAndCondition" class="form-control" rows="4.8"
-                          placeholder="Enter ..."></textarea>
+                <textarea
+                  formControlName="TermsAndCondition"
+                  class="form-control"
+                  rows="4.8"
+                  placeholder="Enter ..."
+                ></textarea>
               </div>
               <div class="form-group">
                 <div class="form-check">
-                  <input formControlName="IsActive" class="form-check-input" type="checkbox">
-                  <label style="margin-bottom: 0; margin-top: 2px" class="form-check-label">active</label>
+                  <input
+                    formControlName="IsActive"
+                    class="form-check-input"
+                    type="checkbox"
+                  />
+                  <label
+                    style="margin-bottom: 0; margin-top: 2px"
+                    class="form-check-label"
+                    >active</label
+                  >
+                </div>
+              </div>
+            </div>
+
+            <br />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Thumbnail</h3>
+            </div>
+
+            <div class="card-body">
+              <div class="form-group">
+                <!--                <label for="exampleInputFile">Ad File</label>-->
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input
+                      type="file"
+                      (change)="uploadThumbnail($event)"
+                      class="custom-file-input"
+                      id="exampleInputFile"
+                    />
+                    <label class="custom-file-label" for="exampleInputFile"
+                      >Choose file</label
+                    >
+                  </div>
+                  <!-- <div class="input-group-append">
+                    <span class="input-group-text">Upload</span>
+                  </div> -->
+                </div>
+                <div *ngIf="percentDone" style="margin-top: 10px">
+                  Upload Percent: {{ percentDone }}%
+                </div>
+                <div
+                  class="mandatory"
+                  *ngIf="percentDone && !uploadSuccess"
+                  style="margin-top: 10px"
+                >
+                  File Upload Failed!!!
                 </div>
               </div>
 
+              <table
+                *ngIf="thumNailDileData && thumNailDileData.fileURL"
+                class="table"
+              >
+                <thead>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Files</th>
+                    <th></th>
+                    <th style="width: 40px">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ 1 }}.</td>
+                    <td>{{ thumNailDileData.fileName }}</td>
+                    <td>
+                      <!--                    <div class="progress progress-xs progress-striped active">-->
+                      <!--                      <div class="progress-bar bg-success" style="width: 90%"></div>-->
+                      <!--                    </div>-->
+                    </td>
+                    <td style="width: 80px">
+                      <span
+                        (click)="downLoadFile(thumNailDileData)"
+                        class="file-action badge bg-success"
+                        ><i class="fas fa-download"></i
+                      ></span>
+                      <span
+                        (click)="deleteThumbnail()"
+                        class="file-action badge bg-danger"
+                        ><i class="fas fa-trash-alt"></i
+                      ></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
-
-            <br>
+            <br />
           </div>
         </div>
+
         <div class="col-md-6">
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Ad Files</h3>
             </div>
 
-
             <div class="card-body">
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Start Date</label>
-                    <input formControlName="AdStartDate" type="date" class="form-control" >
+                    <input
+                      formControlName="AdStartDate"
+                      type="date"
+                      class="form-control"
+                    />
                   </div>
                 </div>
 
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>End Date</label>
-                    <input formControlName="AdEndDate" type="date" class="form-control">
+                    <input
+                      formControlName="AdEndDate"
+                      type="date"
+                      class="form-control"
+                    />
                   </div>
                 </div>
+              </div>
+
+              <div class="form-group">
+                <label>Ad Type</label>
+                <select formControlName="AdType" class="form-control">
+                  <option [value]="''">Select AdType</option>
+                  <option [value]="'image'">Image</option>
+                  <option [value]="'video'">Video</option>
+                </select>
               </div>
 
               <div class="form-group">
                 <!--                <label for="exampleInputFile">Ad File</label>-->
                 <div class="input-group">
                   <div class="custom-file">
-                    <input type="file" (change)="uploadAndProgress($event)" class="custom-file-input"
-                           id="exampleInputFile">
-                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    <input
+                      [disabled]="
+                        f.AdType.value == 'video' && fileData.length > 0
+                      "
+                      type="file"
+                      (change)="uploadAndProgress($event)"
+                      class="custom-file-input"
+                      id="exampleInputFile"
+                    />
+                    <label class="custom-file-label" for="exampleInputFile"
+                      >Choose file</label
+                    >
                   </div>
                   <!-- <div class="input-group-append">
                     <span class="input-group-text">Upload</span>
                   </div> -->
                 </div>
-                <div *ngIf="percentDone" style="margin-top: 10px">Upload Percent: {{percentDone}}%</div>
-                <div class="mandatory" *ngIf="percentDone && !uploadSuccess" style="margin-top: 10px">File Upload
-                  Failed!!!
+                <div *ngIf="percentDone" style="margin-top: 10px">
+                  Upload Percent: {{ percentDone }}%
                 </div>
-
+                <div
+                  class="mandatory"
+                  *ngIf="percentDone && !uploadSuccess"
+                  style="margin-top: 10px"
+                >
+                  File Upload Failed!!!
+                </div>
               </div>
 
               <table *ngIf="fileData.length > 0" class="table">
                 <thead>
-                <tr>
-                  <th style="width: 10px">#</th>
-                  <th>Files</th>
-                  <th></th>
-                  <th style="width: 40px">Action</th>
-                </tr>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Files</th>
+                    <th></th>
+                    <th style="width: 40px">Action</th>
+                  </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let file of fileData; let i = index">
-                  <td>{{i + 1}}.</td>
-                  <td>{{file.fileName}}</td>
-                  <td>
-                    <!--                    <div class="progress progress-xs progress-striped active">-->
-                    <!--                      <div class="progress-bar bg-success" style="width: 90%"></div>-->
-                    <!--                    </div>-->
-                  </td>
-                  <td style="width: 80px">
-                    <span (click)="downLoadFile(file)" class=" file-action badge bg-success"><i
-                      class="fas fa-download"></i></span>
-                    <span (click)="deleteFile(file)" class=" file-action badge bg-danger"><i
-                      class="fas fa-trash-alt"></i></span>
-                  </td>
-                </tr>
-
-
+                  <tr *ngFor="let file of fileData; let i = index">
+                    <td>{{ i + 1 }}.</td>
+                    <td>{{ file.fileName }}</td>
+                    <td>
+                      <!--                    <div class="progress progress-xs progress-striped active">-->
+                      <!--                      <div class="progress-bar bg-success" style="width: 90%"></div>-->
+                      <!--                    </div>-->
+                    </td>
+                    <td style="width: 80px">
+                      <span
+                        (click)="downLoadFile(file)"
+                        class="file-action badge bg-success"
+                        ><i class="fas fa-download"></i
+                      ></span>
+                      <span
+                        (click)="deleteFile(file)"
+                        class="file-action badge bg-danger"
+                        ><i class="fas fa-trash-alt"></i
+                      ></span>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
 
-
-            <br>
+            <br />
           </div>
         </div>
         <div class="col-md-6">
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Location</h3>
-              <span (click)="addLocation($event)" class="btn btn-primary addloc">
+              <span
+                (click)="addLocation($event)"
+                class="btn btn-primary addloc"
+              >
                 <i class="fas fa-plus"></i>
               </span>
             </div>
 
-
             <div class="card-body">
               <ng-container formArrayName="location">
-                <ng-container *ngFor="let loc of location.controls; let i = index">
-
+                <ng-container
+                  *ngFor="let loc of location.controls; let i = index"
+                >
                   <div class="row" [formGroupName]="i">
                     <div class="col-sm-5">
-
                       <div class="form-group">
                         <label>Display For</label>
-                        <select formControlName="DisplayFor" class="form-control">
+                        <select
+                          formControlName="DisplayFor"
+                          class="form-control"
+                        >
                           <option value="">Select DisplayFor</option>
-                          <option *ngFor="let options of (dropdown | async).key" [value]="options">{{options | titlecase}}</option>
+                          <option
+                            *ngFor="let options of (dropdown | async).key"
+                            [value]="options"
+                          >
+                            {{ options | titlecase }}
+                          </option>
                         </select>
-
                       </div>
-                      <span *ngIf="location.controls[i].invalid" class="mandatory">Field is Required</span>
+                      <span
+                        *ngIf="location.controls[i].invalid"
+                        class="mandatory"
+                        >Field is Required</span
+                      >
                     </div>
 
                     <div class="col-sm-5">
-
                       <div class="form-group">
                         <label>values</label>
                         <select formControlName="Value" class="form-control">
-                          <option value="">Select {{location.at(i).get('DisplayFor').value | titlecase}}</option>
-                          <option *ngFor="let option of (dropdown | async)[location.at(i).get('DisplayFor').value]" [value]="option.id">{{option.code}}</option>
+                          <option value="">
+                            Select
+                            {{
+                              location.at(i).get("DisplayFor").value | titlecase
+                            }}
+                          </option>
+                          <option
+                            *ngFor="
+                              let option of (dropdown | async)[
+                                location.at(i).get('DisplayFor').value
+                              ]
+                            "
+                            [value]="option.id"
+                          >
+                            {{ option.code }}
+                          </option>
                         </select>
-<!--                        <input formControlName="value" type="text" class="form-control" placeholder="Enter values">-->
+                        <!--                        <input formControlName="value" type="text" class="form-control" placeholder="Enter values">-->
                       </div>
                     </div>
 
                     <div class="col-sm-2">
-
                       <div class="form-group">
-                        <div (click)="deleteLocation(i)" class="deleteloc">Delete</div>
+                        <div (click)="deleteLocation(i)" class="deleteloc">
+                          Delete
+                        </div>
                       </div>
                     </div>
-
                   </div>
-
-
                 </ng-container>
-
               </ng-container>
             </div>
 
-
-            <br>
+            <br />
           </div>
         </div>
-
 
         <div class="col-md-6">
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Time Slot</h3>
-              <span (click)="addTimeSlot($event)" class="btn btn-primary addloc">
+              <span
+                (click)="addTimeSlot($event)"
+                class="btn btn-primary addloc"
+              >
                 <i class="fas fa-plus"></i>
               </span>
             </div>
 
-
             <div class="card-body">
               <ng-container formArrayName="timeslot">
-                <ng-container *ngFor="let loc of timeslot.controls; let i = index">
-
+                <ng-container
+                  *ngFor="let loc of timeslot.controls; let i = index"
+                >
                   <div class="row" [formGroupName]="i">
-
                     <div class="col-sm-5">
-
                       <div class="form-group">
                         <label>Start Hour</label>
-                        <input type="time"  formControlName="StartHour" class="form-control" >
+                        <input
+                          type="time"
+                          formControlName="StartHour"
+                          class="form-control"
+                        />
                       </div>
-                      <span *ngIf="timeslot.controls[i].invalid" class="mandatory">Field is Required</span>
+                      <span
+                        *ngIf="timeslot.controls[i].invalid"
+                        class="mandatory"
+                        >Field is Required</span
+                      >
                     </div>
 
                     <div class="col-sm-5">
-
                       <div class="form-group">
                         <label>End Hour</label>
-                        <input type="time"  formControlName="EndHour" class="form-control" >
+                        <input
+                          type="time"
+                          formControlName="EndHour"
+                          class="form-control"
+                        />
                       </div>
                       <!-- <span *ngIf="timeslot.controls[i].invalid" class="mandatory">Field is Required</span> -->
                     </div>
 
-
-
                     <div class="col-sm-2">
-
                       <div class="form-group">
-                        <div (click)="deleteTimeSlot(i)" class="deleteloc">Delete</div>
+                        <div (click)="deleteTimeSlot(i)" class="deleteloc">
+                          Delete
+                        </div>
                       </div>
                     </div>
-
                   </div>
-
-
                 </ng-container>
-
               </ng-container>
             </div>
 
-
-            <br>
+            <br />
           </div>
         </div>
-
-
       </div>
     </div>
-
   </section>
 
   <div class="card-footer">
-    <button type="submit" class="btn btn-primary">{{ isUpdate ? 'Update' : 'Submit'}}</button>
+    <button type="submit" class="btn btn-primary">
+      {{ isUpdate ? "Update" : "Submit" }}
+    </button>
   </div>
 </form>
-
-
-
-

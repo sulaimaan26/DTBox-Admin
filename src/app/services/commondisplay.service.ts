@@ -84,7 +84,7 @@ export class CommonDiplayService implements CRUDOperationV2<CommonDisplay> {
   }
 
   uploadFile(formData: FormData): any {
-    formData.append('path', 'commondisplay')
+
     return this.http.post(`${this.apiUrl}/file/upload`, formData, {
       reportProgress: true,
       observe:'response'
