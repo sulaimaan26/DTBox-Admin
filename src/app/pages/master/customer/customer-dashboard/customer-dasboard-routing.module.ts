@@ -3,8 +3,10 @@ import {RouterModule, Routes} from '@angular/router';
 import {CustomerDashboardComponent} from './customer-dashboard.component';
 import {CommonDiplayService} from "../../../../services/commondisplay.service";
 import {RouteData} from "../../../../_model/header";
+import { EventService } from 'src/app/services/events.service';
 
 const COMMON_DISPLAY_SERVICE = new InjectionToken<string>("CommonDiplayService")
+const EVENTS_SERVICE = new InjectionToken<string>("EventService")
 
 const routes: Routes = [
   {
@@ -31,6 +33,31 @@ const routes: Routes = [
      },
       requiredService: COMMON_DISPLAY_SERVICE
     } as RouteData,
+  },
+  {
+    path: 'events',
+    component: CustomerDashboardComponent,
+    data:{
+     header:{
+      title:"Events",
+       breadcrumb:[
+         {
+           name:'Dashboard',
+           isActive:true,
+           link:'/master/list/events'
+         },
+         {
+           name:'Events',
+           isActive:false,
+         },
+       ],
+       button:{
+        link:'/master/events/create/',
+         isActive:true
+       }
+     },
+      requiredService: EVENTS_SERVICE
+    } as RouteData,
   }
 
 
@@ -43,7 +70,11 @@ const routes: Routes = [
     {
       provide: COMMON_DISPLAY_SERVICE,
       useClass: CommonDiplayService
-    }
+    },
+    {
+      provide: EVENTS_SERVICE,
+      useClass: EventService
+    },
   ]
 })
 export class CustomerDasboardRoutingModule { }
