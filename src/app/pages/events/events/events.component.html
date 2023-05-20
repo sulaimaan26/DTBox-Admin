@@ -29,9 +29,8 @@
                   <div class="form-group">
                     <label>Event Id</label>
                     <input
-                      [class.disable-field]="true"
+                      [class.disable-field]="isUpdate"
                       max="30"
-                      [disabled]="true"
                       formControlName="EventId"
                       type="text"
                       class="form-control"
