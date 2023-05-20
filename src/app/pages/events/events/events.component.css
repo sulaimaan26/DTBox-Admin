@@ -1,0 +1,29 @@
+.file-action {
+  padding: 5px;
+  margin-right: 5%;
+  cursor: pointer;
+}
+
+
+.addloc {
+  position: absolute;
+  right: 10px;
+  font-size: 13px;
+}
+.timeslot-delete{
+  margin-top: 95% !important;
+  font-size: 10px;
+}
+
+.deleteloc {
+  margin-top: 41%;
+  text-decoration: underline;
+  color: #d58181;
+  cursor: pointer;
+
+}
+
+
+.disable-field{
+  pointer-events: none;
+}
