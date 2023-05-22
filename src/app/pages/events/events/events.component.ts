@@ -92,6 +92,8 @@ export class EventsComponent implements OnInit {
           });
 
           requiredData.peakHours.forEach((timeslot, i) => {
+            console.log(timeslot);
+
             this.addTimeSlot();
 
             this.peakhours.at(i).patchValue(timeslot);
