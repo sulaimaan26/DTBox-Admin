@@ -10,6 +10,7 @@ import {
   CommonDisplay,
   fileUploadRes,
   DropdownCommonDisplay,
+  adFile,
 } from 'src/app/_model/commondisplay';
 import { ErrorResponse } from 'src/app/_model/response/ErrorResponse';
 import * as uuid from 'uuid';
@@ -32,6 +33,7 @@ export class EventsComponent implements OnInit {
   fileData: fileUploadRes[] = [];
   thumNailDileData: fileUploadRes;
   adFileData: fileUploadRes;
+  adFiles: adFile[];
   valueOption: string[];
   dropdown: Observable<DropdownCommonDisplay>;
   $subscription;
@@ -62,6 +64,7 @@ export class EventsComponent implements OnInit {
       AdEndDate: ['', Validators.required],
       AdFile: [''],
       location: this.formBuilder.array([]),
+      file: this.formBuilder.array([]),
       peakhours: this.formBuilder.array([]),
     });
 
@@ -87,15 +90,16 @@ export class EventsComponent implements OnInit {
           this.setAdFile();
           requiredData.location.forEach((loc, i) => {
             this.addLocation();
-
             this.location.at(i).patchValue(loc);
           });
 
+          requiredData.file.forEach((adfile,i)=>{
+              this.addFile()
+              this.files.at(i).patchValue(adfile);
+          })
+
           requiredData.peakHours.forEach((timeslot, i) => {
-            console.log(timeslot);
-
             this.addTimeSlot();
-
             this.peakhours.at(i).patchValue(timeslot);
           });
           this.eventsData = requiredData;
@@ -115,6 +119,10 @@ export class EventsComponent implements OnInit {
 
   get peakhours() {
     return this.eventsForm.controls['peakhours'] as FormArray;
+  }
+
+  get files() {
+    return this.eventsForm.controls['file'] as FormArray;
   }
 
   onSubmit() {
@@ -162,6 +170,43 @@ export class EventsComponent implements OnInit {
         }
       );
     }
+  }
+
+  fileUpload($event, index, type: 'ThumbNail' | 'VideoFile') {
+    let files: File[] = $event.target.files;
+    let formData = new FormData();
+
+    Array.from(files).forEach((f) => {
+      formData.append('files', f);
+      formData.append('pathId', this.eventsForm.get('DirectoryId').value);
+      formData.append('path', 'event');
+    });
+
+    this.eventService.uploadFile(formData).subscribe(
+      (event) => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.percentDone = Math.round((100 * event.loaded) / event.total);
+        } else if (event instanceof HttpResponse) {
+          let fileRes: fileUploadRes[] = event.body;
+          if (type == 'ThumbNail') {
+            this.files.controls[index].patchValue({
+              ThumbNail: fileRes[0].fileURL,
+              ThumbNailFileName: fileRes[0].fileName,
+            });
+          } else if (type == 'VideoFile') {
+            this.files.controls[index].patchValue({
+              VideoFile: fileRes[0].fileURL,
+              VideoFileName: fileRes[0].fileName,
+            });
+          }
+          console.log(this.files.controls);
+        }
+      },
+      (err) => {
+        this.uploadSuccess = false;
+        alert('File upload failed!');
+      }
+    );
   }
 
   uploadAndProgress($event) {
@@ -241,8 +286,14 @@ export class EventsComponent implements OnInit {
 
   downLoadFile(files: fileUploadRes) {
     this.eventService.downloadFile(files.fileURL).subscribe((blob) => {
-      let url = window.URL.createObjectURL(blob);
       saveAs(blob, files.fileName);
+    });
+  }
+
+  downloadAdFile(fileURL: string) {
+    this.eventService.downloadFile(fileURL).subscribe((blob) => {
+      let url = window.URL.createObjectURL(blob);
+      saveAs(blob, 'fileName.mp4');
     });
   }
 
@@ -267,6 +318,22 @@ export class EventsComponent implements OnInit {
 
   deleteLocation(index) {
     this.location.removeAt(index);
+  }
+
+  addFile($event = null) {
+    const fileForm = this.formBuilder.group({
+      ThumbNailFileName: ['', Validators.required],
+      ThumbNail: ['', Validators.required],
+      VideoFile: ['', Validators.required],
+      VideoFileName: ['', Validators.required],
+      active:[true]
+    });
+
+    this.files.push(fileForm);
+  }
+
+  deleteAdFile(index) {
+    this.files.removeAt(index);
   }
 
   addTimeSlot() {

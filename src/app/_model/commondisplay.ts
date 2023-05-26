@@ -100,6 +100,11 @@ export interface fileUploadRes {
   fileName: string
 }
 
+export interface adFile {
+  ThumbNail: string
+  VideoFile: string
+}
+
 export interface locationUploadRes {
   displayFor: string
   value: string

@@ -318,6 +318,115 @@
             <br />
           </div>
         </div>
+
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Files</h3>
+              <span (click)="addFile($event)" class="btn btn-primary addloc">
+                <i class="fas fa-plus"></i>
+              </span>
+            </div>
+
+            <div class="card-body">
+              <ng-container formArrayName="file">
+                <ng-container *ngFor="let loc of files.controls; let i = index">
+                  <div class="row file-container" [formGroupName]="i">
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="exampleInputFile">ThumbNail</label>
+                        <div class="input-group">
+                          <div class="custom-file">
+                            <input
+                              type="file"
+                              accept="video/mp4"
+                              (change)="fileUpload($event, i, 'ThumbNail')"
+                              class="custom-file-input"
+                            />
+                            <label
+                              class="custom-file-label"
+                              for="exampleInputFile"
+                              >Choose file</label
+                            >
+                          </div>
+                          <!-- <div class="input-group-append">
+                            <span class="input-group-text">Upload</span>
+                          </div> -->
+                        </div>
+                        <table *ngIf="loc.value.ThumbNail" class="table">
+                          <tbody>
+                            <tr>
+                              <td>{{ loc.value.ThumbNailFileName }}</td>
+
+                              <td>
+                                <span
+                                  (click)="downloadAdFile(loc.value.ThumbNail)"
+                                  class="file-action badge bg-success"
+                                  ><i class="fas fa-download"></i
+                                ></span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <!-- <span *ngIf="files.controls[i].invalid" class="mandatory"
+                        >Field is Required</span> -->
+                    </div>
+
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="exampleInputFile">Video File</label>
+                        <div class="input-group">
+                          <div class="custom-file">
+                            <input
+                              type="file"
+                              accept="video/mp4"
+                              (change)="fileUpload($event, i, 'VideoFile')"
+                              class="custom-file-input"
+                              id="exampleInputFile"
+                            />
+                            <label
+                              class="custom-file-label"
+                              for="exampleInputFile"
+                              >Choose file</label
+                            >
+                          </div>
+                        </div>
+                        <table *ngIf="loc.value.VideoFile" class="table">
+                          <tbody>
+                            <tr>
+                              <td>{{ loc.value.VideoFileName }}</td>
+
+                              <td>
+                                <span
+                                  (click)="downloadAdFile(loc.value.VideoFile)"
+                                  class="file-action badge bg-success"
+                                  ><i class="fas fa-download"></i
+                                ></span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                      <div class="form-group">
+                        <div (click)="deleteAdFile(i)" class="deleteloc">
+                          Delete
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                </ng-container>
+              </ng-container>
+            </div>
+
+            <br />
+          </div>
+        </div>
+
         <div class="col-md-6">
           <div class="card card-primary">
             <div class="card-header">
