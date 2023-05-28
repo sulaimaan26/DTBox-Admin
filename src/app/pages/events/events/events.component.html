@@ -177,7 +177,7 @@
                           <div class="custom-file">
                             <input
                               type="file"
-                              accept="video/mp4"
+                              accept="image/png, image/gif, image/jpeg"
                               (change)="fileUpload($event, i, 'ThumbNail')"
                               class="custom-file-input"
                             />
@@ -198,7 +198,7 @@
 
                               <td>
                                 <span
-                                  (click)="downloadAdFile(loc.value.ThumbNail)"
+                                  (click)="downloadAdFile(loc.value.ThumbNail,loc.value.ThumbNailFileName)"
                                   class="file-action badge bg-success"
                                   ><i class="fas fa-download"></i
                                 ></span>
@@ -237,7 +237,7 @@
 
                               <td>
                                 <span
-                                  (click)="downloadAdFile(loc.value.VideoFile)"
+                                  (click)="downloadAdFile(loc.value.VideoFile,loc.value.VideoFileName)"
                                   class="file-action badge bg-success"
                                   ><i class="fas fa-download"></i
                                 ></span>

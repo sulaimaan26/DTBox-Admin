@@ -290,10 +290,10 @@ export class EventsComponent implements OnInit {
     });
   }
 
-  downloadAdFile(fileURL: string) {
+  downloadAdFile(fileURL: string,fileName: string) {
     this.eventService.downloadFile(fileURL).subscribe((blob) => {
       let url = window.URL.createObjectURL(blob);
-      saveAs(blob, 'fileName.mp4');
+      saveAs(blob, fileName);
     });
   }
 
