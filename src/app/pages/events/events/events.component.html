@@ -59,162 +59,6 @@
                   </div>
                 </div>
               </div>
-
-              <div class="form-group">
-                <label>Title</label>
-                <input
-                  max="256"
-                  formControlName="Title"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter Title"
-                />
-                <span class="mandatory" *ngIf="submitted && f.Title.errors"
-                  >Title is required</span
-                >
-              </div>
-
-              <div class="form-group">
-                <label>Description</label>
-                <input
-                  max="256"
-                  formControlName="Description"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter Description"
-                />
-                <span
-                  class="mandatory"
-                  *ngIf="submitted && f.Description.errors"
-                  >Description is required</span
-                >
-              </div>
-
-              <div class="form-group">
-                <div class="form-check">
-                  <input
-                    formControlName="IsActive"
-                    class="form-check-input"
-                    type="checkbox"
-                  />
-                  <label
-                    style="margin-bottom: 0; margin-top: 2px"
-                    class="form-check-label"
-                    >active</label
-                  >
-                </div>
-              </div>
-            </div>
-            <br />
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">Ad Info</h3>
-            </div>
-
-            <div class="card-body">
-              <div class="form-group">
-                <label>Terms And Condition</label>
-                <textarea
-                  formControlName="TermsAndCondition"
-                  class="form-control"
-                  rows="4.8"
-                  placeholder="Enter ..."
-                ></textarea>
-              </div>
-            </div>
-
-            <br />
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">Thumbnail</h3>
-            </div>
-
-            <div class="card-body">
-              <div class="form-group">
-                <!--                <label for="exampleInputFile">Ad File</label>-->
-                <div class="input-group">
-                  <div class="custom-file">
-                    <input
-                      type="file"
-                      (change)="uploadThumbnail($event)"
-                      class="custom-file-input"
-                      id="exampleInputFile"
-                    />
-                    <label class="custom-file-label" for="exampleInputFile"
-                      >Choose file</label
-                    >
-                  </div>
-                  <!-- <div class="input-group-append">
-                    <span class="input-group-text">Upload</span>
-                  </div> -->
-                </div>
-                <div *ngIf="percentDone" style="margin-top: 10px">
-                  Upload Percent: {{ percentDone }}%
-                </div>
-                <div
-                  class="mandatory"
-                  *ngIf="percentDone && !uploadSuccess"
-                  style="margin-top: 10px"
-                >
-                  File Upload Failed!!!
-                </div>
-              </div>
-
-              <table
-                *ngIf="thumNailDileData && thumNailDileData.fileURL"
-                class="table"
-              >
-                <thead>
-                  <tr>
-                    <th style="width: 10px">#</th>
-                    <th>Files</th>
-                    <th></th>
-                    <th style="width: 40px">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{ 1 }}.</td>
-                    <td>{{ thumNailDileData.fileName }}</td>
-                    <td>
-                      <!--                    <div class="progress progress-xs progress-striped active">-->
-                      <!--                      <div class="progress-bar bg-success" style="width: 90%"></div>-->
-                      <!--                    </div>-->
-                    </td>
-                    <td style="width: 80px">
-                      <span
-                        (click)="downLoadFile(thumNailDileData)"
-                        class="file-action badge bg-success"
-                        ><i class="fas fa-download"></i
-                      ></span>
-                      <span
-                        (click)="deleteThumbnail()"
-                        class="file-action badge bg-danger"
-                        ><i class="fas fa-trash-alt"></i
-                      ></span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <br />
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">Ad File</h3>
-            </div>
-
-            <div class="card-body">
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
@@ -250,74 +94,68 @@
               </div>
 
               <div class="form-group">
-                <!--                <label for="exampleInputFile">Ad File</label>-->
-                <div class="input-group">
-                  <div class="custom-file">
-                    <input
-                      type="file"
-                      accept="video/mp4"
-                      (change)="uploadAndProgress($event)"
-                      class="custom-file-input"
-                      id="exampleInputFile"
-                    />
-                    <label class="custom-file-label" for="exampleInputFile"
-                      >Choose file</label
-                    >
-                  </div>
-                  <!-- <div class="input-group-append">
-                    <span class="input-group-text">Upload</span>
-                  </div> -->
-                </div>
-                <div *ngIf="percentDone" style="margin-top: 10px">
-                  Upload Percent: {{ percentDone }}%
-                </div>
-                <div
-                  class="mandatory"
-                  *ngIf="percentDone && !uploadSuccess"
-                  style="margin-top: 10px"
+                <label>Title</label>
+                <input
+                  max="256"
+                  formControlName="Title"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Title"
+                />
+                <span class="mandatory" *ngIf="submitted && f.Title.errors"
+                  >Title is required</span
                 >
-                  File Upload Failed!!!
-                </div>
               </div>
 
-              <table *ngIf="adFileData && adFileData.fileURL" class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 10px">#</th>
-                    <th>Files</th>
-                    <th></th>
-                    <th style="width: 40px">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{ 1 }}.</td>
-                    <td>{{ adFileData.fileName }}</td>
-                    <td>
-                      <!--                    <div class="progress progress-xs progress-striped active">-->
-                      <!--                      <div class="progress-bar bg-success" style="width: 90%"></div>-->
-                      <!--                    </div>-->
-                    </td>
-                    <td style="width: 80px">
-                      <span
-                        (click)="downLoadFile(adFileData)"
-                        class="file-action badge bg-success"
-                        ><i class="fas fa-download"></i
-                      ></span>
-                      <span
-                        (click)="deleteFile()"
-                        class="file-action badge bg-danger"
-                        ><i class="fas fa-trash-alt"></i
-                      ></span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+              <div class="form-group">
+                <label>Description</label>
+                <input
+                  max="256"
+                  formControlName="Description"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Description"
+                />
+                <span
+                  class="mandatory"
+                  *ngIf="submitted && f.Description.errors"
+                  >Description is required</span
+                >
+              </div>
 
+              <div class="form-group">
+                <label>Terms And Condition</label>
+                <textarea
+                  formControlName="TermsAndCondition"
+                  class="form-control"
+                  rows="4.8"
+                  placeholder="Enter ..."
+                ></textarea>
+              </div>
+
+
+              <div class="form-group">
+                <div class="form-check">
+                  <input
+                    formControlName="IsActive"
+                    class="form-check-input"
+                    type="checkbox"
+                  />
+                  <label
+                    style="margin-bottom: 0; margin-top: 2px"
+                    class="form-check-label"
+                    >active</label
+                  >
+                </div>
+              </div>
+            </div>
             <br />
           </div>
         </div>
+
+
+
+
 
         <div class="col-md-6">
           <div class="card card-primary">
