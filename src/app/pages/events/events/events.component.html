@@ -268,6 +268,85 @@
         <div class="col-md-6">
           <div class="card card-primary">
             <div class="card-header">
+              <h3 class="card-title">Thumbnail</h3>
+            </div>
+
+            <div class="card-body">
+              <div class="form-group">
+                <!--                <label for="exampleInputFile">Ad File</label>-->
+                <div class="input-group">
+                  <div class="custom-file">
+                    <input
+                      type="file"
+                      (change)="uploadThumbnail($event)"
+                      class="custom-file-input"
+                      id="exampleInputFile"
+                    />
+                    <label class="custom-file-label" for="exampleInputFile"
+                      >Choose file</label
+                    >
+                  </div>
+                  <!-- <div class="input-group-append">
+                    <span class="input-group-text">Upload</span>
+                  </div> -->
+                </div>
+                <div *ngIf="percentDone" style="margin-top: 10px">
+                  Upload Percent: {{ percentDone }}%
+                </div>
+                <div
+                  class="mandatory"
+                  *ngIf="percentDone && !uploadSuccess"
+                  style="margin-top: 10px"
+                >
+                  File Upload Failed!!!
+                </div>
+              </div>
+
+              <table
+                *ngIf="thumNailDileData && thumNailDileData.fileURL"
+                class="table"
+              >
+                <thead>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Files</th>
+                    <th></th>
+                    <th style="width: 40px">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ 1 }}.</td>
+                    <td>{{ thumNailDileData.fileName }}</td>
+                    <td>
+                      <!--                    <div class="progress progress-xs progress-striped active">-->
+                      <!--                      <div class="progress-bar bg-success" style="width: 90%"></div>-->
+                      <!--                    </div>-->
+                    </td>
+                    <td style="width: 80px">
+                      <span
+                        (click)="downLoadFile(thumNailDileData)"
+                        class="file-action badge bg-success"
+                        ><i class="fas fa-download"></i
+                      ></span>
+                      <span
+                        (click)="deleteThumbnail()"
+                        class="file-action badge bg-danger"
+                        ><i class="fas fa-trash-alt"></i
+                      ></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <br />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
               <h3 class="card-title">Location</h3>
               <span
                 (click)="addLocation($event)"
