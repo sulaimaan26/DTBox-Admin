@@ -93,10 +93,10 @@ export class EventsComponent implements OnInit {
             this.location.at(i).patchValue(loc);
           });
 
-          requiredData.file.forEach((adfile,i)=>{
-              this.addFile()
-              this.files.at(i).patchValue(adfile);
-          })
+          requiredData.file.forEach((adfile, i) => {
+            this.addFile();
+            this.files.at(i).patchValue(adfile);
+          });
 
           requiredData.peakHours.forEach((timeslot, i) => {
             this.addTimeSlot();
@@ -279,6 +279,8 @@ export class EventsComponent implements OnInit {
   setAdFile() {
     let fileURL = this.eventsForm.get('AdFile').value;
     this.adFileData = {
+      Title: 'Hello',
+      Description: 'THis is for testing',
       fileName: fileURL.split('/')[fileURL.split('/').length - 1],
       fileURL,
     };
@@ -290,7 +292,7 @@ export class EventsComponent implements OnInit {
     });
   }
 
-  downloadAdFile(fileURL: string,fileName: string) {
+  downloadAdFile(fileURL: string, fileName: string) {
     this.eventService.downloadFile(fileURL).subscribe((blob) => {
       let url = window.URL.createObjectURL(blob);
       saveAs(blob, fileName);
@@ -326,7 +328,9 @@ export class EventsComponent implements OnInit {
       ThumbNail: ['', Validators.required],
       VideoFile: ['', Validators.required],
       VideoFileName: ['', Validators.required],
-      active:[true]
+      Title:['', Validators.required],
+      Description:['', Validators.required],
+      active: [true],
     });
 
     this.files.push(fileForm);

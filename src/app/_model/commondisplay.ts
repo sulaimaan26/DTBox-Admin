@@ -1,5 +1,5 @@
-import {numberSeries} from "./numberseries";
-import {dropdown} from "./Dropdowns";
+import { numberSeries } from './numberseries';
+import { dropdown } from './Dropdowns';
 
 export interface Commondisplay {
   id?: string;
@@ -64,19 +64,16 @@ export interface Commondisplay {
   updatedAt?: string;
 }
 
-
 export type getAllCustomerApiResponse = {
   result: Commondisplay[];
   totalPage: number;
   totalCount: number;
-}
-
+};
 
 export interface CustomerDropdown {
-  numberseries: numberSeries[]
-  type: dropdown[]
+  numberseries: numberSeries[];
+  type: dropdown[];
 }
-
 
 export interface CommonDisplay {
   id: number;
@@ -84,9 +81,9 @@ export interface CommonDisplay {
   adDuration: string;
   messageDuration: string;
   directoryId: null;
-  file?: fileUploadRes[]
-  location?:locationUploadRes[]
-  timeslot:TimeSlotRes[]
+  file?: fileUploadRes[];
+  location?: locationUploadRes[];
+  timeslot: TimeSlotRes[];
   termsAndCondition: string;
   isActive: boolean;
   createdBy: string;
@@ -96,44 +93,41 @@ export interface CommonDisplay {
 }
 
 export interface fileUploadRes {
-  fileURL: string
-  fileName: string
+  Title?: string;
+  Description?: string;
+  fileURL: string;
+  fileName: string;
 }
 
 export interface adFile {
-  ThumbNail: string
-  VideoFile: string
+  ThumbNail: string;
+  VideoFile: string;
 }
 
 export interface locationUploadRes {
-  displayFor: string
-  value: string
+  displayFor: string;
+  value: string;
 }
 
 export interface TimeSlotRes {
-  id?:         number;
-  StartHour:  string;
-  EndHour:    string;
-  MapId?:      number;
+  id?: number;
+  StartHour: string;
+  EndHour: string;
+  MapId?: number;
   ModuleName?: string;
-  CreatedAt?:  string;
-  UpdatedAt?:  string;
+  CreatedAt?: string;
+  UpdatedAt?: string;
 }
 
-
-
-export interface DropdownCommonDisplay{
-  key:string[]
-  pincode:Dropdown[]
-  city: Dropdown[],
-  state: Dropdown[],
-  country: Dropdown[]
+export interface DropdownCommonDisplay {
+  key: string[];
+  pincode: Dropdown[];
+  city: Dropdown[];
+  state: Dropdown[];
+  country: Dropdown[];
 }
 
-export interface Dropdown{
-  id:number
-  code:string
+export interface Dropdown {
+  id: number;
+  code: string;
 }
-
-
-
