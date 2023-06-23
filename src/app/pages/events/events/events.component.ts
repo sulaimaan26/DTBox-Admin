@@ -84,6 +84,9 @@ export class EventsComponent implements OnInit {
         }
         if (data.details) {
           let requiredData = data.details as IEvents;
+          requiredData.AdStartDate = this.convertDate(requiredData.AdStartDate);
+          requiredData.AdEndDate = this.convertDate(requiredData.AdEndDate);
+
           this.isUpdate = true;
           this.eventsForm.patchValue(requiredData);
           this.setThubmnailFile();
@@ -99,6 +102,9 @@ export class EventsComponent implements OnInit {
           });
 
           requiredData.peakHours.forEach((timeslot, i) => {
+            timeslot.StartDateTime = this.convertDate(timeslot.StartDateTime);
+            timeslot.EndDateTime = this.convertDate(timeslot.EndDateTime);
+
             this.addTimeSlot();
             this.peakhours.at(i).patchValue(timeslot);
           });
@@ -107,6 +113,32 @@ export class EventsComponent implements OnInit {
         }
       }
     });
+  }
+
+  getCurrentDate(date: string): string {
+    const timezone = 'Asia/Kolkata'; // Replace with your desired timezone
+    const now = new Date(date);
+    const year = now.toLocaleDateString('en-US', {
+      timeZone: timezone,
+      year: 'numeric',
+    });
+    const month = String(
+      now.toLocaleDateString('en-US', { timeZone: timezone, month: '2-digit' })
+    ).padStart(2, '0');
+    const day = String(
+      now.toLocaleDateString('en-US', { timeZone: timezone, day: '2-digit' })
+    ).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  getCurrentTime(date, hour12 = false): string {
+    console.log(date);
+    const now = new Date(date);
+    return now.getUTCHours() + ':' + now.getUTCMinutes();
+  }
+
+  convertDate(date: string) {
+    return this.getCurrentDate(date) + ' ' + this.getCurrentTime(date);
   }
 
   get f() {
@@ -328,8 +360,8 @@ export class EventsComponent implements OnInit {
       ThumbNail: ['', Validators.required],
       VideoFile: ['', Validators.required],
       VideoFileName: ['', Validators.required],
-      Title:['', Validators.required],
-      Description:['', Validators.required],
+      Title: ['', Validators.required],
+      Description: ['', Validators.required],
       active: [true],
     });
 
@@ -342,10 +374,9 @@ export class EventsComponent implements OnInit {
 
   addTimeSlot() {
     const timeSlotForm = this.formBuilder.group({
-      StartHour: ['', Validators.required],
-      EndHour: ['', Validators.required],
+      StartDateTime: ['', Validators.required],
+      EndDateTime: ['', Validators.required],
       Points: ['', Validators.required],
-      Date: ['', Validators.required],
     });
 
     this.peakhours.push(timeSlotForm);

@@ -27,9 +27,8 @@ export interface PeakHour {
   id?: number;
   mapId?: number;
   Points: number;
-  Date: string;
-  StartHour: string;
-  EndHour: string;
+  StartDateTime: string;
+  EndDateTime: string;
   CreatedBy?: string;
   UpdatedBy?: string;
   CreatedAt?: string;

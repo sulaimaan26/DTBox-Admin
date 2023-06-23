@@ -65,7 +65,7 @@
                     <label>Start Date</label>
                     <input
                       formControlName="AdStartDate"
-                      type="date"
+                      type="datetime-local"
                       class="form-control"
                     />
                   </div>
@@ -81,7 +81,7 @@
                     <label>End Date</label>
                     <input
                       formControlName="AdEndDate"
-                      type="date"
+                      type="datetime-local"
                       class="form-control"
                     />
                   </div>
@@ -475,9 +475,10 @@
                           class="form-control"
                         />
                       </div>
+
                     </div>
 
-                    <div class="col-sm-3">
+                    <!-- <div class="col-sm-3">
                       <div class="form-group">
                         <label>Date</label>
                         <input
@@ -486,30 +487,31 @@
                           class="form-control"
                         />
                       </div>
-                      <span
-                        *ngIf="peakhours.controls[i].invalid"
-                        class="mandatory"
-                        >Field is Required</span
-                      >
-                    </div>
 
-                    <div class="col-sm-3">
+                    </div> -->
+
+                    <div class="col-sm-4">
                       <div class="form-group">
-                        <label>Start Hour</label>
+                        <label>Start Date Time</label>
                         <input
-                          type="time"
-                          formControlName="StartHour"
+                          type="datetime-local"
+                          formControlName="StartDateTime"
                           class="form-control"
                         />
                       </div>
+                      <span
+                      *ngIf="peakhours.controls[i].invalid"
+                      class="mandatory"
+                      >Field is Required</span
+                    >
                     </div>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                       <div class="form-group">
-                        <label>End Hour</label>
+                        <label>End Date Time</label>
                         <input
-                          type="time"
-                          formControlName="EndHour"
+                          type="datetime-local"
+                          formControlName="EndDateTime"
                           class="form-control"
                         />
                       </div>
