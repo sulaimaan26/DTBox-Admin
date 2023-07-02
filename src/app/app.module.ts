@@ -15,6 +15,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {AutocompleteOffDirective} from "./_directive/autoComplete/autocomplete-off.directive";
+import { EventsComponent } from './pages/events/events/events.component';
 
 @NgModule({
     declarations: [
