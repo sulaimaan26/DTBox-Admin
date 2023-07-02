@@ -116,18 +116,26 @@ export class EventsComponent implements OnInit {
   }
 
   getCurrentDate(date: string): string {
+    console.log('Before:'+date);
+
     const timezone = 'Asia/Kolkata'; // Replace with your desired timezone
     const now = new Date(date);
+    console.log('Middle:'+ now);
+
     const year = now.toLocaleDateString('en-US', {
       timeZone: timezone,
       year: 'numeric',
     });
     const month = String(
-      now.toLocaleDateString('en-US', { timeZone: timezone, month: '2-digit' })
+      // now.toLocaleDateString('en-US', { timeZone: timezone, month: '2-digit' })
+      now.getUTCMonth()+1
     ).padStart(2, '0');
     const day = String(
-      now.toLocaleDateString('en-US', { timeZone: timezone, day: '2-digit' })
+      // now.toLocaleDateString('en-US', { timeZone: timezone, day: '2-digit' })
+      now.getUTCDate()
     ).padStart(2, '0');
+    console.log('after:'+`${year}-${month}-${day}`);
+
     return `${year}-${month}-${day}`;
   }
 
@@ -177,7 +185,7 @@ export class EventsComponent implements OnInit {
             'Events Updated successfully!!',
             'Success'
           );
-          this.router.navigate(['/admin/list/events']);
+
           return;
         },
         (err) => {
@@ -194,7 +202,7 @@ export class EventsComponent implements OnInit {
             'Events Created successfully!!',
             'Success'
           );
-          this.router.navigate(['/admin/list/events']);
+          this.router.navigate(['/admin/events/update/'+res.id]);
         },
         (err: ErrorResponse) => {
           alert('Events update errror!!\n Data: \n' + JSON.stringify(err));
@@ -302,18 +310,22 @@ export class EventsComponent implements OnInit {
 
   setThubmnailFile() {
     let fileURL = this.eventsForm.get('ThumbNail').value;
+    if(!fileURL) return;
+    let splittedFileURL = fileURL.split('/')
     this.thumNailDileData = {
-      fileName: fileURL.split('/')[fileURL.split('/').length - 1],
+      fileName: splittedFileURL[splittedFileURL.length - 1],
       fileURL,
     };
   }
 
   setAdFile() {
     let fileURL = this.eventsForm.get('AdFile').value;
+    if(!fileURL) return;
+    let splittedFileURL = fileURL.split('/')
     this.adFileData = {
       Title: 'Hello',
       Description: 'THis is for testing',
-      fileName: fileURL.split('/')[fileURL.split('/').length - 1],
+      fileName: splittedFileURL[splittedFileURL.length - 1],
       fileURL,
     };
   }

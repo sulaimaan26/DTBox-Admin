@@ -539,10 +539,12 @@
       </div>
     </div>
   </section>
-
+</form>
   <div class="card-footer">
-    <button type="submit" class="btn btn-primary">
+    <button style="margin-right:10px" class="btn" [routerLink]="'/admin/list/events'">Back</button>
+    <button (click)="onSubmit()" class="btn btn-primary">
       {{ isUpdate ? "Update" : "Submit" }}
     </button>
+
   </div>
-</form>
+
