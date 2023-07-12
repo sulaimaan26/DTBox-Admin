@@ -35,7 +35,9 @@ export interface PeakHour {
   UpdatedAt?: string;
 }
 
-interface Adfile {
+export interface Adfile {
+  id:number,
+  eventId:number,
   ThumbNailFileName: string;
   ThumbNail: string;
   VideoFileName: string;

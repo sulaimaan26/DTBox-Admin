@@ -15,7 +15,7 @@ import {
 import { ErrorResponse } from 'src/app/_model/response/ErrorResponse';
 import * as uuid from 'uuid';
 import { saveAs } from 'file-saver/dist/FileSaver';
-import { IEvents } from 'src/app/_model/events';
+import { Adfile, IEvents } from 'src/app/_model/events';
 import { EventService } from 'src/app/services/events.service';
 
 @Component({
@@ -72,16 +72,13 @@ export class EventsComponent implements OnInit {
       console.log(d);
     });
 
-    this.dropdown = this.activatedRoute.data.pipe(
-      pluck('dropdown'),
-      tap(console.table)
-    );
+    this.dropdown = this.activatedRoute.data.pipe(pluck('dropdown'));
+    this.dataSubscription();
+  }
 
+  dataSubscription() {
     this.$subscription = this.activatedRoute.data.subscribe((data) => {
       if (data) {
-        if (data.dropdown) {
-          // this.dropdown = data.dropdown
-        }
         if (data.details) {
           let requiredData = data.details as IEvents;
           requiredData.AdStartDate = this.convertDate(requiredData.AdStartDate);
@@ -116,31 +113,25 @@ export class EventsComponent implements OnInit {
   }
 
   getCurrentDate(date: string): string {
-    console.log('Before:'+date);
-
     const timezone = 'Asia/Kolkata'; // Replace with your desired timezone
     const now = new Date(date);
-    console.log('Middle:'+ now);
-
     const year = now.toLocaleDateString('en-US', {
       timeZone: timezone,
       year: 'numeric',
     });
     const month = String(
       // now.toLocaleDateString('en-US', { timeZone: timezone, month: '2-digit' })
-      now.getUTCMonth()+1
+      now.getUTCMonth() + 1
     ).padStart(2, '0');
     const day = String(
       // now.toLocaleDateString('en-US', { timeZone: timezone, day: '2-digit' })
       now.getUTCDate()
     ).padStart(2, '0');
-    console.log('after:'+`${year}-${month}-${day}`);
 
     return `${year}-${month}-${day}`;
   }
 
   getCurrentTime(date, hour12 = false): string {
-    console.log(date);
     const now = new Date(date);
     return now.getUTCHours() + ':' + now.getUTCMinutes();
   }
@@ -167,10 +158,6 @@ export class EventsComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    // if(this.timeslot.invalid){
-    //   alert('Timeslot is required');
-    //   return;
-    // }
 
     if (this.eventsForm.invalid) {
       return;
@@ -194,15 +181,13 @@ export class EventsComponent implements OnInit {
         }
       );
     } else {
-      console.log(payload);
-
       this.eventService.create(payload).subscribe(
         (res) => {
           this.notificationService.showSuccess(
             'Events Created successfully!!',
             'Success'
           );
-          this.router.navigate(['/admin/events/update/'+res.id]);
+          this.router.navigate(['/admin/events/update/' + res.id]);
         },
         (err: ErrorResponse) => {
           alert('Events update errror!!\n Data: \n' + JSON.stringify(err));
@@ -239,7 +224,6 @@ export class EventsComponent implements OnInit {
               VideoFileName: fileRes[0].fileName,
             });
           }
-          console.log(this.files.controls);
         }
       },
       (err) => {
@@ -310,8 +294,8 @@ export class EventsComponent implements OnInit {
 
   setThubmnailFile() {
     let fileURL = this.eventsForm.get('ThumbNail').value;
-    if(!fileURL) return;
-    let splittedFileURL = fileURL.split('/')
+    if (!fileURL) return;
+    let splittedFileURL = fileURL.split('/');
     this.thumNailDileData = {
       fileName: splittedFileURL[splittedFileURL.length - 1],
       fileURL,
@@ -320,8 +304,8 @@ export class EventsComponent implements OnInit {
 
   setAdFile() {
     let fileURL = this.eventsForm.get('AdFile').value;
-    if(!fileURL) return;
-    let splittedFileURL = fileURL.split('/')
+    if (!fileURL) return;
+    let splittedFileURL = fileURL.split('/');
     this.adFileData = {
       Title: 'Hello',
       Description: 'THis is for testing',
@@ -368,12 +352,14 @@ export class EventsComponent implements OnInit {
 
   addFile($event = null) {
     const fileForm = this.formBuilder.group({
+      id: [''],
       ThumbNailFileName: ['', Validators.required],
       ThumbNail: ['', Validators.required],
       VideoFile: ['', Validators.required],
       VideoFileName: ['', Validators.required],
       Title: ['', Validators.required],
       Description: ['', Validators.required],
+      eventId: [''],
       active: [true],
     });
 
@@ -382,6 +368,18 @@ export class EventsComponent implements OnInit {
 
   deleteAdFile(index) {
     this.files.removeAt(index);
+  }
+
+  patchAdFile(index) {
+    let formValue: Adfile = this.files.at(index).value;
+    this.eventService.patchAdFile(formValue.id, this.eventsData.id, formValue).subscribe((res)=>{
+      this.notificationService.showSuccess(
+        'Video file updated successfully!!',
+        'Success'
+      );
+    })
+
+
   }
 
   addTimeSlot() {
