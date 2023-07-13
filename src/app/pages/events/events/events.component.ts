@@ -56,11 +56,14 @@ export class EventsComponent implements OnInit {
       Title: ['', Validators.required],
       Description: ['', Validators.required],
       Points: [0, Validators.required],
+      TopScorerCount: [10, Validators.required],
       IsActive: [true],
+      IsCompleted: [false],
       TermsAndCondition: [''],
       DirectoryId: [uuid.v4()],
       ThumbNail: [''],
       AdStartDate: ['', Validators.required],
+      AdCompletionDate: ['', Validators.required],
       AdEndDate: ['', Validators.required],
       AdFile: [''],
       location: this.formBuilder.array([]),
@@ -83,6 +86,7 @@ export class EventsComponent implements OnInit {
           let requiredData = data.details as IEvents;
           requiredData.AdStartDate = this.convertDate(requiredData.AdStartDate);
           requiredData.AdEndDate = this.convertDate(requiredData.AdEndDate);
+          requiredData.AdCompletionDate = this.convertDate(requiredData.AdCompletionDate);
 
           this.isUpdate = true;
           this.eventsForm.patchValue(requiredData);
