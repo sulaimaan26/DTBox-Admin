@@ -17,6 +17,7 @@ import * as uuid from 'uuid';
 import { saveAs } from 'file-saver/dist/FileSaver';
 import { Adfile, IEvents } from 'src/app/_model/events';
 import { EventService } from 'src/app/services/events.service';
+import { DateFormatterService } from 'src/app/services/dateformatter.service';
 
 @Component({
   selector: 'app-events',
@@ -43,7 +44,8 @@ export class EventsComponent implements OnInit {
     private eventService: EventService,
     private notificationService: NotificationService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private dateFormatterService:DateFormatterService
   ) {}
 
   ngOnDestroy(): void {
@@ -84,9 +86,11 @@ export class EventsComponent implements OnInit {
       if (data) {
         if (data.details) {
           let requiredData = data.details as IEvents;
-          requiredData.AdStartDate = this.convertDate(requiredData.AdStartDate);
-          requiredData.AdEndDate = this.convertDate(requiredData.AdEndDate);
-          requiredData.AdCompletionDate = this.convertDate(requiredData.AdCompletionDate);
+          requiredData.AdStartDate = this.dateFormatterService.convertDate(requiredData.AdStartDate);
+          requiredData.AdEndDate = this.dateFormatterService.convertDate(requiredData.AdEndDate);
+          requiredData.AdCompletionDate = this.dateFormatterService.convertDate(
+            requiredData.AdCompletionDate
+          );
 
           this.isUpdate = true;
           this.eventsForm.patchValue(requiredData);
@@ -103,8 +107,8 @@ export class EventsComponent implements OnInit {
           });
 
           requiredData.peakHours.forEach((timeslot, i) => {
-            timeslot.StartDateTime = this.convertDate(timeslot.StartDateTime);
-            timeslot.EndDateTime = this.convertDate(timeslot.EndDateTime);
+            timeslot.StartDateTime = this.dateFormatterService.convertDate(timeslot.StartDateTime);
+            timeslot.EndDateTime = this.dateFormatterService.convertDate(timeslot.EndDateTime);
 
             this.addTimeSlot();
             this.peakhours.at(i).patchValue(timeslot);
@@ -116,33 +120,7 @@ export class EventsComponent implements OnInit {
     });
   }
 
-  getCurrentDate(date: string): string {
-    const timezone = 'Asia/Kolkata'; // Replace with your desired timezone
-    const now = new Date(date);
-    const year = now.toLocaleDateString('en-US', {
-      timeZone: timezone,
-      year: 'numeric',
-    });
-    const month = String(
-      // now.toLocaleDateString('en-US', { timeZone: timezone, month: '2-digit' })
-      now.getUTCMonth() + 1
-    ).padStart(2, '0');
-    const day = String(
-      // now.toLocaleDateString('en-US', { timeZone: timezone, day: '2-digit' })
-      now.getUTCDate()
-    ).padStart(2, '0');
 
-    return `${year}-${month}-${day}`;
-  }
-
-  getCurrentTime(date, hour12 = false): string {
-    const now = new Date(date);
-    return now.getUTCHours() + ':' + now.getUTCMinutes();
-  }
-
-  convertDate(date: string) {
-    return this.getCurrentDate(date) + ' ' + this.getCurrentTime(date);
-  }
 
   get f() {
     return this.eventsForm?.controls;
@@ -376,14 +354,14 @@ export class EventsComponent implements OnInit {
 
   patchAdFile(index) {
     let formValue: Adfile = this.files.at(index).value;
-    this.eventService.patchAdFile(formValue.id, this.eventsData.id, formValue).subscribe((res)=>{
-      this.notificationService.showSuccess(
-        'Video file updated successfully!!',
-        'Success'
-      );
-    })
-
-
+    this.eventService
+      .patchAdFile(formValue.id, this.eventsData.id, formValue)
+      .subscribe((res) => {
+        this.notificationService.showSuccess(
+          'Video file updated successfully!!',
+          'Success'
+        );
+      });
   }
 
   addTimeSlot() {
