@@ -13,7 +13,7 @@
     </div>
   </div>
 </section>
-<form [formGroup]="eventsForm" (submit)="onSubmit()">
+<form [formGroup]="eventsForm">
   <section class="content">
     <div class="container-fluid">
       <div class="row">
@@ -25,7 +25,7 @@
 
             <div class="card-body">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
                     <label>Event Id</label>
                     <input
@@ -44,7 +44,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
                     <label>Points</label>
                     <input
@@ -58,9 +58,26 @@
                     >
                   </div>
                 </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Top Scorer Count</label>
+                    <input
+                      type="number"
+                      formControlName="TopScorerCount"
+                      class="form-control"
+                      placeholder="0"
+                    />
+                    <span class="mandatory" *ngIf="submitted && f.TopScorerCount.errors"
+                      >Top Scorer Count is required</span
+                    >
+                  </div>
+                </div>
+
+
               </div>
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
                     <label>Start Date</label>
                     <input
@@ -76,7 +93,23 @@
                   >
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Completion Date</label>
+                    <input
+                      formControlName="AdCompletionDate"
+                      type="datetime-local"
+                      class="form-control"
+                    />
+                  </div>
+                  <span
+                    class="mandatory"
+                    *ngIf="submitted && f.AdCompletionDate.errors"
+                    >AdCompletionDate is required</span
+                  >
+                </div>
+
+                <div class="col-md-4">
                   <div class="form-group">
                     <label>End Date</label>
                     <input
@@ -133,7 +166,6 @@
                 ></textarea>
               </div>
 
-
               <div class="form-group">
                 <div class="form-check">
                   <input
@@ -147,15 +179,25 @@
                     >active</label
                   >
                 </div>
+                <div class="form-check">
+                  <input
+                    formControlName="IsCompleted"
+                    class="form-check-input"
+                    type="checkbox"
+                  />
+                  <label
+                    style="margin-bottom: 0; margin-top: 2px"
+                    class="form-check-label"
+                    >completed</label
+                  >
+                </div>
               </div>
+
+
             </div>
             <br />
           </div>
         </div>
-
-
-
-
 
         <div class="col-md-6">
           <div class="card card-primary">
@@ -169,115 +211,158 @@
             <div class="card-body">
               <ng-container formArrayName="file">
                 <ng-container *ngFor="let loc of files.controls; let i = index">
-                  <div class="row file-container" [formGroupName]="i">
-                    <div class="col-sm-5">
-                      <div class="form-group">
-                        <label>Title</label>
-                        <input
-                          max="256"
-                          formControlName="Title"
-                          type="text"
-                          class="form-control"
-                          placeholder="Enter Title"
-                        />
-
+                  <div class="file-container" [formGroupName]="i">
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label>Title</label>
+                          <input
+                            max="256"
+                            formControlName="Title"
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter Title"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-sm-5">
-                      <div class="form-group">
-                        <label>Description</label>
-                        <input
-                          max="256"
-                          formControlName="Description"
-                          type="text"
-                          class="form-control"
-                          placeholder="Enter Description"
-                        />
 
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label>Description</label>
+                          <input
+                            max="256"
+                            formControlName="Description"
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter Description"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-sm-5">
 
-                      <div class="form-group">
-                        <label for="exampleInputFile">ThumbNail</label>
-                        <div class="input-group">
-                          <div class="custom-file">
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="exampleInputFile">ThumbNail</label>
+                          <div class="input-group">
+                            <div class="custom-file">
+                              <input
+                                type="file"
+                                accept="image/png, image/gif, image/jpeg"
+                                (change)="fileUpload($event, i, 'ThumbNail')"
+                                class="custom-file-input"
+                              />
+                              <label
+                                class="custom-file-label"
+                                for="exampleInputFile"
+                                >Choose file</label
+                              >
+                            </div>
+                          </div>
+                          <table *ngIf="loc.value.ThumbNail" class="table">
+                            <tbody>
+                              <tr>
+                                <td>{{ loc.value.ThumbNailFileName }}</td>
+
+                                <td>
+                                  <span
+                                    (click)="
+                                      downloadAdFile(
+                                        loc.value.ThumbNail,
+                                        loc.value.ThumbNailFileName
+                                      )
+                                    "
+                                    class="file-action badge bg-success"
+                                    ><i class="fas fa-download"></i
+                                  ></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <span
+                          *ngIf="files.controls[i].invalid"
+                          class="mandatory"
+                          >Field is Required</span
+                        >
+                      </div>
+
+                      <div class="col-sm-5">
+                        <div class="form-group">
+                          <label for="exampleInputFile">Video File</label>
+                          <div class="input-group">
+                            <div class="custom-file">
+                              <input
+                                type="file"
+                                accept="video/mp4"
+                                (change)="fileUpload($event, i, 'VideoFile')"
+                                class="custom-file-input"
+                                id="exampleInputFile"
+                              />
+                              <label
+                                class="custom-file-label"
+                                for="exampleInputFile"
+                                >Choose file</label
+                              >
+                            </div>
+                          </div>
+                          <table *ngIf="loc.value.VideoFile" class="table">
+                            <tbody>
+                              <tr>
+                                <td>{{ loc.value.VideoFileName }}</td>
+
+                                <td>
+                                  <span
+                                    (click)="
+                                      downloadAdFile(
+                                        loc.value.VideoFile,
+                                        loc.value.VideoFileName
+                                      )
+                                    "
+                                    class="file-action badge bg-success"
+                                    ><i class="fas fa-download"></i
+                                  ></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <div class="col-sm-5">
+                          <div class="form-check">
                             <input
-                              type="file"
-                              accept="image/png, image/gif, image/jpeg"
-                              (change)="fileUpload($event, i, 'ThumbNail')"
-                              class="custom-file-input"
+                              formControlName="active"
+                              class="form-check-input"
+                              type="checkbox"
                             />
                             <label
-                              class="custom-file-label"
-                              for="exampleInputFile"
-                              >Choose file</label
-                            >
-                          </div>
-
-                        </div>
-                        <table *ngIf="loc.value.ThumbNail" class="table">
-                          <tbody>
-                            <tr>
-                              <td>{{ loc.value.ThumbNailFileName }}</td>
-
-                              <td>
-                                <span
-                                  (click)="downloadAdFile(loc.value.ThumbNail,loc.value.ThumbNailFileName)"
-                                  class="file-action badge bg-success"
-                                  ><i class="fas fa-download"></i
-                                ></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <span *ngIf="files.controls[i].invalid" class="mandatory"
-                        >Field is Required</span>
-                    </div>
-
-                    <div class="col-sm-5">
-                      <div class="form-group">
-                        <label for="exampleInputFile">Video File</label>
-                        <div class="input-group">
-                          <div class="custom-file">
-                            <input
-                              type="file"
-                              accept="video/mp4"
-                              (change)="fileUpload($event, i, 'VideoFile')"
-                              class="custom-file-input"
-                              id="exampleInputFile"
-                            />
-                            <label
-                              class="custom-file-label"
-                              for="exampleInputFile"
-                              >Choose file</label
+                              style="margin-bottom: 0; margin-top: 2px"
+                              class="form-check-label"
+                              >active</label
                             >
                           </div>
                         </div>
-                        <table *ngIf="loc.value.VideoFile" class="table">
-                          <tbody>
-                            <tr>
-                              <td>{{ loc.value.VideoFileName }}</td>
+                      </div>
 
-                              <td>
-                                <span
-                                  (click)="downloadAdFile(loc.value.VideoFile,loc.value.VideoFileName)"
-                                  class="file-action badge bg-success"
-                                  ><i class="fas fa-download"></i
-                                ></span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <div
+                            *ngIf="!loc.value.id"
+                            (click)="deleteAdFile(i)"
+                            class="deleteloc"
+                          >
+                            Delete
+                          </div>
+                        </div>
                       </div>
                     </div>
-
-                    <div class="col-sm-2">
-                      <div class="form-group">
-                        <div (click)="deleteAdFile(i)" class="deleteloc">
-                          Delete
-                        </div>
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <button
+                          (click)="patchAdFile(i)"
+                          *ngIf="isUpdate"
+                          class="btn btn-primary"
+                        >
+                          Save
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -475,7 +560,6 @@
                           class="form-control"
                         />
                       </div>
-
                     </div>
 
                     <!-- <div class="col-sm-3">
@@ -500,10 +584,10 @@
                         />
                       </div>
                       <span
-                      *ngIf="peakhours.controls[i].invalid"
-                      class="mandatory"
-                      >Field is Required</span
-                    >
+                        *ngIf="peakhours.controls[i].invalid"
+                        class="mandatory"
+                        >Field is Required</span
+                      >
                     </div>
 
                     <div class="col-sm-4">
@@ -540,11 +624,15 @@
     </div>
   </section>
 </form>
-  <div class="card-footer">
-    <button style="margin-right:10px" class="btn" [routerLink]="'/admin/list/events'">Back</button>
-    <button (click)="onSubmit()" class="btn btn-primary">
-      {{ isUpdate ? "Update" : "Submit" }}
-    </button>
-
-  </div>
-
+<div class="card-footer">
+  <button
+    style="margin-right: 10px"
+    class="btn"
+    [routerLink]="'/admin/list/events'"
+  >
+    Back
+  </button>
+  <button (click)="onSubmit()" class="btn btn-primary">
+    {{ isUpdate ? "Update" : "Submit" }}
+  </button>
+</div>
