@@ -99,10 +99,15 @@ export class EventService implements CRUDOperationV2<CommonDisplay> {
   }
 
   downloadFile(url: string): any {
-    return this.http.get(url, { responseType: 'blob' });
+    return this.http.get(url, {
+      responseType: 'blob',
+      headers: {
+        skip: 'true',
+      },
+    });
   }
 
-  patchAdFile(fileId,eventId, formData: Adfile): Observable<IEvents> {
+  patchAdFile(fileId, eventId, formData: Adfile): Observable<IEvents> {
     return this.http.patch<IEvents>(
       `${this.apiUrl}/event/adfile/${eventId}?fileId=${fileId}`,
       formData
