@@ -8,13 +8,16 @@ export interface IEvents {
   Title: string;
   Description: string;
   Points: number;
+  TopScorerCount:number;
   IsActive: boolean;
+  IsCompleted: boolean;
   TermsAndCondition: string;
   DirectoryId: string;
   ThumbNail: string;
   file: Adfile[];
   AdStartDate: string;
   AdEndDate: string;
+  AdCompletionDate: string;
   AdFile: string;
   CreatedBy: string;
   UpdatedBy: string;
@@ -35,7 +38,9 @@ export interface PeakHour {
   UpdatedAt?: string;
 }
 
-interface Adfile {
+export interface Adfile {
+  id: number;
+  eventId: number;
   ThumbNailFileName: string;
   ThumbNail: string;
   VideoFileName: string;
