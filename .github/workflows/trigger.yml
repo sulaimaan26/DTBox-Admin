@@ -39,6 +39,7 @@ jobs:
        echo "SERVERUSERNAME=${{ secrets.SERVERUSERNAME }}" >> $GITHUB_ENV
        echo "SERVERPASSWORD=${{ secrets.SERVERPASSWORD }}" >> $GITHUB_ENV
        echo "SERVERSSHPORT=${{ secrets.SERVERSSHPORT }}" >> $GITHUB_ENV
+       echo "WORK_DIR=var/www/html/dtboxqa" >> $GITHUB_ENV
       if: ${{ github.event.inputs.environment == 'qa' }}
     - name: Sets env vars for PROD
       run: |
@@ -46,6 +47,7 @@ jobs:
        echo "SERVERUSERNAME=${{ secrets.SERVERUSERNAME }}" >> $GITHUB_ENV
        echo "SERVERPASSWORD=${{ secrets.SERVERPASSWORD }}" >> $GITHUB_ENV
        echo "SERVERSSHPORT=${{ secrets.SERVERSSHPORT }}" >> $GITHUB_ENV
+       echo "WORK_DIR=var/www/html/app" >> $GITHUB_ENV
       if: ${{ github.event.inputs.environment == 'prod' }} 
     - name: Use Node.js
       uses: actions/setup-node@v3
@@ -61,18 +63,18 @@ jobs:
       run: npm i
     - name: Build
       run: ${{ steps.environment.outputs.value }}
-    - uses: haya14busa/action-cond@v1
-      id: dirname
-      with:
-        cond: ${{ github.event.inputs.environment == 'prod' }}
-        if_true: "app"
-        if_false: "dtboxqa"
+    # - uses: haya14busa/action-cond@v1
+    #   id: dirname
+    #   with:
+    #     cond: ${{ github.event.inputs.environment == 'prod' }}
+    #     if_true: "app"
+    #     if_false: "dtboxqa"
     - name: Create Build tar
       run: |
-        mkdir ${{ steps.dirname.outputs.value }}
-        #cp -TR . ${{ steps.dirname.outputs.value }}
-        cp -TR ./dist/Dento ${{ steps.dirname.outputs.value }}
-        cp .htaccess ./${{ steps.dirname.outputs.value }}
+        mkdir ${{ env.WORK_DIR }}
+        #cp -TR . ${{ env.WORK_DIR }}
+        cp -TR ./dist/Dento ${{ env.WORK_DIR }}
+        cp .htaccess ./${{ env.WORK_DIR }}
     - name: Copy Code to Server
       uses: appleboy/scp-action@master
       with:
@@ -80,9 +82,9 @@ jobs:
         username: ${{ env.SERVERUSERNAME }}
         password: ${{ env.SERVERPASSWORD }}
         port: ${{ env.SERVERSSHPORT }}
-        source: ${{ steps.dirname.outputs.value }}
+        source: ${{ env.WORK_DIR }}
         rm: true
-        target: "/var/www/html/${{ steps.dirname.outputs.value }}"
+        target: "/var/www/html/${{ env.WORK_DIR }}"
     - name: Deploy
       uses: appleboy/ssh-action@master
       with:
@@ -91,9 +93,9 @@ jobs:
         password: ${{ env.SERVERPASSWORD }}
         port: ${{ env.SERVERSSHPORT }}
         script: |
-              cd /var/www/html/${{ steps.dirname.outputs.value }}
+              cd /var/www/html/${{ env.WORK_DIR }}
               mkdir /var/www/html/temp
               mv -f ${{ steps.dirname.outputs.value }} /var/www/html/temp
-              rm -r /var/www/html/${{ steps.dirname.outputs.value }}
-              mv -f /var/www/html/temp/${{ steps.dirname.outputs.value }} /var/www/html/
+              rm -r /var/www/html/${{ env.WORK_DIR }}
+              mv -f /var/www/html/temp/${{ env.WORK_DIR }} /var/www/html/
               rm -r /var/www/html/temp
