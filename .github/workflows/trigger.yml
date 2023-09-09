@@ -7,6 +7,8 @@ env:
   SERVERSSHPORT: ''
   SERVER_DIR: "/var/www/html/"  
   WORK_DIR: "temp"
+  BUILD_COMMAND: ""
+  
 
 on:
   workflow_dispatch:
@@ -41,6 +43,7 @@ jobs:
        echo "SERVERPASSWORD=${{ secrets.SERVERPASSWORD }}" >> $GITHUB_ENV
        echo "SERVERSSHPORT=${{ secrets.SERVERSSHPORT }}" >> $GITHUB_ENV
        echo "WORK_DIR=dtboxqa" >> $GITHUB_ENV
+       echo "BUILD_COMMAND=npm run build-test" >> $GITHUB_ENV
       if: ${{ github.event.inputs.environment == 'qa' }}
     - name: Sets env vars for PROD
       run: |
@@ -49,27 +52,12 @@ jobs:
        echo "SERVERPASSWORD=${{ secrets.SERVERPASSWORD }}" >> $GITHUB_ENV
        echo "SERVERSSHPORT=${{ secrets.SERVERSSHPORT }}" >> $GITHUB_ENV
        echo "WORK_DIR=app" >> $GITHUB_ENV
-      if: ${{ github.event.inputs.environment == 'prod' }} 
-    - name: Use Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 14.15.1
-    - uses: haya14busa/action-cond@v1
-      id: environment
-      with:
-        cond: ${{ github.event.inputs.environment == 'prod' }}
-        if_true: "npm run build"
-        if_false: "npm run build-test"
+       echo "BUILD_COMMAND=npm run build" >> $GITHUB_ENV
+      if: ${{ github.event.inputs.environment == 'prod' }}    
     - name: Install dependencies
       run: npm i
     - name: Build
-      run: ${{ steps.environment.outputs.value }}
-    # - uses: haya14busa/action-cond@v1
-    #   id: dirname
-    #   with:
-    #     cond: ${{ github.event.inputs.environment == 'prod' }}
-    #     if_true: "app"
-    #     if_false: "dtboxqa"
+      run: ${{ env.BUILD_COMMAND }}   
     - name: Create Build tar
       run: |
         mkdir ${{ env.WORK_DIR }}
