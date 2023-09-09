@@ -5,7 +5,8 @@ env:
   SERVERUSERNAME: ''
   SERVERPASSWORD: ''
   SERVERSSHPORT: ''
-  WORK_DIR: "/home/dtbox/dtbox-backend"
+  SERVER_DIR: "/var/www/html/"  
+  WORK_DIR: "temp"
 
 on:
   workflow_dispatch:
@@ -39,7 +40,7 @@ jobs:
        echo "SERVERUSERNAME=${{ secrets.SERVERUSERNAME }}" >> $GITHUB_ENV
        echo "SERVERPASSWORD=${{ secrets.SERVERPASSWORD }}" >> $GITHUB_ENV
        echo "SERVERSSHPORT=${{ secrets.SERVERSSHPORT }}" >> $GITHUB_ENV
-       echo "WORK_DIR=var/www/html/dtboxqa" >> $GITHUB_ENV
+       echo "WORK_DIR=dtboxqa" >> $GITHUB_ENV
       if: ${{ github.event.inputs.environment == 'qa' }}
     - name: Sets env vars for PROD
       run: |
@@ -47,7 +48,7 @@ jobs:
        echo "SERVERUSERNAME=${{ secrets.SERVERUSERNAME }}" >> $GITHUB_ENV
        echo "SERVERPASSWORD=${{ secrets.SERVERPASSWORD }}" >> $GITHUB_ENV
        echo "SERVERSSHPORT=${{ secrets.SERVERSSHPORT }}" >> $GITHUB_ENV
-       echo "WORK_DIR=var/www/html/app" >> $GITHUB_ENV
+       echo "WORK_DIR=app" >> $GITHUB_ENV
       if: ${{ github.event.inputs.environment == 'prod' }} 
     - name: Use Node.js
       uses: actions/setup-node@v3
@@ -84,7 +85,7 @@ jobs:
         port: ${{ env.SERVERSSHPORT }}
         source: ${{ env.WORK_DIR }}
         rm: true
-        target: "/var/www/html/${{ env.WORK_DIR }}"
+        target: "${{ env.SERVER_DIR }}${{ env.WORK_DIR }}"
     - name: Deploy
       uses: appleboy/ssh-action@master
       with:
@@ -93,9 +94,9 @@ jobs:
         password: ${{ env.SERVERPASSWORD }}
         port: ${{ env.SERVERSSHPORT }}
         script: |
-              cd /var/www/html/${{ env.WORK_DIR }}
-              mkdir /var/www/html/temp
-              mv -f ${{ steps.dirname.outputs.value }} /var/www/html/temp
-              rm -r /var/www/html/${{ env.WORK_DIR }}
-              mv -f /var/www/html/temp/${{ env.WORK_DIR }} /var/www/html/
-              rm -r /var/www/html/temp
+              cd ${{ env.SERVER_DIR }}${{ env.WORK_DIR }}
+              mkdir ${{ env.SERVER_DIR }}temp
+              mv -f ${{ env.WORK_DIR }} ${{ env.SERVER_DIR }}temp
+              rm -r ${{ env.SERVER_DIR }}${{ env.WORK_DIR }}
+              mv -f ${{ env.SERVER_DIR }}temp/${{ env.WORK_DIR }} ${{ env.SERVER_DIR }}
+              rm -r ${{ env.SERVER_DIR }}temp
