@@ -36,6 +36,10 @@ jobs:
     - uses: actions/checkout@v3
       with:
         ref: ${{ github.event.inputs.branchname }}
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14.15.1
     - name: Sets env vars for QA
       run: |
        echo "SERVERHOST=${{ secrets.SERVERHOST }}" >> $GITHUB_ENV
