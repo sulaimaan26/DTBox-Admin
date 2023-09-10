@@ -51,10 +51,10 @@ jobs:
       if: ${{ github.event.inputs.environment == 'qa' }}
     - name: Sets env vars for PROD
       run: |
-       echo "SERVERHOST=${{ secrets.SERVERHOST }}" >> $GITHUB_ENV
-       echo "SERVERUSERNAME=${{ secrets.SERVERUSERNAME }}" >> $GITHUB_ENV
-       echo "SERVERPASSWORD=${{ secrets.SERVERPASSWORD }}" >> $GITHUB_ENV
-       echo "SERVERSSHPORT=${{ secrets.SERVERSSHPORT }}" >> $GITHUB_ENV
+       echo "SERVERHOST=${{ secrets.SERVERHOST_PROD }}" >> $GITHUB_ENV
+       echo "SERVERUSERNAME=${{ secrets.SERVERUSERNAME_PROD }}" >> $GITHUB_ENV
+       echo "SERVERPASSWORD=${{ secrets.SERVERPASSWORD_PROD }}" >> $GITHUB_ENV
+       echo "SERVERSSHPORT=${{ secrets.SERVERSSHPORT_PROD }}" >> $GITHUB_ENV
        echo "WORK_DIR=app" >> $GITHUB_ENV
        echo "BUILD_COMMAND=npm run build" >> $GITHUB_ENV
       if: ${{ github.event.inputs.environment == 'prod' }}    
