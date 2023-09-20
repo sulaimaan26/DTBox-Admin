@@ -55,7 +55,7 @@ jobs:
        echo "SERVERUSERNAME=${{ secrets.SERVERUSERNAME_PROD }}" >> $GITHUB_ENV
        echo "SERVERPASSWORD=${{ secrets.SERVERPASSWORD_PROD }}" >> $GITHUB_ENV
        echo "SERVERSSHPORT=${{ secrets.SERVERSSHPORT_PROD }}" >> $GITHUB_ENV
-       echo "WORK_DIR=app" >> $GITHUB_ENV
+       echo "WORK_DIR=tact" >> $GITHUB_ENV
        echo "BUILD_COMMAND=npm run build" >> $GITHUB_ENV
       if: ${{ github.event.inputs.environment == 'prod' }}    
     - name: Install dependencies
