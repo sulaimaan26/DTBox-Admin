@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng  build --aot --output-hashing none",
+    "build": "ng  build --aot --output-hashing none ",
     "build-test": "ng  build --aot --prod --output-hashing none --base-href / --configuration test",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
