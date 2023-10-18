@@ -1,7 +1,5 @@
 import {Observable} from "rxjs";
-import {Commondisplay} from "./commondisplay";
 import {TableColumn} from "./TableColumn";
-import {CurrencyCode, Location} from "./CurrencyCode";
 import {allowedDropdowns} from "./Dropdowns";
 
 export interface APIResponse<T> {
@@ -41,6 +39,7 @@ export interface EditableTableCRUDOperation<T> extends  CRUDOperation<T>{
 
 export interface EditableTableWithSuggestion<T> extends  EditableTableWithDropdown<T>{
   getAllData(limit:number):Observable<getAllApiResponse<T>>
+  getRouteParam?:() =>string
 }
 
 export interface EditableTableWithDropdown<T> extends  EditableTableCRUDOperation<T>{

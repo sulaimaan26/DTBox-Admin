@@ -1,6 +1,6 @@
 import {dropdown} from "./Dropdowns";
 
-export interface CurrencyCode extends EditableTable {
+export interface CurrencyCode {
   id?: number;
   code: string;
   description?: string;
@@ -13,7 +13,7 @@ export interface CurrencyCode extends EditableTable {
 }
 
 
-export interface MasterType extends EditableTable {
+export interface MasterType {
   id?: number;
   code: string;
   type: string;
@@ -26,7 +26,7 @@ export interface MasterType extends EditableTable {
 
 }
 
-export interface MasterCode extends EditableTable {
+export interface MasterCode {
   id?: number;
   code: string;
   description?: string;
@@ -37,7 +37,7 @@ export interface MasterCode extends EditableTable {
   updatedAt?: string;
 }
 
-export interface ItemMaster extends EditableTable {
+export interface ItemMaster {
   id?: number;
   code: string;
   name?: string;
@@ -51,7 +51,7 @@ export interface ItemMaster extends EditableTable {
   updatedAt?: string;
 }
 
-export interface Vessel extends EditableTable {
+export interface Vessel {
   id?: number;
   vesselname: string;
   flag?: string;
@@ -64,7 +64,7 @@ export interface Vessel extends EditableTable {
   updatedAt?: string;
 }
 
-export interface Location extends EditableTable {
+export interface Location {
   id?: number;
   type: string;
   code: string;
@@ -81,7 +81,7 @@ export interface Location extends EditableTable {
   updatedAt?: string;
 }
 
-export interface Container extends EditableTable {
+export interface Container {
   id?: number;
   code: string;
   isactive: boolean;
@@ -95,7 +95,7 @@ export interface Container extends EditableTable {
 
 }
 
-export interface ContainerSpec extends EditableTable {
+export interface ContainerSpec {
   id?: number;
   containercode: number | string;
   code: string;
@@ -110,7 +110,7 @@ export interface ContainerSpec extends EditableTable {
 }
 
 
-export interface UnitOfMeasure extends EditableTable {
+export interface UnitOfMeasure {
   id?: number
   type: string
   code: string
@@ -138,7 +138,7 @@ export interface WorkingDay {
 }
 
 
-export interface SalesPersonCode extends EditableTable{
+export interface SalesPersonCode {
   code: string
   salespersonname: string
   commision: number
@@ -157,8 +157,3 @@ export interface ContainerSpecDropdown {
   containercode: dropdown[]
 }
 
-export interface EditableTable {
-  _id?: number | string;
-  isEdit?: boolean;
-  isSelected?: boolean
-}

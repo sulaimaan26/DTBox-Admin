@@ -5,15 +5,14 @@ import { Observable, of } from 'rxjs';
 import { numberSeries } from '../_model/numberseries';
 import {
   CommonDisplay,
-  Commondisplay,
   CustomerDropdown,
-  getAllCustomerApiResponse,
 } from '../_model/commondisplay';
 import {
   CRUDOperation,
   CRUDOperationV2,
   getAllApiResponse,
 } from '../_model/ApiResponse';
+import { TableColumn } from '../_model/TableColumn';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +58,7 @@ export class CommonDiplayService implements CRUDOperationV2<CommonDisplay> {
     );
   }
 
-  getColumn() {
+  getColumn():TableColumn<CommonDisplay>[] {
     return [
       {
         key: 'id',

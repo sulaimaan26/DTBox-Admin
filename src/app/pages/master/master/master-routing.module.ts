@@ -68,6 +68,14 @@ const routes: Routes = [
             (m) => m.SettingsModule
           ),
       },
+      {
+        path: 'location',
+        loadChildren: () =>
+          import('../../location/location.module').then(
+            (m) => m.LocationModule
+          ),
+      },
+
     ],
   },
 ];

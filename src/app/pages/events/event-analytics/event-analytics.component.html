@@ -1,0 +1,11 @@
+<app-list-input-table
+  *ngIf="eventReport"
+  [Columns]="columns"
+  [TableData]="eventReport"
+  [parentService]="eventAnalyticsService"
+  tableName="Analytics"
+  (savedData)="getModifiedReport($event)"
+  [$makeTableEditInActive]="$tableEditActive"
+  [isDeleteRequired]="false"
+  [sortColumnKey]="'totalpoints'"
+></app-list-input-table>

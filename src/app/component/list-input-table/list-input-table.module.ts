@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListInputTableComponent } from './list-input-table.component';
-import {
-  CurrencyCodeHomeRoutingModule
-} from "../../pages/master/currencycode/currency-code-home/currency-code-home-routing.module";
 import {MatTableModule} from "@angular/material/table";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {FormsModule} from "@angular/forms";
@@ -27,7 +24,6 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
   ],
   imports: [
     CommonModule,
-    CurrencyCodeHomeRoutingModule,
     MatTableModule,
     MatFormFieldModule,
     FormsModule,

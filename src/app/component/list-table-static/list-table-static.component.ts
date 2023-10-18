@@ -1,6 +1,5 @@
 import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {CommonDisplay, Commondisplay} from "../../_model/commondisplay";
 import {MatSort} from "@angular/material/sort";
 import {HttpClient} from "@angular/common/http";
 import {CommonDiplayService} from "../../services/commondisplay.service";
