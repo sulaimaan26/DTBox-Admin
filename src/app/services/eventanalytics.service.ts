@@ -79,6 +79,12 @@ export class EventAnalyticsService
         disabled: true,
       },
       {
+        key: 'UserName',
+        label: 'Name',
+        type: 'text',
+        disabled: true,
+      },
+      {
         key: 'totalpoints',
         label: 'Points',
         type: 'text',
