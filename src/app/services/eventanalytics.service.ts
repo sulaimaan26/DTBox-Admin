@@ -61,6 +61,12 @@ export class EventAnalyticsService
   getColumn(): TableColumn<EventReport>[] {
     return [
       {
+        key: 'rank',
+        label: 'Rank',
+        type: 'text',
+        disabled: true,
+      },
+      {
         key: 'id',
         label: '#Id',
         type: 'text',

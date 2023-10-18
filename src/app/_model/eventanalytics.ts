@@ -33,6 +33,7 @@ export interface EventReport extends EditableTable {
   IsPriceDistributed: boolean;
   totalpoints: string;
   isWinner: boolean;
+  rank:number;
 }
 
 export enum CompletedScreen {
