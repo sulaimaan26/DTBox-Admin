@@ -67,6 +67,12 @@ export class EventAnalyticsService
         disabled: true,
       },
       {
+        key: 'UserName',
+        label: 'Name',
+        type: 'text',
+        disabled: true,
+      },
+      {
         key: 'id',
         label: '#Id',
         type: 'text',
@@ -75,12 +81,6 @@ export class EventAnalyticsService
       {
         key: 'PublicUserId',
         label: 'Public Id',
-        type: 'text',
-        disabled: true,
-      },
-      {
-        key: 'UserName',
-        label: 'Name',
         type: 'text',
         disabled: true,
       },
