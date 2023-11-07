@@ -4,6 +4,7 @@ import { CommonDisplay } from './commondisplay';
 import { Vendor } from './Vendor';
 import { CarrierTariff, CarrierTariffDropDown } from './master/CarrierTariff';
 import { EventReport } from './eventanalytics';
+import { ILocation } from './location';
 
 export interface TableColumn<T> {
   key: keyof T;
@@ -22,8 +23,8 @@ export interface TableColumn<T> {
   referenceCol1?: string;
   displayOptionBasedOnCol1?: FirstLevelOptionFetch[];
   displayOptionBasedOnCol2?: SecondLevelOptionFetch[];
-  isEdit?:boolean
-  disabled?:boolean
+  isEdit?: boolean;
+  disabled?: boolean;
 }
 
 export interface EditableTable {
@@ -43,7 +44,6 @@ export enum TableName {
   UNITOFMEASURE = 'unitofmeasure',
   ITEMMASTER = 'itemmaster',
 }
-
 
 export type allowedServices = EventReport;
 

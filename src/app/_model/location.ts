@@ -1,3 +1,5 @@
+import { EditableTable } from "./TableColumn";
+
 export interface myLocation {
   pincode: string;
   country_name: string;
@@ -5,7 +7,7 @@ export interface myLocation {
   city_name: string;
 }
 
-export interface ILocation {
+export interface ILocation extends EditableTable{
   id: number;
   pincode: string;
   state: string;

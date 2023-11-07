@@ -16,7 +16,7 @@ import { HelperService } from '../../services/helper/helper.service';
 import { NotificationService } from '../../services/NotificationService/notification-service.service';
 import { ButtonControlService } from '../../services/buttonControl/button-control.service';
 import { ActivatedRoute } from '@angular/router';
-import { allowedServices, TableColumn } from '../../_model/TableColumn';
+import { allowedServices, EditableTable, TableColumn } from '../../_model/TableColumn';
 import { pluck } from 'rxjs/operators';
 import { allowedDropdowns, dropdown } from '../../_model/Dropdowns';
 
@@ -26,11 +26,12 @@ import { allowedDropdowns, dropdown } from '../../_model/Dropdowns';
   styleUrls: ['./list-input-table.component.css'],
 })
 export class ListInputTableComponent implements OnInit {
-  @Input() parentService: EditableTableWithSuggestion<allowedServices>;
+  // @Input() parentService: EditableTableWithSuggestion<allowedServices>;
+  @Input() newRowModel: TableColumn<EditableTable>;
   @Input() tableName: string;
   @Input() optionList: Observable<allowedDropdowns>;
   @Input() TableData: allowedServices[];
-  @Input() Columns: TableColumn<allowedServices>[];
+  @Input() Columns: TableColumn<EditableTable>[];
   @Input() $makeTableEditInActive = new Subject<allowedServices>();
   @Input() isDeleteRequired = true;
   @Input() sortColumnKey:keyof allowedServices;
@@ -56,7 +57,7 @@ export class ListInputTableComponent implements OnInit {
   displayedColumns: string[];
   columnsSchema: TableColumn<allowedServices>[];
 
-  dataSource = new MatTableDataSource<allowedServices>();
+  dataSource = new MatTableDataSource<EditableTable>();
   tableData: allowedServices[] = [];
   allTableData: allowedServices[] = [];
   activeRow: allowedServices;
@@ -154,15 +155,15 @@ export class ListInputTableComponent implements OnInit {
     }
   }
 
-  getAllData() {
-    if (!this.parentService.getAllData) return;
-    this.parentService
-      .getAllData(this.resultsLength)
-      .pipe(pluck('result'))
-      .subscribe((data) => {
-        // this.allTableData = data
-      });
-  }
+  // getAllData() {
+  //   if (!this.parentService.getAllData) return;
+  //   this.parentService
+  //     .getAllData(this.resultsLength)
+  //     .pipe(pluck('result'))
+  //     .subscribe((data) => {
+  //       // this.allTableData = data
+  //     });
+  // }
 
   saveChanges(row: allowedServices) {
     this.savedData.emit(row);
@@ -210,31 +211,31 @@ export class ListInputTableComponent implements OnInit {
   addRow() {
     if (this.isEditActive) return;
 
-    const newRow: allowedServices = this.parentService.addRow();
-    this.dataSource.data = [newRow, ...this.dataSource.data];
+    // const newRow: allowedServices = this.parentService.addRow();
+    this.dataSource.data = [this.newRowModel, ...this.dataSource.data];
     this.isEditActive = true;
   }
 
   removeRow(id: number) {
-    this.$subscription = this.parentService.removeRow(id).subscribe(
-      () => {
-        this.notificationService.showSuccess('Deleted Successfully', 'Success');
+    // this.$subscription = this.parentService.removeRow(id).subscribe(
+    //   () => {
+    //     this.notificationService.showSuccess('Deleted Successfully', 'Success');
 
-        --this.resultsLength;
-        // if((this.resultsLength % this.pageEvent.pageSize) == 0){
-        //   this.paginator.previousPage()
-        //   this.paginator.pageIndex = 0
-        // }
+    //     --this.resultsLength;
+    //     // if((this.resultsLength % this.pageEvent.pageSize) == 0){
+    //     //   this.paginator.previousPage()
+    //     //   this.paginator.pageIndex = 0
+    //     // }
 
-        this.dataSource.data = this.dataSource.data.filter(
-          (u: allowedServices) => u.id !== id
-        );
-        this.tableData = this.dataSource.data;
-      },
-      (err) => {
-        this.notificationService.showError(err, 'Failed');
-      }
-    );
+    //     this.dataSource.data = this.dataSource.data.filter(
+    //       (u: allowedServices) => u.id !== id
+    //     );
+    //     this.tableData = this.dataSource.data;
+    //   },
+    //   (err) => {
+    //     this.notificationService.showError(err, 'Failed');
+    //   }
+    // );
 
     this.isEditActive = false;
   }

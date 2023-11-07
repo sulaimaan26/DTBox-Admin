@@ -22,10 +22,9 @@ import { DateFormatterService } from 'src/app/services/dateformatter.service';
 @Component({
   selector: 'app-event-form',
   templateUrl: './event-form.component.html',
-  styleUrls: ['./event-form.component.css']
+  styleUrls: ['./event-form.component.css'],
 })
 export class EventFormComponent implements OnInit {
-
   eventsForm?: FormGroup;
   submitted = false;
   isUpdate = false;
@@ -46,7 +45,7 @@ export class EventFormComponent implements OnInit {
     private notificationService: NotificationService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dateFormatterService:DateFormatterService
+    private dateFormatterService: DateFormatterService
   ) {}
 
   ngOnDestroy(): void {
@@ -72,6 +71,11 @@ export class EventFormComponent implements OnInit {
       location: this.formBuilder.array([]),
       file: this.formBuilder.array([]),
       peakhours: this.formBuilder.array([]),
+      BoosterCalculation: [true],
+      BoosterConversion: [200, Validators.required],
+      WinnerNotificationTitle: ['',Validators.required],
+      WinnerNotificationMessage: ['',Validators.required],
+      isPointsConverted: [''],
     });
 
     this.location.valueChanges.subscribe((d) => {
@@ -80,6 +84,22 @@ export class EventFormComponent implements OnInit {
 
     this.dropdown = this.activatedRoute.data.pipe(pluck('dropdown'));
     this.dataSubscription();
+    this.validatorSubscription();
+  }
+
+  validatorSubscription() {
+    this.eventsForm.controls['BoosterCalculation'].valueChanges.subscribe(
+      (value) => {
+        if (value) {
+          this.eventsForm.controls['BoosterConversion'].setValidators([
+            Validators.required,
+          ]);
+        } else {
+          this.eventsForm.controls['BoosterConversion'].setValidators([]);
+        }
+        this.eventsForm.controls['BoosterConversion'].updateValueAndValidity();
+      }
+    );
   }
 
   dataSubscription() {
@@ -87,8 +107,12 @@ export class EventFormComponent implements OnInit {
       if (data) {
         if (data.details) {
           let requiredData = data.details as IEvents;
-          requiredData.AdStartDate = this.dateFormatterService.convertDate(requiredData.AdStartDate);
-          requiredData.AdEndDate = this.dateFormatterService.convertDate(requiredData.AdEndDate);
+          requiredData.AdStartDate = this.dateFormatterService.convertDate(
+            requiredData.AdStartDate
+          );
+          requiredData.AdEndDate = this.dateFormatterService.convertDate(
+            requiredData.AdEndDate
+          );
           requiredData.AdCompletionDate = this.dateFormatterService.convertDate(
             requiredData.AdCompletionDate
           );
@@ -108,8 +132,12 @@ export class EventFormComponent implements OnInit {
           });
 
           requiredData.peakHours.forEach((timeslot, i) => {
-            timeslot.StartDateTime = this.dateFormatterService.convertDate(timeslot.StartDateTime);
-            timeslot.EndDateTime = this.dateFormatterService.convertDate(timeslot.EndDateTime);
+            timeslot.StartDateTime = this.dateFormatterService.convertDate(
+              timeslot.StartDateTime
+            );
+            timeslot.EndDateTime = this.dateFormatterService.convertDate(
+              timeslot.EndDateTime
+            );
 
             this.addTimeSlot();
             this.peakhours.at(i).patchValue(timeslot);
@@ -120,8 +148,6 @@ export class EventFormComponent implements OnInit {
       }
     });
   }
-
-
 
   get f() {
     return this.eventsForm?.controls;
@@ -378,5 +404,4 @@ export class EventFormComponent implements OnInit {
   deleteTimeSlot(index) {
     this.peakhours.removeAt(index);
   }
-
 }
