@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div>
+    <br>
+    <div class="row">
+      <div class="col-sm-9"></div>
+      <div class="col-sm-2">
+        <button
+          [disabled]="settingsList.length < 0"
+          (click)="openDialog()"
+          type="button"
+          class="btn btn-block btn-primary"
+        >
+        <i class="fa fa-bell"></i> Notification
+        </button>
+
+      </div>
+      <div class="col-sm-1">
+        <button
+          [disabled]="settingsList.length < 0"
+          (click)="onSubmit()"
+          type="button"
+          class="btn btn-block btn-primary"
+        >
+          Save
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <section
+      *ngFor="let settings of settingsList; let i = index"
+      class="col-lg-6 connectedSortable ui-sortable"
+    >
+      <div class="card">
+        <div class="card-header ui-sortable-handle" style="cursor: move">
+          <h3 class="card-title">
+            <!-- <i class="fas fa-chart-pie mr-1"></i> -->
+            {{ settings.name | uppercase }}
+          </h3>
+        </div>
+        <div class="card-body">
+          <div class="tab-content p-0">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <!-- <label>Textarea</label> -->
+                  <textarea
+                    [(ngModel)]="settings.value"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Enter ..."
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

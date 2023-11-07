@@ -4,22 +4,17 @@ import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { numberSeries } from '../_model/numberseries';
 import {
-  CommonDisplay,
-  Commondisplay,
-  CustomerDropdown,
-  getAllCustomerApiResponse,
-} from '../_model/commondisplay';
-import {
   CRUDOperation,
   CRUDOperationV2,
   getAllApiResponse,
 } from '../_model/ApiResponse';
 import { Adfile, IEvents } from '../_model/events';
+import { TableColumn } from '../_model/TableColumn';
 
 @Injectable({
   providedIn: 'root',
 })
-export class EventService implements CRUDOperationV2<CommonDisplay> {
+export class EventService implements CRUDOperationV2<IEvents> {
   private apiUrl;
 
   constructor(private http: HttpClient) {
@@ -39,7 +34,7 @@ export class EventService implements CRUDOperationV2<CommonDisplay> {
   }
 
   getAll() {
-    return this.http.get<getAllApiResponse<CommonDisplay>>(
+    return this.http.get<getAllApiResponse<IEvents>>(
       `${this.apiUrl}/event`
     );
   }
@@ -56,7 +51,7 @@ export class EventService implements CRUDOperationV2<CommonDisplay> {
     return this.http.put(`${this.apiUrl}/event/${customerid}`, formData);
   }
 
-  getColumn() {
+  getColumn():TableColumn<IEvents>[] {
     return [
       {
         key: 'EventId',
@@ -99,10 +94,15 @@ export class EventService implements CRUDOperationV2<CommonDisplay> {
   }
 
   downloadFile(url: string): any {
-    return this.http.get(url, { responseType: 'blob' });
+    return this.http.get(url, {
+      responseType: 'blob',
+      headers: {
+        skip: 'true',
+      },
+    });
   }
 
-  patchAdFile(fileId,eventId, formData: Adfile): Observable<IEvents> {
+  patchAdFile(fileId, eventId, formData: Adfile): Observable<IEvents> {
     return this.http.patch<IEvents>(
       `${this.apiUrl}/event/adfile/${eventId}?fileId=${fileId}`,
       formData

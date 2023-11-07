@@ -12,6 +12,7 @@
 
 td{
   cursor: pointer;
+  overflow: hidden;
 }
 
 th{

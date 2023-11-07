@@ -2,66 +2,87 @@
   <div>
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-
-        <span *ngIf="isOptionSelector"  (click)="addRow()"  class="input-group-text">
+        <span
+          *ngIf="isOptionSelector"
+          (click)="addRow()"
+          class="input-group-text"
+        >
           <i class="fas fa-plus"> </i>
         </span>
         <span class="input-group-text">
           <i class="fas fa-search"> </i>
         </span>
       </div>
-      <input #search (change)="performSearch($event)" type="text" class="form-control" placeholder="Search..">
+      <input
+        #search
+        (input)="performSearch($event)"
+        type="text"
+        class="form-control"
+        placeholder="Search.."
+      />
     </div>
   </div>
-
 </div>
 
 <div class="container-fluid">
-
   <div class="example-container mat-elevation-z8">
-    <div class="example-loading-shade"
+    <!-- <div class="example-loading-shade"
          *ngIf="isLoadingResults || isRateLimitReached">
       <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
 
-    </div>
+    </div> -->
 
-    <div class="example-loading-shade"
-         *ngIf="(showMessage$ | async) && !isEditActive">
-      <div class="example-rate-limit-reached" >
-        No data found.
-      </div>
+    <div
+      class="example-loading-shade"
+      *ngIf="(showMessage$ | async) && !isEditActive"
+    >
+      <div class="example-rate-limit-reached">No data found.</div>
     </div>
 
     <div class="example-table-container">
-
-      <table matSort matSortActive="{{columnsSchema[0].key}}" matSortDisableClear matSortDirection="desc" mat-table
-             [dataSource]="dataSource">
-        <ng-container [matColumnDef]="col.key"  *ngFor="let col of columnsSchema">
-          <th  mat-header-cell mat-sort-header disableClear *matHeaderCellDef>
+      <table
+        matSort
+        matSortActive="{{ sortColumnKey ?? columnsSchema[0].key }}"
+        matSortDisableClear
+        matSortDirection="desc"
+        mat-table
+        [dataSource]="dataSource"
+      >
+        <ng-container
+          [matColumnDef]="col.key"
+          *ngFor="let col of columnsSchema"
+        >
+          <th mat-header-cell mat-sort-header disableClear *matHeaderCellDef>
             {{ col.label }}
           </th>
 
           <th mat-header-cell mat-sort-header disableClear *matHeaderCellDef>
             {{ col.label }}
           </th>
-          <td  mat-cell *matCellDef="let element" >
-
-            <div *ngIf="!col.disableIfColumn || element[col.disableIfColumn] != col.equalto">
+          <td class="table-col" mat-cell *matCellDef="let element">
+            <div
+              *ngIf="
+                !col.disableIfColumn ||
+                element[col.disableIfColumn] != col.equalto
+              "
+            >
               <!-- Edit InActive-->
-              <div  [ngSwitch]="col.type" *ngIf="!element.isEdit">
-
+              <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
                 <!--Action Button-->
                 <div class="btn-edit" *ngSwitchCase="'isEdit'">
-
                   <!--Edit Button-->
-                  <button mat-button [disabled]="isEditActive" class="btn btn-primary btn-custom btn-sm"
-                          (click)="showInputField(element)">
-                    <i class=" fas fa-edit"></i>
+                  <button
+                    mat-button
+                    [disabled]="isEditActive"
+                    class="btn btn-primary btn-custom btn-sm"
+                    (click)="showInputField(element)"
+                  >
+                    <i class="fas fa-edit"></i>
                   </button>
-                  <span style="padding: 5px;"></span>
+                  <span style="padding: 5px"></span>
                   <!--Delete Button-->
                   <button
-                    *ngIf="!isOptionSelector"
+                    *ngIf="isDeleteRequired"
                     mat-button
                     [disabled]="isEditActive"
                     class="btn btn-cancel btn-dark btn-sm"
@@ -70,47 +91,87 @@
                     <i class="fas fa-trash"></i>
                   </button>
                 </div>
-                <span (click)="whenRowClicked(element)"  *ngSwitchCase="'date'">
-                {{ element[col.key]  | date: 'mediumDate' }}
-              </span>
+                <span (click)="whenRowClicked(element)" *ngSwitchCase="'date'">
+                  {{ element[col.key] | date : "mediumDate" }}
+                </span>
 
-                <div >
-                <span (click)="whenRowClicked(element)" *ngSwitchCase="'number'">
-                {{ element[col.key]  }}
-              </span>
-
+                <div>
+                  <span
+                    (click)="whenRowClicked(element)"
+                    *ngSwitchCase="'number'"
+                  >
+                    {{ element[col.key] }}
+                  </span>
                 </div>
 
+                <span
+                  (click)="whenRowClicked(element)"
+                  *ngSwitchCase="'boolean'"
+                >
+                  <div class="table-with-checkbox">
+                    <input
+                      type="checkbox"
+                      class="read-only check-size"
+                      onclick="return false;"
+                      [checked]="element[col.key]"
+                    />
+                  </div>
+                </span>
 
-                <span  (click)="whenRowClicked(element)" *ngSwitchCase="'boolean'">
-                <div class="table-with-checkbox">
-
-                <input type="checkbox" class="read-only check-size" onclick="return false;" [checked]="element[col.key]">
-                </div>
-
-              </span>
-
-                <span (click)="whenRowClicked(element)"  *ngSwitchCase="'dropdown'">
-                  <select disabled [(ngModel)]="element[col.key]" class="form-control view-only-select" >
-                  <option  [value]="''"> Select {{col.label}}</option>
-                  <option *ngFor="let option of getDropDownOptions(col.dropdownkey) | async" [value]="option.id">{{option.value ?? option.code | titlecase}}</option>
-                </select>
-              </span>
+                <span
+                  (click)="whenRowClicked(element)"
+                  *ngSwitchCase="'dropdown'"
+                >
+                  <select
+                    disabled
+                    [(ngModel)]="element[col.key]"
+                    class="form-control view-only-select"
+                  >
+                    <option [value]="''">Select {{ col.label }}</option>
+                    <option
+                      *ngFor="
+                        let option of getDropDownOptions(col.dropdownkey)
+                          | async
+                      "
+                      [value]="option.id"
+                    >
+                      {{ option.value ?? option.code }}
+                    </option>
+                  </select>
+                </span>
 
                 <span (click)="whenRowClicked(element)">
-                <div class="form-input" *ngSwitchCase="'multiple-dropdown'">
-                <mat-select style="appearance: none;border: unset; background-color: unset;"  class="form-control" [(ngModel)]="element[col.key]" multiple>
-                  <mat-option *ngFor="let option of getDropDownOptions(col.dropdownkey) | async" [value]="option.id">{{option.value ?? option.code | titlecase}}</mat-option>
-                </mat-select>
-              </div>
-              </span>
-
+                  <div class="form-input" *ngSwitchCase="'multiple-dropdown'">
+                    <mat-select
+                      style="
+                        appearance: none;
+                        border: unset;
+                        background-color: unset;
+                      "
+                      class="form-control"
+                      [(ngModel)]="element[col.key]"
+                      multiple
+                    >
+                      <mat-option
+                        *ngFor="
+                          let option of getDropDownOptions(col.dropdownkey)
+                            | async
+                        "
+                        [value]="option.id"
+                        >{{ option.value ?? option.code }}</mat-option
+                      >
+                    </mat-select>
+                  </div>
+                </span>
 
                 <span (click)="whenRowClicked(element)" *ngSwitchDefault>
-                 {{col.capitalize ?  (element[col.key] | uppercase) : (element[col.key] | titlecase)}}
-              </span>
+                  {{
+                    col.capitalize
+                      ? (element[col.key] | uppercase)
+                      : element[col.key]
+                  }}
+                </span>
               </div>
-
 
               <!-- Edit Active-->
               <div [ngSwitch]="col.type" *ngIf="element.isEdit">
@@ -123,7 +184,7 @@
                   >
                     <i class="fas fa-check"></i>
                   </button>
-                  <span style="padding: 5px;"></span>
+                  <span style="padding: 5px"></span>
                   <button
                     mat-button
                     (click)="cancelChanges(element)"
@@ -133,57 +194,71 @@
                   </button>
                 </div>
 
-                <mat-form-field
-                  class="form-input"
-                  *ngSwitchCase="'date'"
-                >
+                <div class="form-input" class="form-input" *ngSwitchCase="'date'">
                   <input
-
+                    [disabled]="col.disabled"
                     type="date"
+                    class="form-control"
                     [value]="helperService.getCurrentDate()"
                     [(ngModel)]="element[col.key]"
                   />
 
-                  <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-
-                <div
-                  class="form-input"
-                  *ngSwitchCase="'boolean'"
-                >
-
-                  <div class="table-with-checkbox">
-
-                    <input class="check-size"   style="cursor: pointer" type="checkbox" [(ngModel)]="element[col.key]" [checked]="element[col.key]">
-                  </div>
-
+                  <!-- <mat-datepicker #picker></mat-datepicker> -->
                 </div>
 
+                <div class="form-input" *ngSwitchCase="'boolean'">
+                  <div class="table-with-checkbox">
+                    <input
+                      [disabled]="col.disabled"
+                      class="check-size"
+                      style="cursor: pointer"
+                      type="checkbox"
+                      [(ngModel)]="element[col.key]"
+                      [checked]="element[col.key]"
+                    />
+                  </div>
+                </div>
 
-                <div
-                  class="form-input"
-                  *ngSwitchCase="'datalist'"
-                >
+                <div class="form-input" *ngSwitchCase="'datalist'">
+                  <div class="form-input">
+                    <input
+                      [disabled]="col.disabled"
+                      autocomplete="osssff"
+                      (input)="listStat[col.key] = true"
+                      (change)="listStat[col.key] = false"
+                      [(ngModel)]="element[col.key]"
+                      class="form-control"
+                      [attr.list]="col.key + 'a'"
+                      id="{{ col.key }}"
+                    />
 
-                  <div  class="form-input">
-                    <input autocomplete="osssff" (input)="listStat[col.key] = true" (change)="listStat[col.key] = false"  [(ngModel)]="element[col.key]" class="form-control" [attr.list]="col.key+ 'a'" id="{{col.key}}">
-
-                    <datalist *ngIf="listStat[col.key]"  [id]="col.key+ 'a'">
-                      <option *ngFor="let option of getListOptions(col.key,element[col.key])" value="{{option}}">
+                    <datalist *ngIf="listStat[col.key]" [id]="col.key + 'a'">
+                      <option
+                        *ngFor="
+                          let option of getListOptions(
+                            col.key,
+                            element[col.key]
+                          )
+                        "
+                        value="{{ option }}"
+                      ></option>
                     </datalist>
                   </div>
-
                 </div>
 
-                <div
-                  class="form-input"
-                  *ngSwitchCase="'dropdown'"
-                >
-                  <select [(ngModel)]="element[col.key]" class="form-control" >
-                    <option  [value]="''"> Select {{col.label}}</option>
-                    <option *ngFor="let option of getDropDownOptions(col.dropdownkey) | async" [value]="option.id">{{option.value ?? option.code | titlecase}}</option>
+                <div class="form-input" *ngSwitchCase="'dropdown'">
+                  <select [disabled]="col.disabled" [(ngModel)]="element[col.key]" class="form-control">
+                    <option [value]="''">Select {{ col.label }}</option>
+                    <option
+                      *ngFor="
+                        let option of getDropDownOptions(col.dropdownkey)
+                          | async
+                      "
+                      [value]="option.id"
+                    >
+                      {{ option.value ?? option.code }}
+                    </option>
                   </select>
-
                 </div>
 
                 <div class="form-input" *ngSwitchCase="'number'">
@@ -194,15 +269,27 @@
                     [min]="col.min"
                     [(ngModel)]="element[col.key]"
                     (change)="inputHandler($event, element._id, col.key)"
+                    [disabled]="col.disabled"
                   />
                 </div>
 
                 <div class="form-input" *ngSwitchCase="'multiple-dropdown'">
-                  <mat-select (selectionChange)="sect(element,col.responsekey)"   class="form-control" [(ngModel)]="element[col.key]" multiple>
-                    <mat-option *ngFor="let option of getDropDownOptions(col.dropdownkey) | async" [value]="option.id">{{option.value ?? option.code | titlecase}}</mat-option>
+                  <mat-select
+                    (selectionChange)="sect(element, col.responsekey)"
+                    class="form-control"
+                    [(ngModel)]="element[col.key]"
+                    multiple
+                  >
+                    <mat-option
+                      *ngFor="
+                        let option of getDropDownOptions(col.dropdownkey)
+                          | async
+                      "
+                      [value]="option.id"
+                      >{{ option.value ?? option.code }}</mat-option
+                    >
                   </mat-select>
                 </div>
-
 
                 <div class="form-input" *ngSwitchDefault>
                   <input
@@ -212,38 +299,28 @@
                     [type]="col.type"
                     [maxlength]="col.max"
                     [(ngModel)]="element[col.key]"
+                    [disabled]="col.disabled"
                     (change)="inputHandler($event, element._id, col.key)"
                   />
                 </div>
-
-
               </div>
             </div>
-
-
-
-
           </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-
-
     </div>
 
     <mat-paginator
-      (page)="pageEvent = $event"
-      [length]="resultsLength"
       [pageSize]="10"
       [pageSizeOptions]="[5, 10, 25, 100]"
-      aria-label="Select page">
+      aria-label="Select page"
+    >
     </mat-paginator>
   </div>
-
-
-
 </div>
-
-

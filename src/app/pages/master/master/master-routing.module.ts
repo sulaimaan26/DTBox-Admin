@@ -61,6 +61,21 @@ const routes: Routes = [
           dropdown: EventsDropdownResolver,
         },
       },
+      {
+        path: 'settings',
+        loadChildren: () =>
+          import('../../settings/settings.module').then(
+            (m) => m.SettingsModule
+          ),
+      },
+      {
+        path: 'location',
+        loadChildren: () =>
+          import('../../location/location.module').then(
+            (m) => m.LocationModule
+          ),
+      },
+
     ],
   },
 ];

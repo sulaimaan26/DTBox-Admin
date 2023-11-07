@@ -1,6 +1,5 @@
 import {Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {Commondisplay} from "../../_model/commondisplay";
 import {MatSort} from "@angular/material/sort";
 import {HttpClient} from "@angular/common/http";
 import {CommonDiplayService} from "../../services/commondisplay.service";
@@ -41,7 +40,7 @@ export class ListTableComponent implements OnInit {
   $subscription:Subscription
   // MatPaginator Output
   pageEvent: PageEvent;
-  tableData: Commondisplay[] = [];
+  tableData: any[] = [];
 
   resultsLength = 0;
   isLoadingResults = true;

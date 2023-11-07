@@ -4,12 +4,6 @@ import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { numberSeries } from '../_model/numberseries';
 import {
-  CommonDisplay,
-  Commondisplay,
-  CustomerDropdown,
-  getAllCustomerApiResponse,
-} from '../_model/commondisplay';
-import {
   CRUDOperation,
   CRUDOperationV2,
   getAllApiResponse,

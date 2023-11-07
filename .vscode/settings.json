@@ -6,7 +6,17 @@
       "**/CVS": true,
       "**/.DS_Store": true,
       "**/Thumbs.db": true,
-      "**/node_modules": false
+      "**/node_modules": true,
+      ".idea": true,
+      "dist/*.*": true,
+      "dist/Dento": true,
+      "**/Dento": true,
+      "Dento": true,
+      "**/dist": true,
+      "dist": true,
+      "**/.vscode": true,
+      ".vscode": true
     },
-    "editor.acceptSuggestionOnEnter": "on"
+    "editor.acceptSuggestionOnEnter": "on",
+    "explorerExclude.backup": {}
 }
