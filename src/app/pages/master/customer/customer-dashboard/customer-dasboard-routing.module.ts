@@ -63,31 +63,31 @@ const routes: Routes = [
       requiredService: EVENTS_SERVICE,
     } as RouteData,
   },
-  {
-    path: 'location',
-    component: CustomerDashboardComponent,
-    data: {
-      header: {
-        title: 'Location',
-        breadcrumb: [
-          {
-            name: 'Dashboard',
-            isActive: true,
-            link: '/master/list/events',
-          },
-          {
-            name: 'Events',
-            isActive: false,
-          },
-        ],
-        button: {
-          link: '/admin/location/create',
-          isActive: true,
-        },
-      },
-      requiredService: LOCATION_SERVICE,
-    } as RouteData,
-  },
+  // {
+  //   path: 'location',
+  //   component: CustomerDashboardComponent,
+  //   data: {
+  //     header: {
+  //       title: 'Location',
+  //       breadcrumb: [
+  //         {
+  //           name: 'Dashboard',
+  //           isActive: true,
+  //           link: '/master/list/events',
+  //         },
+  //         {
+  //           name: 'Events',
+  //           isActive: false,
+  //         },
+  //       ],
+  //       button: {
+  //         link: '/admin/location/create',
+  //         isActive: true,
+  //       },
+  //     },
+  //     requiredService: LOCATION_SERVICE,
+  //   } as RouteData,
+  // },
 ];
 
 @NgModule({

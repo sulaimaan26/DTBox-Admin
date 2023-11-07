@@ -5,6 +5,7 @@ import { LocationComponent } from './location.component';
 const routes: Routes = [
   {
     path: '',
+    component:LocationComponent,
     children: [
       {
         path: 'create',

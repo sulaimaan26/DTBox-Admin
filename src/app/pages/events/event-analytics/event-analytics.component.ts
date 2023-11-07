@@ -13,7 +13,7 @@ import { TableColumn } from 'src/app/_model/TableColumn';
   styleUrls: ['./event-analytics.component.css'],
 })
 export class EventAnalyticsComponent implements OnInit, OnDestroy {
-  columns: TableColumn<EventReport>[] = [];
+  columns: TableColumn<Partial<EventReport>>[] = [];
   $subscription: Subscription;
   eventId: number;
   eventReport: EventReport[];
@@ -23,11 +23,13 @@ export class EventAnalyticsComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public eventAnalyticsService: EventAnalyticsService,
-    private notificationService:NotificationService
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
-    this.columns = this.eventAnalyticsService.getColumn();
+    this.columns = this.eventAnalyticsService.getColumn() as TableColumn<
+      Partial<EventReport>
+    >[];
     this.$subscription = this.activatedRoute.data.subscribe((data) => {
       if (data) {
         if (data.details) {
@@ -54,16 +56,19 @@ export class EventAnalyticsComponent implements OnInit, OnDestroy {
 
   getModifiedReport(report: EventReport) {
     let payload = {
-      EventId:this.eventId,
-      UserId:report.id,
-      IsPriceDistributed:report.IsPriceDistributed ?? false,
-      Remarks:report.Remarks,
-      DistributedDate:report.DistributedDate
-    }
+      EventId: this.eventId,
+      UserId: report.id,
+      IsPriceDistributed: report.IsPriceDistributed ?? false,
+      Remarks: report.Remarks,
+      DistributedDate: report.DistributedDate,
+    };
 
     this.eventAnalyticsService.updateReport(payload).subscribe(
       (res) => {
-        this.notificationService.showSuccess('Report has been updated!','Success')
+        this.notificationService.showSuccess(
+          'Report has been updated!',
+          'Success'
+        );
         report.isEdit = false;
         this.$tableEditActive.next(report);
       },
