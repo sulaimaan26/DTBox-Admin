@@ -16,7 +16,11 @@ import { HelperService } from '../../services/helper/helper.service';
 import { NotificationService } from '../../services/NotificationService/notification-service.service';
 import { ButtonControlService } from '../../services/buttonControl/button-control.service';
 import { ActivatedRoute } from '@angular/router';
-import { allowedServices, EditableTable, TableColumn } from '../../_model/TableColumn';
+import {
+  allowedServices,
+  EditableTable,
+  TableColumn,
+} from '../../_model/TableColumn';
 import { pluck } from 'rxjs/operators';
 import { allowedDropdowns, dropdown } from '../../_model/Dropdowns';
 
@@ -27,15 +31,17 @@ import { allowedDropdowns, dropdown } from '../../_model/Dropdowns';
 })
 export class ListInputTableComponent implements OnInit {
   // @Input() parentService: EditableTableWithSuggestion<allowedServices>;
-  @Input() newRowModel: TableColumn<EditableTable>;
+  @Input() newRowModel: EditableTable;
   @Input() tableName: string;
   @Input() optionList: Observable<allowedDropdowns>;
-  @Input() TableData: allowedServices[];
+  @Input() TableData: EditableTable[];
   @Input() Columns: TableColumn<EditableTable>[];
   @Input() $makeTableEditInActive = new Subject<allowedServices>();
   @Input() isDeleteRequired = true;
-  @Input() sortColumnKey:keyof allowedServices;
-  @Output() savedData = new EventEmitter<allowedServices>();
+  @Input() sortColumnKey: string;
+  @Input() $updateTable = new Subject<EditableTable[]>();
+  @Output() savedData = new EventEmitter<any>();
+  @Output() removedData = new EventEmitter<any>();
 
   $subscription: Subscription;
   isEditActive = false;
@@ -58,13 +64,13 @@ export class ListInputTableComponent implements OnInit {
   columnsSchema: TableColumn<allowedServices>[];
 
   dataSource = new MatTableDataSource<EditableTable>();
-  tableData: allowedServices[] = [];
+  tableData: EditableTable[] = [];
   allTableData: allowedServices[] = [];
   activeRow: allowedServices;
   valid: any = {};
 
   //Only If it is used as option selector
-  @Input() isOptionSelector = false;
+  @Input() allowAddingRow = false;
   @Output() selectedValue = new EventEmitter<any>();
   @Output() addedValue = new EventEmitter<boolean>();
 
@@ -95,6 +101,10 @@ export class ListInputTableComponent implements OnInit {
     // this.Columns = this.parentService.getColumn();
     this.displayedColumns = this.Columns.map((col) => col.key);
     this.columnsSchema = this.Columns;
+    this.$subscription = this.$updateTable.subscribe((tableData) => {
+      this.dataSource.data = tableData;
+      this.tableData = tableData;
+    });
   }
 
   ngAfterViewInit() {
@@ -102,48 +112,6 @@ export class ListInputTableComponent implements OnInit {
     this.tableData = this.TableData;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    // If the user changes the sort order, reset back to the first page.
-    // this.$subscription = this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-    // this.$subscription = this.search.subscribe(() => this.paginator.pageIndex = 0)
-
-    // this.$subscription = merge(this.sort.sortChange, this.paginator.page, this.search,this.isTableChanged)
-    //   .pipe(
-    //     startWith({}),
-    //     switchMap((search) => {
-
-    //       this.isLoadingResults = true;
-    //       return this.parentService!.getAll(
-    //       ).pipe(
-    //         catchError(() => of(null)));
-    //     }),
-    //     map(data => {
-    //       // Flip flag to show that loading has finished.
-    //       this.isLoadingResults = false;
-    //       this.isRateLimitReached = data.result === null;
-
-    //       if (data.result === null) {
-    //         return [];
-    //       }
-
-    //       // Only refresh the result length if there is new data. In case of rate
-    //       // limit errors, we do not want to reset the paginator to zero, as that
-    //       // would prevent users from re-triggering requests.
-    //       this.resultsLength = data.totalCount;
-
-    //       return data.result;
-    //     }),
-    //     map((data =>{
-    //       if(data.length == 0) this.showMessage$.next(true);
-    //       else this.showMessage$.next(false);
-    //       return data;
-    //     } ))
-    //   )
-
-    //   .subscribe((data) => {
-    //     this.dataSource.data = data
-    //     this.tableData = this.TableData
-    //     // this.getAllData()
-    //   });
   }
 
   performSearch($event) {
@@ -155,48 +123,8 @@ export class ListInputTableComponent implements OnInit {
     }
   }
 
-  // getAllData() {
-  //   if (!this.parentService.getAllData) return;
-  //   this.parentService
-  //     .getAllData(this.resultsLength)
-  //     .pipe(pluck('result'))
-  //     .subscribe((data) => {
-  //       // this.allTableData = data
-  //     });
-  // }
-
   saveChanges(row: allowedServices) {
     this.savedData.emit(row);
-    // this.parentService.saveChanges(row).subscribe(
-    //   (res) => {
-    //     // if (row._id === 0) {
-
-    //     //   this.notificationService.showSuccess("Created Successfully!!!", "Success")
-
-    //     //   row._id = res.id
-    //     //   row.id = res.id
-    //     //   this.tableData.push(row)
-    //     //   this.dataSource.data = this.tableData
-    //     //   row.isEdit = false
-    //     //   this.isEditActive = false
-
-    //     // }
-    //     // else {
-    //     //   this.notificationService.showSuccess("Updated Successfully!!!", "Success")
-    //     //   let index = this.tableData.findIndex(t => t.id === row.id)
-    //     //   this.tableData[index] = row
-    //     //   this.dataSource.data = this.tableData
-    //     //   row.isEdit = false
-    //     //   this.isEditActive = false
-    //     // }
-    //     this.showMessage$.next(false);
-    //     this.addedValue.emit(true);
-    //     //this.isTableChanged.next(true)
-    //   },
-    //   (err) => {
-    //     this.notificationService.showError(err, 'Failed');
-    //   }
-    // );
   }
 
   cancelChanges(row: allowedServices) {
@@ -205,37 +133,19 @@ export class ListInputTableComponent implements OnInit {
     this.dataSource.data = [...this.tableData];
     // row.isEdit = false
     this.isEditActive = false;
-    this.isTableChanged.next(true);
+    this.$updateTable.next(this.tableData);
   }
 
   addRow() {
     if (this.isEditActive) return;
 
     // const newRow: allowedServices = this.parentService.addRow();
-    this.dataSource.data = [this.newRowModel, ...this.dataSource.data];
+    this.dataSource.data = [{ ...this.newRowModel }, ...this.dataSource.data];
     this.isEditActive = true;
   }
 
-  removeRow(id: number) {
-    // this.$subscription = this.parentService.removeRow(id).subscribe(
-    //   () => {
-    //     this.notificationService.showSuccess('Deleted Successfully', 'Success');
-
-    //     --this.resultsLength;
-    //     // if((this.resultsLength % this.pageEvent.pageSize) == 0){
-    //     //   this.paginator.previousPage()
-    //     //   this.paginator.pageIndex = 0
-    //     // }
-
-    //     this.dataSource.data = this.dataSource.data.filter(
-    //       (u: allowedServices) => u.id !== id
-    //     );
-    //     this.tableData = this.dataSource.data;
-    //   },
-    //   (err) => {
-    //     this.notificationService.showError(err, 'Failed');
-    //   }
-    // );
+  removeRow($event) {
+    this.removedData.emit($event);
 
     this.isEditActive = false;
   }
@@ -289,7 +199,7 @@ export class ListInputTableComponent implements OnInit {
   }
 
   whenRowClicked(row) {
-    if (this.isOptionSelector) {
+    if (this.allowAddingRow) {
       row.id = parseInt(row.id);
       this.selectedValue.emit(row);
     }

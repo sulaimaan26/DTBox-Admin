@@ -72,7 +72,7 @@ export class LocationService implements EditableTableWithSuggestion<ILocation> {
     return this.http.put(`${this.apiUrl}/location/${customerid}`, formData);
   }
 
-  getColumn(): TableColumn<ILocation>[] {
+  getColumn(): TableColumn<Partial<ILocation>>[] {
     return [
       // {
       //   key: 'id',
@@ -99,6 +99,11 @@ export class LocationService implements EditableTableWithSuggestion<ILocation> {
         type: 'text',
         label: 'Country',
       },
+      // {
+      //   key: 'isEdit',
+      //   label: 'Action',
+      //   type: 'isEdit',
+      // },
     ];
   }
 }

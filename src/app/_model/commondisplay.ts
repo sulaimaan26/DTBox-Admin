@@ -1,6 +1,6 @@
 import { numberSeries } from './numberseries';
 import { dropdown } from './Dropdowns';
-
+import { IVideoLevel } from './videolevel';
 
 export interface CustomerDropdown {
   numberseries: numberSeries[];
@@ -9,8 +9,8 @@ export interface CustomerDropdown {
 
 export interface CommonDisplay {
   id: number;
-  Title:string
-  Description:string
+  Title: string;
+  Description: string;
   messages: string;
   adDuration: string;
   messageDuration: string;
@@ -24,9 +24,9 @@ export interface CommonDisplay {
   updatedBy: string;
   createdAt: string;
   updatedAt: string;
-  AdStartDate:string;
-  AdEndDate:string
-  IsActive:string
+  AdStartDate: string;
+  AdEndDate: string;
+  IsActive: string;
 }
 
 export interface fileUploadRes {
@@ -62,6 +62,7 @@ export interface DropdownCommonDisplay {
   city: Dropdown[];
   state: Dropdown[];
   country: Dropdown[];
+  videolevel: IVideoLevel[];
 }
 
 export interface Dropdown {
