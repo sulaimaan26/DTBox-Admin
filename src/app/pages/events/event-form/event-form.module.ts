@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { EventFormRoutingModule } from './event-form-routing.module';
 import { EventFormComponent } from './event-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -11,7 +10,6 @@ import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
-
   ],
   imports: [
     CommonModule,

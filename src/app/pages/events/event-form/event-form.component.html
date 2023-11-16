@@ -435,82 +435,94 @@
                             Delete
                           </button>
                         </div>
-
-                        <button
-                          style="float: right; margin-right: 10px"
-                          (click)="addControl(i)"
-                          class="btn btn-warning"
-                        >
-                          Add Control
-                        </button>
                       </div>
                     </div>
-                    <!-- Video Level Table -->
-                    <ng-container>
-                      <ng-container
-                        *ngFor="
-                          let row of loc['controls'].videolevel.controls;
-                          let idx = index
-                        "
-                        formArrayName="videolevel"
-                      >
-                        <hr *ngIf="idx == 0" />
-
-                        <div *ngIf="idx == 0" class="row">
-                          <div class="col-sm-5">
-                            <div style="margin-bottom: 5px">
-                              <span>ViewCount</span>
-                            </div>
-                          </div>
-                          <div class="col-sm-5">
-                            <div style="margin-bottom: 5px">
-                              <span>TimeOut</span>
+                    <br />
+                    <mat-accordion>
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title> View Control </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row flex-row-reverse mt-1">
+                          <div class="col-md-1">
+                            <div >
+                              <button
+                                (click)="addControl(i)"
+                                class="btn btn-warning"
+                              >
+                              <i class="fas fa-plus"></i>
+                              </button>
                             </div>
                           </div>
                         </div>
-                        <div class="row" id="{{ idx }}" [formGroupName]="idx">
-                          <div class="col-sm-5">
-                            <div class="form-group">
-                              <!-- <label>ViewCount</label> -->
-                              <input
-                                [class.is-invalid]="
-                                  row.controls.ViewCount.errors
-                                "
-
-                                formControlName="ViewCount"
-                                type="number"
-                                class="form-control"
-                                placeholder="ViewCount"
-                              />
+                        <ng-container
+                          *ngFor="
+                            let row of loc['controls'].videolevel.controls;
+                            let idx = index
+                          "
+                          formArrayName="videolevel"
+                        >
+                          <div>
+                            <div *ngIf="idx == 0" class="row">
+                              <div class="col-sm-5">
+                                <div style="margin-bottom: 5px">
+                                  <span>View Count</span>
+                                </div>
+                              </div>
+                              <div class="col-sm-5">
+                                <div style="margin-bottom: 5px">
+                                  <span>Time Out</span>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                          <div class="col-sm-5">
-                            <div class="form-group">
-                              <!-- <label>TimeOut</label> -->
-                              <input
-                                [class.is-invalid]="
-                                row.controls.TimeOut.errors
-                                "
-
-                                formControlName="TimeOut"
-                                type="number"
-                                class="form-control"
-                                placeholder="TimeOut"
-                              />
-                            </div>
-                          </div>
-
-                          <div class="col-sm-2">
-                            <button
-                              (click)="deleteControl(i, idx)"
-                              class="btn btn-danger"
+                            <div
+                              class="row"
+                              id="{{ idx }}"
+                              [formGroupName]="idx"
                             >
-                              Delete
-                            </button>
+                              <div class="col-sm-5">
+                                <div class="form-group">
+                                  <!-- <label>ViewCount</label> -->
+                                  <input
+                                    [class.is-invalid]="
+                                      row.controls.ViewCount.errors
+                                    "
+                                    formControlName="ViewCount"
+                                    type="number"
+                                    class="form-control"
+                                    placeholder="ViewCount"
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-sm-5">
+                                <div class="form-group">
+                                  <!-- <label>TimeOut</label> -->
+                                  <input
+                                    [class.is-invalid]="
+                                      row.controls.TimeOut.errors
+                                    "
+                                    formControlName="TimeOut"
+                                    type="number"
+                                    class="form-control"
+                                    placeholder="TimeOut"
+                                  />
+                                </div>
+                              </div>
+
+                              <div class="col-sm-2">
+                                <button
+                                  (click)="deleteControl(i, idx)"
+                                  class="btn btn-danger"
+                                >
+                                  Delete
+                                </button>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </ng-container>
-                    </ng-container>
+                        </ng-container>
+                      </mat-expansion-panel>
+                    </mat-accordion>
+                    <!-- Video Level Table -->
                   </div>
                   <br />
                 </ng-container>
