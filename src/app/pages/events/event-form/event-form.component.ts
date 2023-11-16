@@ -78,6 +78,7 @@ export class EventFormComponent implements OnInit {
       WinnerNotificationTitle: ['', Validators.required],
       WinnerNotificationMessage: ['', Validators.required],
       isPointsConverted: [''],
+      ControlViews: [true],
     });
 
     this.dropdown = this.activatedRoute.data.pipe(pluck('dropdown'));
@@ -130,7 +131,6 @@ export class EventFormComponent implements OnInit {
           requiredData.file.forEach((adfile, i) => {
             this.addFile(null, adfile);
             this.files.at(i).patchValue(adfile);
-
           });
 
           requiredData.peakHours.forEach((timeslot, i) => {
