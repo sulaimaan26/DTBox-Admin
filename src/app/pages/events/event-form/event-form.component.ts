@@ -63,6 +63,7 @@ export class EventFormComponent implements OnInit {
       TopScorerCount: [10, Validators.required],
       IsActive: [true],
       IsCompleted: [false],
+      IsComingSoon:[false],
       TermsAndCondition: [''],
       DirectoryId: [uuid.v4()],
       ThumbNail: [''],
