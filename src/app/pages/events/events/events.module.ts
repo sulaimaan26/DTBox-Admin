@@ -10,6 +10,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { EventFormComponent } from '../event-form/event-form.component';
 import { EventAnalyticsComponent } from '../event-analytics/event-analytics.component';
 import { ListInputTableModule } from 'src/app/component/list-input-table/list-input-table.module';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [EventsComponent, EventFormComponent, EventAnalyticsComponent],
@@ -21,7 +22,8 @@ import { ListInputTableModule } from 'src/app/component/list-input-table/list-in
     MatInputModule,
     MatIconModule,
     MatTabsModule,
-    ListInputTableModule
+    ListInputTableModule,
+    MatExpansionModule
   ],
 })
 export class EventsModule {}

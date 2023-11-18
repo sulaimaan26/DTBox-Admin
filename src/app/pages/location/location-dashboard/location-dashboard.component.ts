@@ -10,12 +10,26 @@ import { TableColumn } from 'src/app/_model/TableColumn';
   styleUrls: ['./location-dashboard.component.css'],
 })
 export class LocationDashboardComponent implements OnInit {
+  tableRow: ILocation = {
+    city: '',
+    country: '',
+    id: 0,
+    pincode: '',
+    state: '',
+    _id: '',
+    isEdit: true,
+  };
   $tableEditActive = new Subject<any>();
   columns: TableColumn<Partial<ILocation>>[] = [];
-  eventReport
+  locationList: ILocation[];
   constructor(public locationService: LocationService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.columns = this.locationService.getColumn();
+    this.locationService.getAll().subscribe((res)=>{
+      this.locationList = res
+    })
+  }
 
   getModifiedReport($event) {}
 }

@@ -3,7 +3,7 @@
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span
-          *ngIf="isOptionSelector"
+          *ngIf="allowAddingRow"
           (click)="addRow()"
           class="input-group-text"
         >
@@ -44,7 +44,7 @@
         matSort
         matSortActive="{{ sortColumnKey ?? columnsSchema[0].key }}"
         matSortDisableClear
-        matSortDirection="desc"
+        matSortDirection="asc"
         mat-table
         [dataSource]="dataSource"
       >
@@ -86,7 +86,7 @@
                     mat-button
                     [disabled]="isEditActive"
                     class="btn btn-cancel btn-dark btn-sm"
-                    (click)="removeRow(element.id)"
+                    (click)="removeRow(element)"
                   >
                     <i class="fas fa-trash"></i>
                   </button>

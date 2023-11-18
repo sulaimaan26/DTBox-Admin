@@ -149,7 +149,7 @@ export class SearchdropdownComponent implements OnInit {
           dialogRef.componentInstance.parentService = this.inputTableParentService as EditableTableWithSuggestion<allowedServices>
           dialogRef.componentInstance.tableName = TableName.ITEMMASTER
           dialogRef.componentInstance.optionList = of(res)
-          dialogRef.componentInstance.isOptionSelector = true
+          dialogRef.componentInstance.allowAddingRow = true
           //
           dialogRef.componentInstance.selectedValue.subscribe((data)=>{
             this.selectedValueFromPopup.next(data)
@@ -172,7 +172,7 @@ export class SearchdropdownComponent implements OnInit {
 
         dialogRef.componentInstance.parentService = this.inputTableParentService as EditableTableWithSuggestion<allowedServices>
         dialogRef.componentInstance.tableName = TableName.ITEMMASTER
-        dialogRef.componentInstance.isOptionSelector = true
+        dialogRef.componentInstance.allowAddingRow = true
         //
         dialogRef.componentInstance.selectedValue.subscribe((data)=>{
           this.selectedValueFromPopup.next(data)

@@ -75,7 +75,13 @@ const routes: Routes = [
             (m) => m.LocationModule
           ),
       },
-
+      {
+        path: 'videolevel',
+        loadChildren: () =>
+          import('../../video-level/video-level.module').then(
+            (m) => m.VideoLevelModule
+          ),
+      },
     ],
   },
 ];

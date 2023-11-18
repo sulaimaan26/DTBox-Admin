@@ -29,11 +29,12 @@ export interface TableColumn<T> {
 
 export interface EditableTable {
   _id?: number | string;
+  id?: number ;
   isEdit?: boolean;
   isSelected?: boolean;
 }
 
-export type TableColumnType = 'text' | 'isEdit' | 'date' | 'boolean';
+export type TableColumnType = 'text' | 'isEdit' | 'date' | 'boolean' | 'number';
 
 export enum TableName {
   CURRENCY_CODE = 'currencycode',

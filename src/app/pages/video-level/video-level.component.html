@@ -1,12 +1,14 @@
 <app-list-input-table
-  *ngIf="locationList"
+  *ngIf="videoLevelList"
   [Columns]="columns"
-  [TableData]="locationList"
+  [TableData]="videoLevelList"
   tableName="Location"
   (savedData)="getModifiedReport($event)"
   [$makeTableEditInActive]="$tableEditActive"
   [isDeleteRequired]="true"
-  [sortColumnKey]="'PinCode'"
+  [sortColumnKey]="'ViewCount'"
   [newRowModel]="tableRow"
-  [allowAddingRow]="false"
+  [allowAddingRow]="true"
+  (removedData)="deleteVideoLevel($event)"
+  [$updateTable]="$updateTable"
 ></app-list-input-table>

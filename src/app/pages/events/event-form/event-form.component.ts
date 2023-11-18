@@ -37,6 +37,8 @@ export class EventFormComponent implements OnInit {
   adFiles: adFile[];
   valueOption: string[];
   dropdown: Observable<DropdownCommonDisplay>;
+  normalDropdown: DropdownCommonDisplay;
+
   $subscription;
 
   constructor(
@@ -61,6 +63,7 @@ export class EventFormComponent implements OnInit {
       TopScorerCount: [10, Validators.required],
       IsActive: [true],
       IsCompleted: [false],
+      IsComingSoon:[false],
       TermsAndCondition: [''],
       DirectoryId: [uuid.v4()],
       ThumbNail: [''],
@@ -73,16 +76,16 @@ export class EventFormComponent implements OnInit {
       peakhours: this.formBuilder.array([]),
       BoosterCalculation: [true],
       BoosterConversion: [200, Validators.required],
-      WinnerNotificationTitle: ['',Validators.required],
-      WinnerNotificationMessage: ['',Validators.required],
+      WinnerNotificationTitle: ['', Validators.required],
+      WinnerNotificationMessage: ['', Validators.required],
       isPointsConverted: [''],
-    });
-
-    this.location.valueChanges.subscribe((d) => {
-      console.log(d);
+      ControlViews: [true],
     });
 
     this.dropdown = this.activatedRoute.data.pipe(pluck('dropdown'));
+    this.$subscription = this.dropdown.subscribe((options) => {
+      this.normalDropdown = options;
+    });
     this.dataSubscription();
     this.validatorSubscription();
   }
@@ -127,7 +130,7 @@ export class EventFormComponent implements OnInit {
           });
 
           requiredData.file.forEach((adfile, i) => {
-            this.addFile();
+            this.addFile(null, adfile);
             this.files.at(i).patchValue(adfile);
           });
 
@@ -359,7 +362,7 @@ export class EventFormComponent implements OnInit {
     this.location.removeAt(index);
   }
 
-  addFile($event = null) {
+  addFile($event = null, videoLevelData = null) {
     const fileForm = this.formBuilder.group({
       id: [''],
       ThumbNailFileName: ['', Validators.required],
@@ -370,13 +373,49 @@ export class EventFormComponent implements OnInit {
       Description: ['', Validators.required],
       eventId: [''],
       active: [true],
+      videolevel: this.formBuilder.array([]),
     });
+    if (videoLevelData) {
+      videoLevelData.videolevel.forEach((dr) => {
+        (<FormArray>fileForm.controls['videolevel']).push(
+          this.formBuilder.group({
+            ViewCount: [dr.ViewCount, Validators.required],
+            TimeOut: [dr.TimeOut, Validators.required],
+          })
+        );
+      });
+    } else {
+      this.normalDropdown.videolevel.forEach((dr) => {
+        (<FormArray>fileForm.controls['videolevel']).push(
+          this.formBuilder.group({
+            ViewCount: [dr.ViewCount, Validators.required],
+            TimeOut: [dr.TimeOut, Validators.required],
+          })
+        );
+      });
+    }
 
     this.files.push(fileForm);
   }
 
   deleteAdFile(index) {
-    this.files.removeAt(index);
+    this.files;
+    // this.files.removeAt(index);
+  }
+
+  addControl(fileFormIndex) {
+    this.files.at(fileFormIndex)['controls']['videolevel'].push(
+      this.formBuilder.group({
+        ViewCount: ['', Validators.required],
+        TimeOut: ['', Validators.required],
+      })
+    );
+  }
+
+  deleteControl(fileFormIndex, controlFormIndex) {
+    this.files
+      .at(fileFormIndex)
+      ['controls']['videolevel'].removeAt(controlFormIndex);
   }
 
   patchAdFile(index) {
