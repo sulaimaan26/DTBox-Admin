@@ -34,7 +34,7 @@ export interface EditableTable {
   isSelected?: boolean;
 }
 
-export type TableColumnType = 'text' | 'isEdit' | 'date' | 'boolean' | 'number';
+export type TableColumnType = 'text' | 'isEdit' | 'date' | 'boolean' | 'number' | 'datetime';
 
 export enum TableName {
   CURRENCY_CODE = 'currencycode',

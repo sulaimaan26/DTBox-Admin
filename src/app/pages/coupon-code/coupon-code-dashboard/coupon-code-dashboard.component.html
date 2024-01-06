@@ -1,0 +1,16 @@
+<app-list-input-table
+  *ngIf="couponCodeList"
+  [Columns]="columns"
+  [TableData]="couponCodeList"
+  tableName="Location"
+  (savedData)="getModifiedCouponCode($event)"
+  [$makeTableEditInActive]="$tableEditActive"
+  [isDeleteRequired]="true"
+  [sortColumnKey]="'id'"
+  [newRowModel]="tableRow"
+  [allowAddingRow]="true"
+  [isDeleteRequired]="false"
+  [$updateTable]="$updateTable"
+  [addRowsAsEvent]="true"
+  (addRowEvent)="addRow()"
+></app-list-input-table>

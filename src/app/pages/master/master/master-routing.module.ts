@@ -82,6 +82,13 @@ const routes: Routes = [
             (m) => m.VideoLevelModule
           ),
       },
+      {
+        path: 'couponcode',
+        loadChildren: () =>
+          import('../../coupon-code/coupon-code.module').then(
+            (m) => m.CouponCodeModule
+          ),
+      },
     ],
   },
 ];

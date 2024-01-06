@@ -44,7 +44,7 @@
         matSort
         matSortActive="{{ sortColumnKey ?? columnsSchema[0].key }}"
         matSortDisableClear
-        matSortDirection="asc"
+        [matSortDirection]="sortType"
         mat-table
         [dataSource]="dataSource"
       >
@@ -93,6 +93,10 @@
                 </div>
                 <span (click)="whenRowClicked(element)" *ngSwitchCase="'date'">
                   {{ element[col.key] | date : "mediumDate" }}
+                </span>
+
+                <span (click)="whenRowClicked(element)" *ngSwitchCase="'datetime'">
+                  {{ element[col.key] | date : "medium" }}
                 </span>
 
                 <div>
@@ -202,8 +206,16 @@
                     [value]="helperService.getCurrentDate()"
                     [(ngModel)]="element[col.key]"
                   />
+                </div>
 
-                  <!-- <mat-datepicker #picker></mat-datepicker> -->
+                <div class="form-input" class="form-input" *ngSwitchCase="'datetime'">
+                  <input
+                    [disabled]="col.disabled"
+                    type="datetime-local"
+                    class="form-control"
+                    [value]="helperService.getCurrentDate()"
+                    [(ngModel)]="element[col.key]"
+                  />
                 </div>
 
                 <div class="form-input" *ngSwitchCase="'boolean'">

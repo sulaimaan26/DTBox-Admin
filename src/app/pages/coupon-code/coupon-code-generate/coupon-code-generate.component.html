@@ -1,0 +1,124 @@
+<form [formGroup]="eventsForm">
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Generate Coupon Code</h3>
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Coupon Code Prefix</label>
+                    <input
+                      max="30"
+                      formControlName="CouponCodePrefix"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter Coupon Code Prefix"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.CouponCodePrefix.errors"
+                      >CouponCodePrefix is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>CouponCodeLength</label>
+                    <input
+                      formControlName="CouponCodeLength"
+                      type="number"
+                      class="form-control"
+                      placeholder="Enter CouponCodeLength"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.CouponCodeLength.errors"
+                      >Coupon Code Length is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Coupon Code Count</label>
+                    <input
+                      type="number"
+                      formControlName="CouponCodeCount"
+                      class="form-control"
+                      placeholder="0"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.CouponCodeCount.errors"
+                      >Coupon Code Count is required</span
+                    >
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Description</label>
+                    <input
+                      type="text"
+                      formControlName="Description"
+                      class="form-control"
+                      placeholder="Enter Description"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Start Date</label>
+                    <input
+                      formControlName="StartDate"
+                      type="datetime-local"
+                      class="form-control"
+                    />
+                  </div>
+                  <span
+                    class="mandatory"
+                    *ngIf="submitted && f.StartDate.errors"
+                    >StartDate is required</span
+                  >
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>End Date</label>
+                    <input
+                      formControlName="EndDate"
+                      type="datetime-local"
+                      class="form-control"
+                    />
+                  </div>
+                  <span class="mandatory" *ngIf="submitted && f.EndDate.errors"
+                    >End Date is required</span
+                  >
+                </div>
+              </div>
+            </div>
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>
+<div class="card-footer">
+  <button
+    style="margin-right: 10px"
+    class="btn"
+    [routerLink]="'/admin/couponcode'"
+  >
+    Back
+  </button>
+  <button (click)="onSubmit()" class="btn btn-primary">Generate</button>
+</div>
