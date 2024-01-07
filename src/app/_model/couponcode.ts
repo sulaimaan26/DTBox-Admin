@@ -1,11 +1,17 @@
-import { EditableTable } from "./TableColumn";
+import { EditableTable } from './TableColumn';
 
 export interface ICouponCode extends EditableTable {
   id?: number;
   CouponCode: string;
+  VendorId?: number;
   Description: string;
   StartDate: string;
   EndDate: string;
+  BooseterValue: number;
+  IsOnlyForNewUser: boolean;
+  RedeemerId?: number;
+  RedeemDate?: number;
+  IsRedeemed?: boolean;
   IsActive: boolean;
   CreatedBy?: string;
   UpdatedBy?: string;

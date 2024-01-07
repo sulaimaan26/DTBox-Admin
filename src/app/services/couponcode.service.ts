@@ -45,9 +45,14 @@ export class CouponCodeService {
       {
         key: 'CouponCode',
         type: 'text',
-        label: 'Coupon Code',
+        label: 'Coupon',
         disabled:true
       },
+      // {
+      //   key: 'VendorId',
+      //   type: 'number',
+      //   label: 'Vendor'
+      // },
       {
         key: 'Description',
         type: 'text',
@@ -56,13 +61,41 @@ export class CouponCodeService {
       {
         key: 'StartDate',
         label: 'StartDate',
-        type: 'datetime',
+        type: 'date',
       },
       {
         key: 'EndDate',
         label: 'EndDate',
-        type: 'datetime',
+        type: 'date',
       },
+      {
+        key: 'BooseterValue',
+        label: 'Value',
+        type: 'number',
+      },
+      {
+        key: 'IsOnlyForNewUser',
+        label: 'NewUser',
+        type: 'boolean',
+      },
+      {
+        key: 'RedeemerId',
+        label: 'Redeemer',
+        type: 'number',
+        disabled:true
+      },
+      {
+        key: 'RedeemDate',
+        label: 'RedeemOn',
+        type: 'date',
+        disabled:true
+      },
+      // {
+      //   key: 'IsRedeemed',
+      //   label: 'Redeemed',
+      //   type: 'boolean',
+      //   disabled:true
+      // },
       {
         key: 'IsActive',
         label: 'Active',

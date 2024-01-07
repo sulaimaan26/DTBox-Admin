@@ -7,6 +7,7 @@ import { DateFormatterService } from 'src/app/services/dateformatter.service';
 import { NotificationService } from 'src/app/services/NotificationService/notification-service.service';
 import { ICouponCode } from 'src/app/_model/couponcode';
 import { TableColumn, EditableTable } from 'src/app/_model/TableColumn';
+import { saveAs } from 'file-saver'
 
 @Component({
   selector: 'app-coupon-code-dashboard',
@@ -17,13 +18,13 @@ export class CouponCodeDashboardComponent implements OnInit {
   couponCodeList: ICouponCode[];
   columns: TableColumn<Partial<ICouponCode>>[] = [];
   $tableEditActive = new Subject<any>();
-  tableRow: ICouponCode = {
-    CouponCode: '',
-    Description: '',
-    EndDate: '',
-    IsActive: true,
-    StartDate: '',
-  };
+  // tableRow: ICouponCode = {
+  //   CouponCode: '',
+  //   Description: '',
+  //   EndDate: '',
+  //   IsActive: true,
+  //   StartDate: '',
+  // };
   $updateTable = new Subject<EditableTable[]>();
   tempTableRow: ICouponCode;
   $subscription;
@@ -36,12 +37,11 @@ export class CouponCodeDashboardComponent implements OnInit {
     private dateFormatterService: DateFormatterService
   ) {
     this.$subscription = this.activatedRoute.queryParams.subscribe(() => {
-      this.tempTableRow = { ...this.tableRow };
+      // this.tempTableRow = { ...this.tableRow };
 
       this.columns = this.couponCodeService.getColumn();
       this.couponCodeService
         .getAll()
-        .pipe(map((coupon) => coupon.map((e) => this.convertDateFields(e))))
         .subscribe((res) => {
           this.couponCodeList = res;
         });
@@ -66,11 +66,6 @@ export class CouponCodeDashboardComponent implements OnInit {
 
     this.$subscription = this.couponCodeService
       .patch(id, changedVideoLevel)
-      .pipe(
-        map((coupon: ICouponCode[]) =>
-          coupon.map((e) => this.convertDateFields(e))
-        )
-      )
       .subscribe(
         (res) => {
           this.$updateTable.next(res);
@@ -89,4 +84,16 @@ export class CouponCodeDashboardComponent implements OnInit {
   addRow() {
     this.router.navigate(['/admin/couponcode/create'])
   }
+
+  downloadFile() {
+    let data = this.couponCodeList
+    const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
+    const header = Object.keys(data[0]);
+    let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
+    csv.unshift(header.join(','));
+    let csvArray = csv.join('\r\n');
+
+    var blob = new Blob([csvArray], {type: 'text/csv' })
+    saveAs(blob, `couponcode_${new Date().toLocaleString()}.csv`);
+}
 }

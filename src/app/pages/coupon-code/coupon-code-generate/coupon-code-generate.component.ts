@@ -6,6 +6,7 @@ import { DateFormatterService } from 'src/app/services/dateformatter.service';
 import { NotificationService } from 'src/app/services/NotificationService/notification-service.service';
 import { ErrorResponse } from 'src/app/_model/response/ErrorResponse';
 
+
 @Component({
   selector: 'app-coupon-code-generate',
   templateUrl: './coupon-code-generate.component.html',
@@ -14,6 +15,7 @@ import { ErrorResponse } from 'src/app/_model/response/ErrorResponse';
 export class CouponCodeGenerateComponent implements OnInit {
   eventsForm?: FormGroup;
   submitted = false;
+  isGenerating = false
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,6 +34,9 @@ export class CouponCodeGenerateComponent implements OnInit {
       Description: [''],
       EndDate: ['', Validators.required],
       StartDate: ['', Validators.required],
+      BooseterValue:['',Validators.required],
+      IsActive:[true],
+      IsOnlyForNewUser:[true]
     });
   }
 
@@ -45,7 +50,7 @@ export class CouponCodeGenerateComponent implements OnInit {
     if (this.eventsForm.invalid) {
       return;
     }
-
+    this.isGenerating = true
     this.couponCodeService.create(this.eventsForm.value).subscribe(
       (res) => {
         this.notificationService.showSuccess(
@@ -55,9 +60,12 @@ export class CouponCodeGenerateComponent implements OnInit {
         this.router.navigate(['/admin/couponcode']);
       },
       (err: ErrorResponse) => {
+        this.isGenerating = false
         alert('Coupon code generate errror!!\n Data: \n' + JSON.stringify(err));
         return;
       }
     );
   }
+
+
 }

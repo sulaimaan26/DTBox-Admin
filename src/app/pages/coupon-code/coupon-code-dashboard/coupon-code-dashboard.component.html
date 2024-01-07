@@ -1,3 +1,8 @@
+<div *ngIf="couponCodeList" class="row flex-row-reverse mt-2 mb-2">
+  <div class="col-md-1">
+    <button (click)="downloadFile()" class="btn btn-primary">Export</button>
+  </div>
+</div>
 <app-list-input-table
   *ngIf="couponCodeList"
   [Columns]="columns"
@@ -7,7 +12,6 @@
   [$makeTableEditInActive]="$tableEditActive"
   [isDeleteRequired]="true"
   [sortColumnKey]="'id'"
-  [newRowModel]="tableRow"
   [allowAddingRow]="true"
   [isDeleteRequired]="false"
   [$updateTable]="$updateTable"
