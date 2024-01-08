@@ -7,7 +7,7 @@ import { DateFormatterService } from 'src/app/services/dateformatter.service';
 import { NotificationService } from 'src/app/services/NotificationService/notification-service.service';
 import { ICouponCode } from 'src/app/_model/couponcode';
 import { TableColumn, EditableTable } from 'src/app/_model/TableColumn';
-import { saveAs } from 'file-saver'
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-coupon-code-dashboard',
@@ -42,6 +42,7 @@ export class CouponCodeDashboardComponent implements OnInit {
       this.columns = this.couponCodeService.getColumn();
       this.couponCodeService
         .getAll()
+        .pipe(map((coupon) => coupon.map((e) => this.convertDateFields(e))))
         .subscribe((res) => {
           this.couponCodeList = res;
         });
@@ -51,12 +52,13 @@ export class CouponCodeDashboardComponent implements OnInit {
   ngOnInit(): void {}
 
   convertDateFields(couponCode: ICouponCode) {
-    couponCode.StartDate = this.dateFormatterService.convertDate(
-      couponCode.StartDate
-    );
-    couponCode.EndDate = this.dateFormatterService.convertDate(
-      couponCode.EndDate
-    );
+    // couponCode.StartDate = this.dateFormatterService.convertDate(
+    //   couponCode.StartDate
+    // );
+    if (couponCode.RedeemDate)
+      couponCode.RedeemDate = this.dateFormatterService.convertDate(
+        couponCode.RedeemDate
+      );
     return couponCode;
   }
 
@@ -66,6 +68,7 @@ export class CouponCodeDashboardComponent implements OnInit {
 
     this.$subscription = this.couponCodeService
       .patch(id, changedVideoLevel)
+      .pipe(map((coupon:ICouponCode[]) => coupon.map((e) => this.convertDateFields(e))))
       .subscribe(
         (res) => {
           this.$updateTable.next(res);
@@ -82,18 +85,22 @@ export class CouponCodeDashboardComponent implements OnInit {
   }
 
   addRow() {
-    this.router.navigate(['/admin/couponcode/create'])
+    this.router.navigate(['/admin/couponcode/create']);
   }
 
   downloadFile() {
-    let data = this.couponCodeList
-    const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
+    let data = this.couponCodeList;
+    const replacer = (key, value) => (value === null ? '' : value); // specify how you want to handle null values here
     const header = Object.keys(data[0]);
-    let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
+    let csv = data.map((row) =>
+      header
+        .map((fieldName) => JSON.stringify(row[fieldName], replacer))
+        .join(',')
+    );
     csv.unshift(header.join(','));
     let csvArray = csv.join('\r\n');
 
-    var blob = new Blob([csvArray], {type: 'text/csv' })
+    var blob = new Blob([csvArray], { type: 'text/csv' });
     saveAs(blob, `couponcode_${new Date().toLocaleString()}.csv`);
-}
+  }
 }

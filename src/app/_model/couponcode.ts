@@ -10,7 +10,7 @@ export interface ICouponCode extends EditableTable {
   BooseterValue: number;
   IsOnlyForNewUser: boolean;
   RedeemerId?: number;
-  RedeemDate?: number;
+  RedeemDate?: string;
   IsRedeemed?: boolean;
   IsActive: boolean;
   CreatedBy?: string;

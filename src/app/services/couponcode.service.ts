@@ -87,7 +87,7 @@ export class CouponCodeService {
       {
         key: 'RedeemDate',
         label: 'RedeemOn',
-        type: 'date',
+        type: 'datetime',
         disabled:true
       },
       // {
