@@ -23,6 +23,7 @@ import {
 } from '../../_model/TableColumn';
 import { pluck } from 'rxjs/operators';
 import { allowedDropdowns, dropdown } from '../../_model/Dropdowns';
+import { DateFormatterService } from 'src/app/services/dateformatter.service';
 
 @Component({
   selector: 'app-list-input-table',
@@ -39,9 +40,12 @@ export class ListInputTableComponent implements OnInit {
   @Input() $makeTableEditInActive = new Subject<allowedServices>();
   @Input() isDeleteRequired = true;
   @Input() sortColumnKey: string;
+  @Input() sortType: 'asc' | 'desc' = 'desc';
   @Input() $updateTable = new Subject<EditableTable[]>();
   @Output() savedData = new EventEmitter<any>();
   @Output() removedData = new EventEmitter<any>();
+  @Output() addRowEvent = new EventEmitter<any>();
+  @Input() addRowsAsEvent = false;
 
   $subscription: Subscription;
   isEditActive = false;
@@ -77,6 +81,7 @@ export class ListInputTableComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public helperService: HelperService,
+    public dateFormatterService: DateFormatterService,
     private notificationService: NotificationService,
     private buttonControlService: ButtonControlService,
     private route: ActivatedRoute
@@ -138,7 +143,8 @@ export class ListInputTableComponent implements OnInit {
 
   addRow() {
     if (this.isEditActive) return;
-
+    this.addRowEvent.emit(true);
+    if (this.addRowsAsEvent) return;
     // const newRow: allowedServices = this.parentService.addRow();
     this.dataSource.data = [{ ...this.newRowModel }, ...this.dataSource.data];
     this.isEditActive = true;
