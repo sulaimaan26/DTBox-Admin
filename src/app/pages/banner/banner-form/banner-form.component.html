@@ -1,0 +1,413 @@
+<form [formGroup]="bannerForm">
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Banner</h3>
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Banner Id</label>
+                    <input
+                      [class.disable-field]="isUpdate"
+                      max="30"
+                      formControlName="BannerId"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter BannerId"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.BannerId.errors"
+                      >BannerId is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Start Date</label>
+                    <input
+                      formControlName="StartDate"
+                      type="datetime-local"
+                      class="form-control"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.StartDate.errors"
+                      >AdStartDate is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>End Date</label>
+                    <input
+                      formControlName="EndDate"
+                      type="datetime-local"
+                      class="form-control"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.EndDate.errors"
+                      >AdEndDate is required</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Terms And Condition</label>
+                <textarea
+                  formControlName="TermsAndCondition"
+                  class="form-control"
+                  rows="4.8"
+                  placeholder="Enter ..."
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <div class="form-check">
+                  <input
+                    formControlName="IsActive"
+                    class="form-check-input"
+                    type="checkbox"
+                  />
+                  <label
+                    style="margin-bottom: 0; margin-top: 2px"
+                    class="form-check-label"
+                    >active</label
+                  >
+                </div>
+              </div>
+            </div>
+            <br />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Location</h3>
+              <span
+                (click)="addLocation($event)"
+                class="btn btn-primary addloc"
+              >
+                <i class="fas fa-plus"></i>
+              </span>
+            </div>
+
+            <div class="card-body">
+              <ng-container formArrayName="location">
+                <ng-container
+                  *ngFor="let loc of location.controls; let i = index"
+                >
+                  <div class="row" [formGroupName]="i">
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label>Display For</label>
+                        <select
+                          formControlName="DisplayFor"
+                          class="form-control"
+                        >
+                          <option value="">Select DisplayFor</option>
+                          <option
+                            *ngFor="let options of normalDropdown.key"
+                            [value]="options"
+                          >
+                            {{ options | titlecase }}
+                          </option>
+                        </select>
+                      </div>
+                      <span
+                        *ngIf="location.controls[i].invalid"
+                        class="mandatory"
+                        >Field is Required</span
+                      >
+                    </div>
+
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label>values</label>
+                        <select formControlName="Value" class="form-control">
+                          <option value="">
+                            Select
+                            {{
+                              location.at(i).get("DisplayFor").value | titlecase
+                            }}
+                          </option>
+                          <option
+                            *ngFor="
+                              let option of normalDropdown[
+                                location.at(i).get('DisplayFor').value
+                              ]
+                            "
+                            [value]="option.id"
+                          >
+                            {{ option.code }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                      <div class="form-group">
+                        <div (click)="deleteLocation(i)" class="deleteloc">
+                          Delete
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </div>
+
+            <br />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">
+                Ad Files {{ "[" + bannerVideo.length + "]" }}
+              </h3>
+              <span
+                (click)="addBannerVideo($event)"
+                class="btn btn-primary addloc"
+              >
+                <i class="fas fa-plus"></i>
+              </span>
+            </div>
+
+            <div class="card-body">
+              <ng-container>
+                <ng-container
+                  *ngFor="let loc of bannerVideo.controls; let i = index"
+                  formArrayName="bannervideo"
+                >
+                  <div class="file-container" [formGroupName]="i">
+                    <div class="row" id="{{ i }}">
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Title</label>
+                          <input
+                            formControlName="Title"
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter Title"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Description</label>
+                          <input
+                            formControlName="Description"
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter Description"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>StartDate</label>
+                          <input
+                            formControlName="StartDate"
+                            type="datetime-local"
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>EndDate</label>
+                          <input
+                            formControlName="EndDate"
+                            type="datetime-local"
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>RequiredView</label>
+                          <input
+                            formControlName="RequiredView"
+                            type="number"
+                            class="form-control"
+                            placeholder="0"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>BoosterValue</label>
+                          <input
+                            formControlName="BoosterValue"
+                            type="number"
+                            class="form-control"
+                            placeholder="0"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label for="exampleInputFile">ThumbNail</label>
+                          <div class="input-group">
+                            <div class="custom-file">
+                              <input
+                                type="file"
+                                accept="image/png, image/gif, image/jpeg"
+                                (change)="fileUpload($event, i, 'ThumbNail')"
+                                class="custom-file-input"
+                              />
+                              <label
+                                class="custom-file-label"
+                                for="exampleInputFile"
+                                >Choose file</label
+                              >
+                            </div>
+                          </div>
+                          <table *ngIf="loc.value.ThumbnailURL" class="table">
+                            <tbody>
+                              <tr>
+                                <td>{{ loc.value.ThumbnailFileName }}</td>
+
+                                <td>
+                                  <span
+                                    (click)="
+                                      downloadAdFile(
+                                        loc.value.ThumbnailURL,
+                                        loc.value.ThumbnailFileName
+                                      )
+                                    "
+                                    class="file-action badge bg-success"
+                                    ><i class="fas fa-download"></i
+                                  ></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <span
+                          *ngIf="bannerVideo.controls[i].invalid"
+                          class="mandatory"
+                          >Field is Required</span
+                        >
+                      </div>
+
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label for="exampleInputFile">Video File</label>
+                          <div class="input-group">
+                            <div class="custom-file">
+                              <input
+                                type="file"
+                                accept="video/mp4"
+                                (change)="fileUpload($event, i, 'VideoFile')"
+                                class="custom-file-input"
+                                id="exampleInputFile"
+                              />
+                              <label
+                                class="custom-file-label"
+                                for="exampleInputFile"
+                                >Choose file</label
+                              >
+                            </div>
+                          </div>
+                          <table *ngIf="loc.value.VideoURL" class="table">
+                            <tbody>
+                              <tr>
+                                <td>{{ loc.value.VideoFileName }}</td>
+
+                                <td>
+                                  <span
+                                    (click)="
+                                      downloadAdFile(
+                                        loc.value.VideoURL,
+                                        loc.value.VideoFileName
+                                      )
+                                    "
+                                    class="file-action badge bg-success"
+                                    ><i class="fas fa-download"></i
+                                  ></span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <div class="col-sm-5">
+                          <div class="form-check">
+                            <input
+                              formControlName="IsActive"
+                              class="form-check-input"
+                              type="checkbox"
+                            />
+                            <label
+                              style="margin-bottom: 0; margin-top: 2px"
+                              class="form-check-label"
+                              >active</label
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div>
+                          <button
+                            style="float: right"
+                            (click)="patchAdFile(i)"
+                            *ngIf="isUpdate"
+                            class="btn btn-primary"
+                          >
+                            Save
+                          </button>
+
+                          <button
+                            style="float: right"
+                            (click)="deleteAdFile(i)"
+                            *ngIf="!isUpdate && !loc.value.id"
+                            class="btn btn-danger"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+                  </div>
+                  <br />
+                </ng-container>
+              </ng-container>
+            </div>
+
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>
+<div class="card-footer">
+  <button style="margin-right: 10px" class="btn" [routerLink]="'/admin/banner'">
+    Back
+  </button>
+  <button (click)="onSubmit()" class="btn btn-primary">
+    {{ isUpdate ? "Update" : "Create" }}
+  </button>
+</div>

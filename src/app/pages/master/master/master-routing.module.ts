@@ -89,6 +89,11 @@ const routes: Routes = [
             (m) => m.CouponCodeModule
           ),
       },
+      {
+        path: 'banner',
+        loadChildren: () =>
+          import('../../banner/banner.module').then((m) => m.BannerModule),
+      },
     ],
   },
 ];
