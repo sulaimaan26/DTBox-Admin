@@ -132,8 +132,9 @@ export class BannerFormComponent implements OnInit {
       VideoURL: ['', Validators.required],
       StartDate: ['', Validators.required],
       EndDate: ['', Validators.required],
-      RequiredView: ['', Validators.required],
+      ViewsPerDay: ['', Validators.required],
       BoosterValue: ['', Validators.required],
+      AlertMessage:['', Validators.required],
       IsActive: [true],
     });
 

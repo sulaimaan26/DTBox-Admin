@@ -241,9 +241,9 @@
 
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label>RequiredView</label>
+                          <label>ViewsPerDay</label>
                           <input
-                            formControlName="RequiredView"
+                            formControlName="ViewsPerDay"
                             type="number"
                             class="form-control"
                             placeholder="0"
@@ -301,11 +301,6 @@
                             </tbody>
                           </table>
                         </div>
-                        <span
-                          *ngIf="bannerVideo.controls[i].invalid"
-                          class="mandatory"
-                          >Field is Required</span
-                        >
                       </div>
 
                       <div class="col-sm-6">
@@ -348,22 +343,39 @@
                             </tbody>
                           </table>
                         </div>
+                      </div>
 
-                        <div class="col-sm-5">
-                          <div class="form-check">
-                            <input
-                              formControlName="IsActive"
-                              class="form-check-input"
-                              type="checkbox"
-                            />
-                            <label
-                              style="margin-bottom: 0; margin-top: 2px"
-                              class="form-check-label"
-                              >active</label
-                            >
-                          </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Alert Message</label>
+                          <input
+                            formControlName="AlertMessage"
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter AlertMessage"
+                          />
                         </div>
                       </div>
+                      <div class="col-sm-5">
+                        <div class="form-check">
+                          <input
+                            formControlName="IsActive"
+                            class="form-check-input"
+                            type="checkbox"
+                          />
+                          <label
+                            style="margin-bottom: 0; margin-top: 2px"
+                            class="form-check-label"
+                            >active</label
+                          >
+                        </div>
+                      </div>
+
+                      <span
+                        *ngIf="bannerVideo.controls[i].invalid"
+                        class="mandatory"
+                        >Field is Required</span
+                      >
                     </div>
 
                     <div class="row">
