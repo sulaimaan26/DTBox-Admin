@@ -94,10 +94,10 @@ export class BannerFormComponent implements OnInit {
 
     tempBannerData.bannervideo.forEach((adfile, i) => {
       adfile.StartDate = this.dateFormatterService.convertDate(
-        tempBannerData.StartDate
+        adfile.StartDate
       );
       adfile.EndDate = this.dateFormatterService.convertDate(
-        tempBannerData.EndDate
+        adfile.EndDate
       );
       this.addBannerVideo(null, adfile);
       this.bannerVideo.at(i).patchValue(adfile);
