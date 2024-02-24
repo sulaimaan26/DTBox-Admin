@@ -46,6 +46,7 @@ export class ListInputTableComponent implements OnInit {
   @Output() removedData = new EventEmitter<any>();
   @Output() addRowEvent = new EventEmitter<any>();
   @Input() addRowsAsEvent = false;
+  @Output() rowClickEvent = new EventEmitter<EditableTable>();
 
   $subscription: Subscription;
   isEditActive = false;
@@ -209,5 +210,9 @@ export class ListInputTableComponent implements OnInit {
       row.id = parseInt(row.id);
       this.selectedValue.emit(row);
     }
+  }
+
+  clickedRow($event) {
+    this.rowClickEvent.emit($event);
   }
 }
