@@ -1,0 +1,15 @@
+<app-list-input-table
+  *ngIf="campaignList"
+  [Columns]="columns"
+  [TableData]="campaignList"
+  tableName="Location"
+  [$makeTableEditInActive]="$tableEditActive"
+  [isDeleteRequired]="true"
+  [sortColumnKey]="'id'"
+  [allowAddingRow]="true"
+  [isDeleteRequired]="false"
+  [$updateTable]="$updateTable"
+  [addRowsAsEvent]="true"
+  (addRowEvent)="addRow()"
+  (rowClickEvent)="onRowClicked($event)"
+></app-list-input-table>

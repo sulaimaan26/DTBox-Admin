@@ -1,0 +1,185 @@
+<form [formGroup]="campaignForm">
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Campaign</h3>
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>CampaignId</label>
+                    <input
+                      max="10"
+                      [class.disable-field]="isUpdate"
+                      formControlName="CampaignId"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter CampaignId"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.CampaignId.errors"
+                      >CampaignId is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Title</label>
+                    <input
+                      formControlName="Title"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter Title"
+                    />
+                    <span class="mandatory" *ngIf="submitted && f.Title.errors"
+                      >Title is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Description</label>
+                    <input
+                      type="text"
+                      formControlName="Description"
+                      class="form-control"
+                      placeholder="Enter Description"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.Description.errors"
+                      >Description is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Campaign Type</label>
+                    <select formControlName="CampaignType" class="form-control">
+                      <option
+                        *ngFor="let options of campaignType"
+                        [value]="options"
+                      >
+                        {{ options | titlecase }}
+                      </option>
+                    </select>
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.CampaignType.errors"
+                      >CampaignType is required</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Campaign Value</label>
+                    <input
+                      type="text"
+                      formControlName="CampaignValue"
+                      class="form-control"
+                      placeholder="Enter CampaignValue"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.CampaignValue.errors"
+                      >CampaignValue is required</span
+                    >
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Button Text</label>
+                    <input
+                      maxlength="15"
+                      type="text"
+                      formControlName="ButtonText"
+                      class="form-control"
+                      placeholder="Enter Button Text"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.ButtonText.errors"
+                      >ButtonText is required</span
+                    >
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Start Date</label>
+                    <input
+                      formControlName="StartDate"
+                      type="datetime-local"
+                      class="form-control"
+                    />
+                  </div>
+                  <span
+                    class="mandatory"
+                    *ngIf="submitted && f.StartDate.errors"
+                    >StartDate is required</span
+                  >
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>End Date</label>
+                    <input
+                      formControlName="EndDate"
+                      type="datetime-local"
+                      class="form-control"
+                    />
+                  </div>
+                  <span class="mandatory" *ngIf="submitted && f.EndDate.errors"
+                    >End Date is required</span
+                  >
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-1">
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input
+                        formControlName="IsActive"
+                        class="form-check-input"
+                        type="checkbox"
+                      />
+                      <label
+                        style="margin-bottom: 0; margin-top: 2px"
+                        class="form-check-label"
+                        >active</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>
+<div class="card-footer">
+  <button
+    style="margin-right: 10px"
+    class="btn"
+    [routerLink]="'/admin/campaign'"
+  >
+    Back
+  </button>
+  <button (click)="onSubmit()" class="btn btn-primary">
+    {{ isUpdate ? "Update" : "Create" }}
+  </button>
+</div>
