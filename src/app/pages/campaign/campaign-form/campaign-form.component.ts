@@ -21,7 +21,7 @@ export class CampaignFormComponent implements OnInit, OnDestroy {
   submitted = false;
   isGenerating = false;
   isUpdate = false;
-  campaignType = ['app share', 'link redirection'];
+  campaignButtonType = ['copy','copy and share','share','booster','ok'];
   campaignData: ICampaign;
 
   constructor(
@@ -38,12 +38,13 @@ export class CampaignFormComponent implements OnInit, OnDestroy {
       CampaignId: ['', Validators.required],
       Title: ['', Validators.required],
       Description: ['', Validators.required],
-      CampaignType: ['app share'],
-      CampaignValue: ['', Validators.required],
-      ButtonText: ['', Validators.required],
+      Footer: [''],
+      BoosterValue: [0, Validators.required],
+      ButtonText: ['copy', Validators.required],
       StartDate: ['', Validators.required],
       EndDate: ['', Validators.required],
       IsActive: [true],
+      InstantBooster: [true],
     });
 
     this.activatedRoute.data.subscribe((data) => {
@@ -90,7 +91,7 @@ export class CampaignFormComponent implements OnInit, OnDestroy {
           },
           (err: ErrorResponse) => {
             alert(
-              'Coupon code generate errror!!\n Data: \n' + JSON.stringify(err)
+              'Campaign creation errror!!\n Data: \n' + JSON.stringify(err)
             );
             return;
           }
@@ -106,7 +107,7 @@ export class CampaignFormComponent implements OnInit, OnDestroy {
         },
         (err: ErrorResponse) => {
           alert(
-            'Coupon code generate errror!!\n Data: \n' + JSON.stringify(err)
+            'Campaign creation errror!!\n Data: \n' + JSON.stringify(err)
           );
           return;
         }

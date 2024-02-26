@@ -50,9 +50,9 @@ export class CampaignService {
         label: 'Title',
       },
       {
-        key: 'CampaignType',
+        key: 'BoosterValue',
         type: 'text',
-        label: 'Type',
+        label: 'Value',
       },
       {
         key: 'StartDate',

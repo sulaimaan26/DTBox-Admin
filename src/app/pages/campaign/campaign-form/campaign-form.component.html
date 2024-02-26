@@ -63,10 +63,43 @@
 
                 <div class="col-md-3">
                   <div class="form-group">
-                    <label>Campaign Type</label>
-                    <select formControlName="CampaignType" class="form-control">
+                    <label>Footer</label>
+                    <input
+                      type="text"
+                      formControlName="Footer"
+                      class="form-control"
+                      placeholder="Enter Footer"
+                    />
+                    <span class="mandatory" *ngIf="submitted && f.Footer.errors"
+                      >Footer is required</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Booster Value</label>
+                    <input
+                      type="number"
+                      formControlName="BoosterValue"
+                      class="form-control"
+                      placeholder="Enter BoosterValue"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.BoosterValue.errors"
+                      >BoosterValue is required</span
+                    >
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Button Text</label>
+                    <select formControlName="ButtonText" class="form-control">
                       <option
-                        *ngFor="let options of campaignType"
+                        *ngFor="let options of campaignButtonType"
                         [value]="options"
                       >
                         {{ options | titlecase }}
@@ -74,43 +107,8 @@
                     </select>
                     <span
                       class="mandatory"
-                      *ngIf="submitted && f.CampaignType.errors"
-                      >CampaignType is required</span
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label>Campaign Value</label>
-                    <input
-                      type="text"
-                      formControlName="CampaignValue"
-                      class="form-control"
-                      placeholder="Enter CampaignValue"
-                    />
-                    <span
-                      class="mandatory"
-                      *ngIf="submitted && f.CampaignValue.errors"
-                      >CampaignValue is required</span
-                    >
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label>Button Text</label>
-                    <input
-                      maxlength="15"
-                      type="text"
-                      formControlName="ButtonText"
-                      class="form-control"
-                      placeholder="Enter Button Text"
-                    />
-                    <span
-                      class="mandatory"
                       *ngIf="submitted && f.ButtonText.errors"
-                      >ButtonText is required</span
+                      >Button Text is required</span
                     >
                   </div>
                 </div>
@@ -158,6 +156,23 @@
                         style="margin-bottom: 0; margin-top: 2px"
                         class="form-check-label"
                         >active</label
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input
+                        formControlName="InstantBooster"
+                        class="form-check-input"
+                        type="checkbox"
+                      />
+                      <label
+                        style="margin-bottom: 0; margin-top: 2px"
+                        class="form-check-label"
+                        >Instant Booster</label
                       >
                     </div>
                   </div>
