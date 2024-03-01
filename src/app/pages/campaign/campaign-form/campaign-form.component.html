@@ -10,7 +10,7 @@
 
             <div class="card-body">
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-1">
                   <div class="form-group">
                     <label>CampaignId</label>
                     <input
@@ -44,41 +44,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label>Description</label>
-                    <input
-                      type="text"
-                      formControlName="Description"
-                      class="form-control"
-                      placeholder="Enter Description"
-                    />
-                    <span
-                      class="mandatory"
-                      *ngIf="submitted && f.Description.errors"
-                      >Description is required</span
-                    >
-                  </div>
-                </div>
-
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label>Footer</label>
-                    <input
-                      type="text"
-                      formControlName="Footer"
-                      class="form-control"
-                      placeholder="Enter Footer"
-                    />
-                    <span class="mandatory" *ngIf="submitted && f.Footer.errors"
-                      >Footer is required</span
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label>Booster Value</label>
                     <input
@@ -94,7 +60,7 @@
                     >
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label>Button Text</label>
                     <select formControlName="ButtonText" class="form-control">
@@ -112,7 +78,8 @@
                     >
                   </div>
                 </div>
-                <div class="col-md-3">
+
+                <div class="col-md-2">
                   <div class="form-group">
                     <label>Start Date</label>
                     <input
@@ -128,7 +95,7 @@
                   >
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label>End Date</label>
                     <input
@@ -140,6 +107,53 @@
                   <span class="mandatory" *ngIf="submitted && f.EndDate.errors"
                     >End Date is required</span
                   >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Description</label>
+                    <textarea
+                      formControlName="Description"
+                      class="form-control"
+                      rows="4.8"
+                      placeholder="Enter Description"
+                    ></textarea>
+                    <!-- <input
+                      type="text"
+                      formControlName="Description"
+                      class="form-control"
+                      placeholder="Enter Description"
+                    /> -->
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.Description.errors"
+                      >Description is required</span
+                    >
+                  </div>
+                </div>
+
+
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Footer</label>
+                    <textarea
+                      formControlName="Footer"
+                      class="form-control"
+                      rows="4.8"
+                      placeholder="Enter Footer"
+                    ></textarea>
+                    <!-- <input
+                      type="text"
+                      formControlName="Footer"
+                      class="form-control"
+                      placeholder="Enter Footer"
+                    /> -->
+                    <span class="mandatory" *ngIf="submitted && f.Footer.errors"
+                      >Footer is required</span
+                    >
+                  </div>
                 </div>
               </div>
 
@@ -161,7 +175,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-2">
+                <!-- <div class="col-md-2">
                   <div class="form-group">
                     <div class="form-check">
                       <input
@@ -176,7 +190,7 @@
                       >
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
             <br />

@@ -39,7 +39,7 @@ export class CampaignFormComponent implements OnInit, OnDestroy {
       Title: ['', Validators.required],
       Description: ['', Validators.required],
       Footer: [''],
-      BoosterValue: [0, Validators.required],
+      BoosterValue: [1, Validators.required],
       ButtonText: ['copy', Validators.required],
       StartDate: ['', Validators.required],
       EndDate: ['', Validators.required],
