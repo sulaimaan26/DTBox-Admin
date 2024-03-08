@@ -273,6 +273,18 @@
                     >Coming Soon</label
                   >
                 </div>
+                <div class="form-check">
+                  <input
+                    formControlName="AllowShare"
+                    class="form-check-input"
+                    type="checkbox"
+                  />
+                  <label
+                    style="margin-bottom: 0; margin-top: 2px"
+                    class="form-check-label"
+                    >Allow Share</label
+                  >
+                </div>
               </div>
             </div>
             <br />
@@ -457,12 +469,12 @@
                         </mat-expansion-panel-header>
                         <div class="row flex-row-reverse mt-1">
                           <div class="col-md-1">
-                            <div >
+                            <div>
                               <button
                                 (click)="addControl(i)"
                                 class="btn btn-warning"
                               >
-                              <i class="fas fa-plus"></i>
+                                <i class="fas fa-plus"></i>
                               </button>
                             </div>
                           </div>
@@ -785,6 +797,103 @@
                   </div>
                 </ng-container>
               </ng-container>
+            </div>
+
+            <br />
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Send Point Feature</h3>
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Enable ShareOption At</label>
+                    <input
+                      formControlName="EnableShareOptionAt"
+                      type="datetime-local"
+                      class="form-control"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.EnableShareOptionAt.errors"
+                      >Enable date is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Disable ShareOption At</label>
+                    <input
+                      formControlName="DisableShareOptionAt"
+                      type="datetime-local"
+                      class="form-control"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.DisableShareOptionAt.errors"
+                      >Disable date is required</span
+                    >
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>View Count</label>
+                    <input
+                      formControlName="ShareOptionWatchCount"
+                      type="number"
+                      class="form-control"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.ShareOptionWatchCount.errors"
+                      >Required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Min Bal</label>
+                    <input
+                      formControlName="MinimumPointBalance"
+                      type="number"
+                      class="form-control"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.MinimumPointBalance.errors"
+                      >Required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Point limit</label>
+                    <input
+                      formControlName="SharePointCount"
+                      type="number"
+                      class="form-control"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.SharePointCount.errors"
+                      >Required</span
+                    >
+                  </div>
+                </div>
+              </div>
             </div>
 
             <br />

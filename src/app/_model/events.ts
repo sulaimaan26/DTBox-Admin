@@ -9,7 +9,7 @@ export interface IEvents {
   Title: string;
   Description: string;
   Points: number;
-  TopScorerCount:number;
+  TopScorerCount: number;
   IsActive: boolean;
   IsCompleted: boolean;
   TermsAndCondition: string;
@@ -26,6 +26,12 @@ export interface IEvents {
   UpdatedAt: string;
   peakHours: PeakHour[];
   location: locationUploadRes[];
+  AllowShare: boolean;
+  EnableShareOptionAt: string;
+  DisableShareOptionAt: string;
+  ShareOptionWatchCount: number;
+  MinimumPointBalance: number;
+  SharePointCount: number;
 }
 export interface PeakHour {
   id?: number;
@@ -47,5 +53,5 @@ export interface Adfile {
   VideoFileName: string;
   active: boolean;
   VideoFile: string;
-  videolevel:IVideoLevel[]
+  videolevel: IVideoLevel[];
 }

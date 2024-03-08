@@ -59,11 +59,11 @@ export class EventFormComponent implements OnInit {
       EventId: ['', Validators.required],
       Title: ['', Validators.required],
       Description: ['', Validators.required],
-      Points: [0, Validators.required],
-      TopScorerCount: [10, Validators.required],
+      Points: [5, Validators.required],
+      TopScorerCount: [20, Validators.required],
       IsActive: [true],
       IsCompleted: [false],
-      IsComingSoon:[false],
+      IsComingSoon: [false],
       TermsAndCondition: [''],
       DirectoryId: [uuid.v4()],
       ThumbNail: [''],
@@ -80,6 +80,12 @@ export class EventFormComponent implements OnInit {
       WinnerNotificationMessage: ['', Validators.required],
       isPointsConverted: [''],
       ControlViews: [true],
+      AllowShare: [true],
+      EnableShareOptionAt: ['', Validators.required],
+      DisableShareOptionAt: ['', Validators.required],
+      ShareOptionWatchCount: [5, Validators.required],
+      MinimumPointBalance: [50, Validators.required],
+      SharePointCount: [100, Validators.required],
     });
 
     this.dropdown = this.activatedRoute.data.pipe(pluck('dropdown'));
@@ -91,6 +97,12 @@ export class EventFormComponent implements OnInit {
   }
 
   validatorSubscription() {
+    this.boosterCalculationSubscription();
+    this.sendPointSubscription();
+    this.startDateSubscription();
+  }
+
+  boosterCalculationSubscription() {
     this.eventsForm.controls['BoosterCalculation'].valueChanges.subscribe(
       (value) => {
         if (value) {
@@ -103,6 +115,49 @@ export class EventFormComponent implements OnInit {
         this.eventsForm.controls['BoosterConversion'].updateValueAndValidity();
       }
     );
+  }
+
+  sendPointSubscription() {
+    this.eventsForm.controls['AllowShare'].valueChanges.subscribe((value) => {
+      let cEnableShareOptionAt =
+        this.eventsForm.controls['EnableShareOptionAt'];
+      let cDisableShareOptionAt =
+        this.eventsForm.controls['DisableShareOptionAt'];
+      let cShareOptionWatchCount =
+        this.eventsForm.controls['ShareOptionWatchCount'];
+      let cMinimumPointBalance =
+        this.eventsForm.controls['MinimumPointBalance'];
+      let cSharePointCount = this.eventsForm.controls['SharePointCount'];
+
+      if (value) {
+        cEnableShareOptionAt.setValidators([Validators.required]);
+        cDisableShareOptionAt.setValidators([Validators.required]);
+        cShareOptionWatchCount.setValidators([Validators.required]);
+        cMinimumPointBalance.setValidators([Validators.required]);
+        cSharePointCount.setValidators([Validators.required]);
+      } else {
+        cEnableShareOptionAt.setValidators([]);
+        cDisableShareOptionAt.setValidators([]);
+        cShareOptionWatchCount.setValidators([]);
+        cMinimumPointBalance.setValidators([]);
+        cSharePointCount.setValidators([]);
+      }
+      cEnableShareOptionAt.updateValueAndValidity();
+      cDisableShareOptionAt.updateValueAndValidity();
+      cShareOptionWatchCount.updateValueAndValidity();
+      cMinimumPointBalance.updateValueAndValidity();
+      cSharePointCount.updateValueAndValidity();
+    });
+  }
+
+  startDateSubscription() {
+    this.eventsForm.controls['AdStartDate'].valueChanges.subscribe((value) => {
+      this.eventsForm.patchValue({EnableShareOptionAt:this.dateFormatterService.addHours(value,5)})
+    });
+
+    this.eventsForm.controls['AdCompletionDate'].valueChanges.subscribe((value) => {
+      this.eventsForm.patchValue({DisableShareOptionAt:this.dateFormatterService.decrementHours(value,2)})
+    });
   }
 
   dataSubscription() {
@@ -119,6 +174,14 @@ export class EventFormComponent implements OnInit {
           requiredData.AdCompletionDate = this.dateFormatterService.convertDate(
             requiredData.AdCompletionDate
           );
+          requiredData.EnableShareOptionAt =
+            this.dateFormatterService.convertDate(
+              requiredData.EnableShareOptionAt
+            );
+          requiredData.DisableShareOptionAt =
+            this.dateFormatterService.convertDate(
+              requiredData.DisableShareOptionAt
+            );
 
           this.isUpdate = true;
           this.eventsForm.patchValue(requiredData);
