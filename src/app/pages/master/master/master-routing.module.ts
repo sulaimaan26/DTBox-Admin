@@ -94,6 +94,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('../../banner/banner.module').then((m) => m.BannerModule),
       },
+      {
+        path: 'campaign',
+        loadChildren: () =>
+          import('../../campaign/campaign.module').then(
+            (m) => m.CampaignModule
+          ),
+      },
     ],
   },
 ];
