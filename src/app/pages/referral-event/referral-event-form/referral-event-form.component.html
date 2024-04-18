@@ -1,0 +1,164 @@
+<form [formGroup]="referralEventForm">
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Referral Event</h3>
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>EventId</label>
+                    <input
+                      max="10"
+                      [class.disable-field]="isUpdate"
+                      formControlName="EventId"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter EventId"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.EventId.errors"
+                      >EventId is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Title</label>
+                    <input
+                      formControlName="Title"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter Title"
+                    />
+                    <span class="mandatory" *ngIf="submitted && f.Title.errors"
+                      >Title is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Start Date</label>
+                    <input
+                      formControlName="StartDate"
+                      type="datetime-local"
+                      class="form-control"
+                    />
+                  </div>
+                  <span
+                    class="mandatory"
+                    *ngIf="submitted && f.StartDate.errors"
+                    >StartDate is required</span
+                  >
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>End Date</label>
+                    <input
+                      formControlName="EndDate"
+                      type="datetime-local"
+                      class="form-control"
+                    />
+                  </div>
+                  <span class="mandatory" *ngIf="submitted && f.EndDate.errors"
+                    >End Date is required</span
+                  >
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Description</label>
+                    <textarea
+                      formControlName="Description"
+                      class="form-control"
+                      rows="4.8"
+                      placeholder="Enter Description"
+                    ></textarea>
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.Description.errors"
+                      >Description is required</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-1">
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input
+                        formControlName="IsActive"
+                        class="form-check-input"
+                        type="checkbox"
+                      />
+                      <label
+                        style="margin-bottom: 0; margin-top: 2px"
+                        class="form-check-label"
+                        >active</label
+                      >
+                    </div>
+
+                    <div class="form-check">
+                      <input
+                        formControlName="IsCompleted"
+                        class="form-check-input"
+                        type="checkbox"
+                      />
+                      <label
+                        style="margin-bottom: 0; margin-top: 2px"
+                        class="form-check-label"
+                        >completed</label
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="col-md-2">
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input
+                        formControlName="InstantBooster"
+                        class="form-check-input"
+                        type="checkbox"
+                      />
+                      <label
+                        style="margin-bottom: 0; margin-top: 2px"
+                        class="form-check-label"
+                        >Instant Booster</label
+                      >
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>
+<div class="card-footer">
+  <button
+    style="margin-right: 10px"
+    class="btn"
+    [routerLink]="'/admin/referralevent'"
+  >
+    Back
+  </button>
+  <button (click)="onSubmit()" class="btn btn-primary">
+    {{ isUpdate ? "Update" : "Create" }}
+  </button>
+</div>
