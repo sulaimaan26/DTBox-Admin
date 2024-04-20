@@ -10,7 +10,7 @@
 
             <div class="card-body">
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label>EventId</label>
                     <input
@@ -25,6 +25,23 @@
                       class="mandatory"
                       *ngIf="submitted && f.EventId.errors"
                       >EventId is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label>Top Scorer count</label>
+                    <input
+                      formControlName="TopScorerCount"
+                      type="number"
+                      class="form-control"
+                      placeholder="Enter TopScorerCount"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.TopScorerCount.errors"
+                      >Top Scorer count is required</span
                     >
                   </div>
                 </div>
@@ -44,7 +61,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label>Start Date</label>
                     <input
@@ -60,7 +77,7 @@
                   >
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label>End Date</label>
                     <input

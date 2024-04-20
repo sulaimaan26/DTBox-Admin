@@ -35,6 +35,7 @@ export class ReferralEventFormComponent implements OnInit {
       Description: ['', Validators.required],
       StartDate: ['', Validators.required],
       EndDate: ['', Validators.required],
+      TopScorerCount: ['', Validators.required],
       IsActive: [true],
       IsCompleted: [true],
     });
