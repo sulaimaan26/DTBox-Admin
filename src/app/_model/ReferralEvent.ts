@@ -9,6 +9,8 @@ export interface IReferralEvent extends EditableTable {
   Description3: null;
   StartDate: string;
   EndDate: string;
+  CompletionDate: string;
+  TopScorerCount: number;
   IsActive: boolean;
   IsCompleted: boolean;
   CreatedBy: string;

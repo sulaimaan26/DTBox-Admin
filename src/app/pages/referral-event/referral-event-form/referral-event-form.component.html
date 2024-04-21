@@ -46,7 +46,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                   <div class="form-group">
                     <label>Title</label>
                     <input
@@ -74,6 +74,22 @@
                     class="mandatory"
                     *ngIf="submitted && f.StartDate.errors"
                     >StartDate is required</span
+                  >
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label>Completion Date</label>
+                    <input
+                      formControlName="CompletionDate"
+                      type="datetime-local"
+                      class="form-control"
+                    />
+                  </div>
+                  <span
+                    class="mandatory"
+                    *ngIf="submitted && f.CompletionDate.errors"
+                    >Completion Date is required</span
                   >
                 </div>
 

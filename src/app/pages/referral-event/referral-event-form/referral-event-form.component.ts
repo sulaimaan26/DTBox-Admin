@@ -35,14 +35,13 @@ export class ReferralEventFormComponent implements OnInit {
       Description: ['', Validators.required],
       StartDate: ['', Validators.required],
       EndDate: ['', Validators.required],
+      CompletionDate: ['', Validators.required],
       TopScorerCount: ['', Validators.required],
       IsActive: [true],
-      IsCompleted: [true],
+      IsCompleted: [false],
     });
 
     this.activatedRoute.data.subscribe((data) => {
-      console.log(data);
-
       if (data) {
         if (data.details) {
           this.referralEventData = data.details;
@@ -54,6 +53,10 @@ export class ReferralEventFormComponent implements OnInit {
           this.referralEventData.EndDate =
             this.dateFormatterService.convertToLocalDateTime(
               this.referralEventData.EndDate
+            );
+          this.referralEventData.CompletionDate =
+            this.dateFormatterService.convertToLocalDateTime(
+              this.referralEventData.CompletionDate
             );
           this.referralEventForm.patchValue(this.referralEventData);
         }
@@ -72,7 +75,7 @@ export class ReferralEventFormComponent implements OnInit {
       return;
     }
 
-    let formValue = this.convertToUTC(this.referralEventForm.value)
+    let formValue = this.convertToUTC(this.referralEventForm.value);
 
     if (this.isUpdate) {
       this.referralEventService
@@ -108,10 +111,11 @@ export class ReferralEventFormComponent implements OnInit {
       );
   }
 
-  convertToUTC(formValue:IReferralEvent){
+  convertToUTC(formValue: IReferralEvent) {
     formValue.StartDate = new Date(formValue.StartDate).toISOString();
     formValue.EndDate = new Date(formValue.EndDate).toISOString();
-    return formValue
+    formValue.CompletionDate = new Date(formValue.CompletionDate).toISOString();
+    return formValue;
   }
   ngOnDestroy(): void {}
 }
