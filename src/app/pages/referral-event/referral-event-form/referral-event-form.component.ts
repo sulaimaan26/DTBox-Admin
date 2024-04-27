@@ -36,9 +36,11 @@ export class ReferralEventFormComponent implements OnInit {
       StartDate: ['', Validators.required],
       EndDate: ['', Validators.required],
       CompletionDate: ['', Validators.required],
-      TopScorerCount: ['', Validators.required],
+      TermsAndCondition: [''],
+      TopScorerCount: [10, Validators.required],
       IsActive: [true],
       IsCompleted: [false],
+      DisplayRank: [false],
     });
 
     this.activatedRoute.data.subscribe((data) => {
