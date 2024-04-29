@@ -50,6 +50,18 @@ export class DateFormatterService {
   formatToTwoDigit(value: number) {
     return String(value).padStart(2, '0');
   }
+  convertToLocalDateTime(date: string): string {
+    const now = new Date(date);
+    const year = now.toLocaleDateString('en-US', {
+      year: 'numeric',
+    });
+    const month = now.toLocaleDateString('en-US', { month: '2-digit' });
+    const day = now.toLocaleDateString('en-US', { day: '2-digit' });
+    const hours = this.formatToTwoDigit(now.getHours());
+    const minutes = this.formatToTwoDigit(now.getMinutes());
+
+    return `${year}-${month}-${day}` + ' ' + hours+":"+minutes;
+  }
 
   addHours(date: string,hours:number) {
     let dat = new Date(date)

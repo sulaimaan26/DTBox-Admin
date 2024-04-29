@@ -101,6 +101,13 @@ const routes: Routes = [
             (m) => m.CampaignModule
           ),
       },
+      {
+        path: 'referralevent',
+        loadChildren: () =>
+          import('../../referral-event/referral-event.module').then(
+            (m) => m.ReferralEventModule
+          ),
+      },
     ],
   },
 ];
