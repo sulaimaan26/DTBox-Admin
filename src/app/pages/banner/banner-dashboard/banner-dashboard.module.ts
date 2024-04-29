@@ -7,6 +7,10 @@ import { ListInputTableModule } from 'src/app/component/list-input-table/list-in
 
 @NgModule({
   declarations: [BannerDashboardComponent],
-  imports: [CommonModule, BannerDashboardRoutingModule, ListInputTableModule],
+  imports: [
+    CommonModule,
+    BannerDashboardRoutingModule,
+    ListInputTableModule,
+  ],
 })
 export class BannerDashboardModule {}
