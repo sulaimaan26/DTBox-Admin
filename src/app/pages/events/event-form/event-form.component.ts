@@ -152,12 +152,21 @@ export class EventFormComponent implements OnInit {
 
   startDateSubscription() {
     this.eventsForm.controls['AdStartDate'].valueChanges.subscribe((value) => {
-      this.eventsForm.patchValue({EnableShareOptionAt:this.dateFormatterService.addHours(value,5)})
+      this.eventsForm.patchValue({
+        EnableShareOptionAt: this.dateFormatterService.addHours(value, 5),
+      });
     });
 
-    this.eventsForm.controls['AdCompletionDate'].valueChanges.subscribe((value) => {
-      this.eventsForm.patchValue({DisableShareOptionAt:this.dateFormatterService.decrementHours(value,2)})
-    });
+    this.eventsForm.controls['AdCompletionDate'].valueChanges.subscribe(
+      (value) => {
+        this.eventsForm.patchValue({
+          DisableShareOptionAt: this.dateFormatterService.decrementHours(
+            value,
+            2
+          ),
+        });
+      }
+    );
   }
 
   dataSubscription() {
@@ -165,21 +174,24 @@ export class EventFormComponent implements OnInit {
       if (data) {
         if (data.details) {
           let requiredData = data.details as IEvents;
-          requiredData.AdStartDate = this.dateFormatterService.convertDate(
-            requiredData.AdStartDate
-          );
-          requiredData.AdEndDate = this.dateFormatterService.convertDate(
-            requiredData.AdEndDate
-          );
-          requiredData.AdCompletionDate = this.dateFormatterService.convertDate(
-            requiredData.AdCompletionDate
-          );
+          requiredData.AdStartDate =
+            this.dateFormatterService.convertToLocalDateTime(
+              requiredData.AdStartDate
+            );
+          requiredData.AdEndDate =
+            this.dateFormatterService.convertToLocalDateTime(
+              requiredData.AdEndDate
+            );
+          requiredData.AdCompletionDate =
+            this.dateFormatterService.convertToLocalDateTime(
+              requiredData.AdCompletionDate
+            );
           requiredData.EnableShareOptionAt =
-            this.dateFormatterService.convertDate(
+            this.dateFormatterService.convertToLocalDateTime(
               requiredData.EnableShareOptionAt
             );
           requiredData.DisableShareOptionAt =
-            this.dateFormatterService.convertDate(
+            this.dateFormatterService.convertToLocalDateTime(
               requiredData.DisableShareOptionAt
             );
 
@@ -197,13 +209,15 @@ export class EventFormComponent implements OnInit {
             this.files.at(i).patchValue(adfile);
           });
 
-          requiredData.peakHours.forEach((timeslot, i) => {
-            timeslot.StartDateTime = this.dateFormatterService.convertDate(
-              timeslot.StartDateTime
-            );
-            timeslot.EndDateTime = this.dateFormatterService.convertDate(
-              timeslot.EndDateTime
-            );
+          requiredData.peakhours.forEach((timeslot, i) => {
+            timeslot.StartDateTime =
+              this.dateFormatterService.convertToLocalDateTime(
+                timeslot.StartDateTime
+              );
+            timeslot.EndDateTime =
+              this.dateFormatterService.convertToLocalDateTime(
+                timeslot.EndDateTime
+              );
 
             this.addTimeSlot();
             this.peakhours.at(i).patchValue(timeslot);
@@ -238,7 +252,7 @@ export class EventFormComponent implements OnInit {
       return;
     }
 
-    let payload = this.eventsForm.value;
+    let payload = this.convertToUTCEvent(this.eventsForm.value);
 
     if (this.isUpdate) {
       this.eventService.update(this.eventsData.id, payload).subscribe(
@@ -505,5 +519,29 @@ export class EventFormComponent implements OnInit {
 
   deleteTimeSlot(index) {
     this.peakhours.removeAt(index);
+  }
+
+  convertToUTCEvent(formValue: IEvents) {
+    formValue.AdStartDate = new Date(formValue.AdStartDate).toISOString();
+    formValue.AdEndDate = new Date(formValue.AdEndDate).toISOString();
+    formValue.AdCompletionDate = new Date(
+      formValue.AdCompletionDate
+    ).toISOString();
+
+    //Time slot
+    formValue.peakhours = formValue.peakhours.map((hour) => {
+      hour.StartDateTime = new Date(hour.StartDateTime).toISOString();
+      hour.EndDateTime = new Date(hour.EndDateTime).toISOString();
+      return hour;
+    });
+
+    formValue.EnableShareOptionAt = new Date(
+      formValue.EnableShareOptionAt
+    ).toISOString();
+    formValue.DisableShareOptionAt = new Date(
+      formValue.DisableShareOptionAt
+    ).toISOString();
+
+    return formValue;
   }
 }

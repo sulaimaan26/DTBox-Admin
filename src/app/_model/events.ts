@@ -24,7 +24,7 @@ export interface IEvents {
   UpdatedBy: string;
   CreatedAt: string;
   UpdatedAt: string;
-  peakHours: PeakHour[];
+  peakhours: PeakHour[];
   location: locationUploadRes[];
   AllowShare: boolean;
   EnableShareOptionAt: string;
