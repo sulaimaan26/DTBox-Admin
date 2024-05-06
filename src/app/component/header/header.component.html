@@ -18,19 +18,19 @@
   <!-- Left navbar links -->
 
   <ul class="navbar-nav nav-pills">
-<!--    <div *ngIf="headerValue | async as breadCrumb">-->
-<!--      <h3>-->
-<!--        {{ breadCrumb.title }}-->
-<!--      </h3>-->
-<!--      <ol class="breadcrumb">-->
-<!--        <li *ngFor="let child of breadCrumb.breadcrumb" class="breadcrumb-item">-->
-<!--          <a *ngIf="child.isActive" [routerLink]="child.link">{{-->
-<!--            child.name-->
-<!--          }}</a>-->
-<!--          <a *ngIf="!child.isActive">{{ child.name }}</a>-->
-<!--        </li>-->
-<!--      </ol>-->
-<!--    </div>-->
+    <!--    <div *ngIf="headerValue | async as breadCrumb">-->
+    <!--      <h3>-->
+    <!--        {{ breadCrumb.title }}-->
+    <!--      </h3>-->
+    <!--      <ol class="breadcrumb">-->
+    <!--        <li *ngFor="let child of breadCrumb.breadcrumb" class="breadcrumb-item">-->
+    <!--          <a *ngIf="child.isActive" [routerLink]="child.link">{{-->
+    <!--            child.name-->
+    <!--          }}</a>-->
+    <!--          <a *ngIf="!child.isActive">{{ child.name }}</a>-->
+    <!--        </li>-->
+    <!--      </ol>-->
+    <!--    </div>-->
   </ul>
 
   <!-- Right navbar links -->
@@ -72,18 +72,27 @@
         role="menu"
         data-accordion="false"
       >
+
         <li class="nav-item">
-          <a [routerLinkActive]="'active'" routerLink="admin/list/commondisplay" class="nav-link">
+          <a
+            [routerLinkActive]="'active'"
+            routerLink="admin/commondisplay"
+            class="nav-link"
+          >
             <i class="nav-icon fas fa-th"></i>
             <p>
-              CommonDisplay
+              Common Display
               <!-- <span class="right badge badge-danger">New</span> -->
             </p>
           </a>
         </li>
 
         <li class="nav-item">
-          <a [routerLinkActive]="'active'" routerLink="admin/list/events" class="nav-link">
+          <a
+            [routerLinkActive]="'active'"
+            routerLink="admin/events"
+            class="nav-link"
+          >
             <i class="nav-icon fas fa-th"></i>
             <p>
               Events
@@ -93,7 +102,11 @@
         </li>
 
         <li class="nav-item">
-          <a [routerLinkActive]="'active'" routerLink="admin/settings" class="nav-link">
+          <a
+            [routerLinkActive]="'active'"
+            routerLink="admin/settings"
+            class="nav-link"
+          >
             <i class="nav-icon fas fa-th"></i>
             <p>
               Settings
@@ -103,7 +116,11 @@
         </li>
 
         <li class="nav-item">
-          <a [routerLinkActive]="'active'" routerLink="admin/location" class="nav-link">
+          <a
+            [routerLinkActive]="'active'"
+            routerLink="admin/location"
+            class="nav-link"
+          >
             <i class="nav-icon fas fa-th"></i>
             <p>
               Location
@@ -113,7 +130,11 @@
         </li>
 
         <li class="nav-item">
-          <a [routerLinkActive]="'active'" routerLink="admin/videolevel" class="nav-link">
+          <a
+            [routerLinkActive]="'active'"
+            routerLink="admin/videolevel"
+            class="nav-link"
+          >
             <i class="nav-icon fas fa-th"></i>
             <p>
               Video Level
@@ -123,7 +144,11 @@
         </li>
 
         <li class="nav-item">
-          <a [routerLinkActive]="'active'" routerLink="admin/couponcode" class="nav-link">
+          <a
+            [routerLinkActive]="'active'"
+            routerLink="admin/couponcode"
+            class="nav-link"
+          >
             <i class="nav-icon fas fa-th"></i>
             <p>
               Coupon Code
@@ -133,7 +158,11 @@
         </li>
 
         <li class="nav-item">
-          <a [routerLinkActive]="'active'" routerLink="admin/banner" class="nav-link">
+          <a
+            [routerLinkActive]="'active'"
+            routerLink="admin/banner"
+            class="nav-link"
+          >
             <i class="nav-icon fas fa-th"></i>
             <p>
               Banner
@@ -143,7 +172,11 @@
         </li>
 
         <li class="nav-item">
-          <a [routerLinkActive]="'active'" routerLink="admin/campaign" class="nav-link">
+          <a
+            [routerLinkActive]="'active'"
+            routerLink="admin/campaign"
+            class="nav-link"
+          >
             <i class="nav-icon fas fa-th"></i>
             <p>
               Campaign
@@ -153,7 +186,11 @@
         </li>
 
         <li class="nav-item">
-          <a [routerLinkActive]="'active'" routerLink="admin/referralevent" class="nav-link">
+          <a
+            [routerLinkActive]="'active'"
+            routerLink="admin/referralevent"
+            class="nav-link"
+          >
             <i class="nav-icon fas fa-th"></i>
             <p>
               Referral Event
@@ -162,6 +199,19 @@
           </a>
         </li>
 
+        <li class="nav-item">
+          <a
+            [routerLinkActive]="'active'"
+            routerLink="admin/customer"
+            class="nav-link"
+          >
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Customer
+              <!-- <span class="right badge badge-danger">New</span> -->
+            </p>
+          </a>
+        </li>
       </ul>
     </nav>
   </div>

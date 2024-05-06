@@ -5,7 +5,7 @@ import { AuthGuard } from './_helpers/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/admin',
+    redirectTo: '/admin/commondisplay',
     pathMatch: 'full'
   },
   {
