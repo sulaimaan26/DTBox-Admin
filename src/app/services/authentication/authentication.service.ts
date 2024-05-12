@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import {  UserAuth } from 'src/app/_model/user';
+import { UserAuth } from 'src/app/_model/user';
 import { environment } from 'src/environments/environment';
 import { LocalstorageService } from '../localstorage/localstorage.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthenticationService {
   private loggedIn = new BehaviorSubject<boolean>(false); // {1}
@@ -17,13 +17,17 @@ export class AuthenticationService {
   public currentUser: Observable<UserAuth>;
   private apiUrl;
 
-  constructor(private http: HttpClient,private localStorageService:LocalstorageService,private routes:Router) {
+  constructor(
+    private http: HttpClient,
+    private localStorageService: LocalstorageService,
+    private routes: Router
+  ) {
     this.apiUrl = environment.baseUrl;
     try {
-      JSON.parse(localStorage.getItem('currentUser'))
+      JSON.parse(localStorage.getItem('currentUser'));
     } catch (e) {
-      console.log(e)
-      this.logout()
+      console.log(e);
+      this.logout();
     }
     this.currentUserSubject = new BehaviorSubject<any>(
       JSON.parse(localStorage.getItem('currentUser'))
@@ -37,20 +41,18 @@ export class AuthenticationService {
   }
 
   get isLoggedIn() {
-    if(this.currentUserValue){
+    if (this.currentUserValue) {
       this.loggedIn.next(true);
     }
     return this.loggedIn.asObservable(); // {2}
   }
-
-
 
   login(username, password) {
     return this.http
       .post<any>(`${this.apiUrl}/admin/login`, { username, password })
       .pipe(
         tap(console.log),
-        map((user:UserAuth) => {
+        map((user: UserAuth) => {
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
           this.loggedIn.next(true);
@@ -61,7 +63,7 @@ export class AuthenticationService {
           //   //this.companyId.next(user.companyid)
           //   this.localStorageService.addItem('companyid', user.companyid);
           // }
-         // this.loggedIn.next(true);
+          // this.loggedIn.next(true);
           return user;
         })
       );
@@ -70,8 +72,12 @@ export class AuthenticationService {
   logout() {
     // remove user from local storage and set current user to null
     //localStorage.removeItem('currentUser');
-    localStorage.clear()
+    localStorage.clear();
     this.currentUserSubject.next(null);
     this.loggedIn.next(false);
+  }
+
+  resetPassword(formData) {
+    return this.http.post<any>(`${this.apiUrl}/admin/resetpassword`, formData);
   }
 }
