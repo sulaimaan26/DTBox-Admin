@@ -27,9 +27,20 @@ export class NotificationComponent implements OnInit {
 
   ngOnInit(): void {
     this.notificationForm = this.formBuilder.group({
-      userId: ['', [Validators.required, this.ValidateUserID]],
+      userId: [''],
       title: ['', Validators.required],
       body: ['', Validators.required],
+      allUser: [true],
+    });
+
+    this.f.allUser.valueChanges.subscribe((value) => {
+      if (value) {
+        // this.notificationForm.patchValue({ userId: '' });
+        this.f.userId.clearValidators();
+      } else {
+        this.f.userId.setValidators([Validators.required, this.ValidateUserID]);
+      }
+      this.f.userId.updateValueAndValidity();
     });
   }
 

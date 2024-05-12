@@ -50,7 +50,6 @@ export class DateFormatterService {
   formatToTwoDigit(value: number) {
     return String(value).padStart(2, '0');
   }
-
   convertToLocalDateTime(date: string): string {
     const now = new Date(date);
     const year = now.toLocaleDateString('en-US', {
@@ -63,4 +62,24 @@ export class DateFormatterService {
 
     return `${year}-${month}-${day}` + ' ' + hours+":"+minutes;
   }
+
+  addHours(date: string,hours:number) {
+    let dat = new Date(date)
+    dat.setHours(dat.getHours()+hours)
+    return this.dateWithoutTimezone(dat);
+  }
+
+  decrementHours(date: string,hours:number) {
+    let dat = new Date(date)
+    dat.setHours(dat.getHours()-hours)
+    return this.dateWithoutTimezone(dat);
+  }
+
+  dateWithoutTimezone(date: Date) {
+    const tzoffset = date.getTimezoneOffset() * 60000; //offset in milliseconds
+    const withoutTimezone = new Date(date.valueOf() - tzoffset)
+      .toISOString()
+      .slice(0, -1);
+    return withoutTimezone;
+  };
 }

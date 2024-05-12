@@ -10,7 +10,13 @@ import { CommonDisplayDetailsResolver } from '../../../resolver/commondisplay/co
 import { CommonDisplayDropdownResolver } from '../../../resolver/commondisplay/common-display-dropdown.resolve';
 import { EventsDropdownResolver } from 'src/app/resolver/events/events-dropdown.resolve';
 import { EventsDetailsResolver } from 'src/app/resolver/events/events.resolve';
+import { CustomerDashboardComponent } from '../customer/customer-dashboard/customer-dashboard.component';
+import { EventService } from 'src/app/services/events.service';
 
+const EVENTS_SERVICE = new InjectionToken<string>('EventService');
+const COMMON_DISPLAY_SERVICE = new InjectionToken<string>(
+  'CommonDiplayService'
+);
 const routes: Routes = [
   {
     path: '',
@@ -108,6 +114,27 @@ const routes: Routes = [
             (m) => m.ReferralEventModule
           ),
       },
+      {
+        path: 'customer',
+        loadChildren: () =>
+          import('../../customer/customer.module').then(
+            (m) => m.CustomerModule
+          ),
+      },
+      {
+        path: 'events',
+        component: CustomerDashboardComponent,
+        data: {
+          requiredService: EVENTS_SERVICE,
+        } as RouteData,
+      },
+      {
+        path: 'commondisplay',
+        component: CustomerDashboardComponent,
+        data: {
+          requiredService: COMMON_DISPLAY_SERVICE,
+        } as RouteData,
+      },
     ],
   },
 ];
@@ -115,5 +142,15 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  providers: [
+    {
+      provide: EVENTS_SERVICE,
+      useClass: EventService,
+    },
+    {
+      provide: COMMON_DISPLAY_SERVICE,
+      useClass: CommonDiplayService,
+    },
+  ],
 })
 export class MasterRoutingModule {}

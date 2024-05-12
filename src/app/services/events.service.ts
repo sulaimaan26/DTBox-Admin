@@ -29,7 +29,7 @@ export class EventService implements CRUDOperationV2<IEvents> {
     return of('/admin/events/update/');
   }
 
-  create(formData: FormData): any {
+  create(formData): any {
     return this.http.post(`${this.apiUrl}/event`, formData);
   }
 
@@ -47,7 +47,7 @@ export class EventService implements CRUDOperationV2<IEvents> {
     return this.http.get(`${this.apiUrl}/event/dropdown/`);
   }
 
-  update(customerid, formData: FormData): any {
+  update(customerid, formData): any {
     return this.http.put(`${this.apiUrl}/event/${customerid}`, formData);
   }
 
