@@ -17,4 +17,5 @@ export interface ICustomer extends EditableTable {
   createdAt:           string;
   updatedAt:           string;
   lastLogin:           string;
+  IsSales:            boolean;
 }

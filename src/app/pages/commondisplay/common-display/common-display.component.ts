@@ -132,7 +132,7 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
     if (this.isUpdate) {
       this.commonDiplayService.update(this.commonDisplayData.id, payload).subscribe((res) => {
         this.notificationService.showSuccess("Common Display Updated successfully!!", "Success")
-        this.router.navigate(['/admin/list/commondisplay'])
+        this.router.navigate(['/admin/commondisplay'])
         return
       }, (err) => {
         alert("Common Display exist!!\n Exist Data \n"+ JSON.stringify(err));
@@ -141,7 +141,7 @@ export class CommonDisplayComponent implements OnInit, OnDestroy {
     } else {
       this.commonDiplayService.create(payload).subscribe((res) => {
         this.notificationService.showSuccess("Common Display Created successfully!!", "Success")
-        this.router.navigate(['/admin/list/commondisplay'])
+        this.router.navigate(['/admin/commondisplay'])
       }, (err:ErrorResponse) => {
         alert("Common Display exist!!\n Exist Data \n"+ JSON.stringify(err));
         return
