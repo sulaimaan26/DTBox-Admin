@@ -6,18 +6,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
-  declarations: [
-  ],
+  declarations: [EventFormComponent],
   imports: [
     CommonModule,
     EventFormRoutingModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatIconModule
-  ]
+    MatIconModule,
+    MatExpansionModule,
+  ],
 })
-export class EventFormModule { }
+export class EventFormModule {}

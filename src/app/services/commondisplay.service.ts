@@ -58,7 +58,7 @@ export class CommonDiplayService implements CRUDOperationV2<CommonDisplay> {
     );
   }
 
-  getColumn():TableColumn<CommonDisplay>[] {
+  getColumn():TableColumn<Partial<CommonDisplay>>[] {
     return [
       {
         key: 'id',

@@ -28,7 +28,9 @@ export class CustomerDashboardComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dateFormatterService: DateFormatterService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.$subscription = this.activatedRoute.queryParams.subscribe(() => {
       // this.tempTableRow = { ...this.tableRow };
 
@@ -55,5 +57,22 @@ export class CustomerDashboardComponent implements OnInit {
     saveAs(blob, `customer_${new Date().toLocaleString()}.csv`);
   }
 
-  ngOnInit(): void {}
+  getModified($event) {
+    let customerId: number = $event.id;
+    let payload = {
+      IsSales: $event.IsSales,
+    };
+
+    this.customerService.patchCustomer(customerId, payload).subscribe(
+      () => {
+        $event.isEdit = false;
+        this.$updateTable.next({ ...this.customerList });
+        this.notificationService.showSuccess('Updated Successfully', 'Success');
+        this.$tableEditActive.next(true);
+      },
+      (err) => {
+        alert(err);
+      }
+    );
+  }
 }

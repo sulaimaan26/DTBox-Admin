@@ -1,8 +1,8 @@
-<div *ngIf="customerList" class="row flex-row-reverse mt-2 mb-2">
+<!-- <div *ngIf="customerList" class="row flex-row-reverse mt-2 mb-2">
   <div class="col-md-1">
     <button (click)="downloadFile()" class="btn btn-primary">Export</button>
   </div>
-</div>
+</div> -->
 
 <app-list-input-table
   *ngIf="customerList"
@@ -11,11 +11,11 @@
   tableName="Location"
   [$makeTableEditInActive]="$tableEditActive"
   [isDeleteRequired]="true"
-  [sortColumnKey]="'createdAt'"
-  (savedData)="getModified($event)"
+  [sortColumnKey]="'id'"
   [allowAddingRow]="true"
   [isDeleteRequired]="false"
   [$updateTable]="$updateTable"
-  [addRowsAsEvent]="false"
-  [allowAddingRow]="false"
+  [addRowsAsEvent]="true"
+  (rowClickEvent)="onRowClicked($event)"
+  (addRowEvent)="addRow()"
 ></app-list-input-table>

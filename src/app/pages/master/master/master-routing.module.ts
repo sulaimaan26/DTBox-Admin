@@ -48,25 +48,25 @@ const routes: Routes = [
           dropdown: CommonDisplayDropdownResolver,
         },
       },
-      {
-        path: 'events/create',
-        loadChildren: () =>
-          import('../../events/events/events.module').then(
-            (m) => m.EventsModule
-          ),
-        resolve: { dropdown: EventsDropdownResolver },
-      },
-      {
-        path: 'events/update/:eventid',
-        loadChildren: () =>
-          import('../../events/events/events.module').then(
-            (m) => m.EventsModule
-          ),
-        resolve: {
-          details: EventsDetailsResolver,
-          dropdown: EventsDropdownResolver,
-        },
-      },
+      // {
+      //   path: 'events/create',
+      //   loadChildren: () =>
+      //     import('../../events/events/events.module').then(
+      //       (m) => m.EventsModule
+      //     ),
+      //   resolve: { dropdown: EventsDropdownResolver },
+      // },
+      // {
+      //   path: 'events/update/:eventid',
+      //   loadChildren: () =>
+      //     import('../../events/events/events.module').then(
+      //       (m) => m.EventsModule
+      //     ),
+      //   resolve: {
+      //     details: EventsDetailsResolver,
+      //     dropdown: EventsDropdownResolver,
+      //   },
+      // },
       {
         path: 'settings',
         loadChildren: () =>
@@ -123,17 +123,21 @@ const routes: Routes = [
       },
       {
         path: 'events',
-        component: CustomerDashboardComponent,
-        data: {
-          requiredService: EVENTS_SERVICE,
-        } as RouteData,
+        loadChildren: () =>
+          import('../../events/event-home.module').then(
+            (m) => m.EventHomeModule
+          ),
+        // component: CustomerDashboardComponent,
+        // data: {
+        //   requiredService: EVENTS_SERVICE,
+        // } as RouteData,
       },
       {
         path: 'commondisplay',
-        component: CustomerDashboardComponent,
-        data: {
-          requiredService: COMMON_DISPLAY_SERVICE,
-        } as RouteData,
+        loadChildren: () =>
+          import(
+            '../../commondisplay/common-display-home/common-display-home.module'
+          ).then((m) => m.CommonDisplayHomeModule),
       },
     ],
   },

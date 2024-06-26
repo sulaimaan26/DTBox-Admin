@@ -34,9 +34,7 @@ export class EventService implements CRUDOperationV2<IEvents> {
   }
 
   getAll() {
-    return this.http.get<getAllApiResponse<IEvents>>(
-      `${this.apiUrl}/event`
-    );
+    return this.http.get<getAllApiResponse<IEvents>>(`${this.apiUrl}/event`);
   }
 
   get(commonDisplayId): any {
@@ -51,7 +49,7 @@ export class EventService implements CRUDOperationV2<IEvents> {
     return this.http.put(`${this.apiUrl}/event/${customerid}`, formData);
   }
 
-  getColumn():TableColumn<IEvents>[] {
+  getColumn(): TableColumn<Partial<IEvents>>[] {
     return [
       {
         key: 'EventId',
