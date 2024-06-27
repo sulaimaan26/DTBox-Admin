@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EventsComponent } from './events.component';
+import { SalesCodeUpdateComponent } from './sales-code-update.component';
 
-describe('EventsComponent', () => {
-  let component: EventsComponent;
-  let fixture: ComponentFixture<EventsComponent>;
+describe('SalesCodeUpdateComponent', () => {
+  let component: SalesCodeUpdateComponent;
+  let fixture: ComponentFixture<SalesCodeUpdateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventsComponent ]
+      declarations: [ SalesCodeUpdateComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EventsComponent);
+    fixture = TestBed.createComponent(SalesCodeUpdateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
