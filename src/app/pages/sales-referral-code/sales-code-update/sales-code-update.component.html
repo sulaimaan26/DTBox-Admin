@@ -1,5 +1,5 @@
 <form [formGroup]="salesCodeForm">
-  <section class="content">
+  <section *ngIf="!codeInfo.UserId" class="content">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
@@ -69,4 +69,14 @@
       </div>
     </div>
   </section>
+
+  <div *ngIf="codeInfo.UserId">
+    <div>
+      <app-referral-log
+        [referrerName]="codeInfo.UserName"
+        [referrerCode]="codeInfo.SalesReferralCode"
+        [referrerId]="codeInfo.UserId"
+      ></app-referral-log>
+    </div>
+  </div>
 </form>

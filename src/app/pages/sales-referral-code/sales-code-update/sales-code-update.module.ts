@@ -4,6 +4,7 @@ import { SalesCodeUpdateRoutingModule } from './sales-code-update-routing.module
 import { SalesCodeUpdateComponent } from './sales-code-update.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ReferralLogModule } from '../../referral-log/referral-log.module';
 
 @NgModule({
   declarations: [SalesCodeUpdateComponent],
@@ -12,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     SalesCodeUpdateRoutingModule,
     ReactiveFormsModule,
     NgSelectModule,
+    ReferralLogModule,
   ],
 })
 export class SalesCodeUpdateModule {}

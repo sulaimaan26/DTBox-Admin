@@ -40,6 +40,8 @@ export class SalesCodeUpdateComponent implements OnInit {
     });
 
     this.activatedRoute.data.subscribe((resolvedData) => {
+      console.log(resolvedData);
+
       if (resolvedData && resolvedData.data) {
         this.codeInfo = resolvedData.data;
         this.salesCodeForm.patchValue(this.codeInfo);
@@ -81,8 +83,6 @@ export class SalesCodeUpdateComponent implements OnInit {
       alert("You can't change the mapped sales person");
       return;
     }
-
-    console.log(changedUserId);
 
     this.isGenerating = true;
     this.salesReferralCodeService

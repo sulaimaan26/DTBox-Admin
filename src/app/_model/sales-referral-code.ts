@@ -1,6 +1,6 @@
 import { ICustomer } from './customer';
 
-export interface ISalesReferralCode {
+export interface ISalesReferralCode extends ICustomer {
   id: number;
   UserId: number;
   SalesReferralCode: string;
