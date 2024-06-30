@@ -19,17 +19,13 @@ const routes: Routes = [
       {
         path: 'create',
         loadChildren: () =>
-          import('./event-form/event-form.module').then(
-            (m) => m.EventFormModule
-          ),
+          import('./event-tab/event-tab.module').then((m) => m.EventTabModule),
         resolve: { dropdown: EventsDropdownResolver },
       },
       {
         path: 'update/:eventid',
         loadChildren: () =>
-          import('./event-form/event-form.module').then(
-            (m) => m.EventFormModule
-          ),
+          import('./event-tab/event-tab.module').then((m) => m.EventTabModule),
         resolve: {
           details: EventsDetailsResolver,
           dropdown: EventsDropdownResolver,

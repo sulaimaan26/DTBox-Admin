@@ -1,0 +1,82 @@
+<form [formGroup]="salesCodeForm">
+  <section *ngIf="!codeInfo.UserId" class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Edit Sales Code</h3>
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Sales Referral Code</label>
+                    <input
+                      formControlName="SalesReferralCode"
+                      type="text"
+                      class="form-control"
+                      placeholder="Code"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Sales Person</label>
+
+                    <ng-select
+                      [placeholder]="'Select Sales Person'"
+                      [items]="customerList"
+                      [searchFn]="customSearchFn"
+                      bindLabel="UserName"
+                      bindValue="id"
+                      formControlName="UserId"
+                    >
+                      <ng-template ng-option-tmp let-item="item">
+                        {{ item.UserName }} <br />
+                        <small>{{
+                          item.PhoneNumber + " | " + item.PublicUserId
+                        }}</small>
+                      </ng-template>
+                    </ng-select>
+
+                    <span class="mandatory" *ngIf="submitted && f.UserId.errors"
+                      >UserId is required</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div class="float-right">
+                <button
+                  style="margin-right: 10px"
+                  class="btn"
+                  [routerLink]="'/admin/salesreferralcode/'"
+                >
+                  Back
+                </button>
+                <button (click)="onSubmit()" class="btn btn-primary">
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div *ngIf="codeInfo.UserId">
+    <div>
+      <app-referral-log
+        [referrerName]="codeInfo.UserName"
+        [referrerCode]="codeInfo.SalesReferralCode"
+        [referrerId]="codeInfo.UserId"
+      ></app-referral-log>
+    </div>
+  </div>
+</form>
