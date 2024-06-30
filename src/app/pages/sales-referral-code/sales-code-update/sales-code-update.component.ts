@@ -40,8 +40,6 @@ export class SalesCodeUpdateComponent implements OnInit {
     });
 
     this.activatedRoute.data.subscribe((resolvedData) => {
-      console.log(resolvedData);
-
       if (resolvedData && resolvedData.data) {
         this.codeInfo = resolvedData.data;
         this.salesCodeForm.patchValue(this.codeInfo);
@@ -59,10 +57,10 @@ export class SalesCodeUpdateComponent implements OnInit {
   }
 
   customSearchFn(term: string, item: ICustomer) {
-    term = term.toLowerCase();
+    term = term.toString().toLowerCase();
     return (
-      item.UserName.toLowerCase().indexOf(term) > -1 ||
-      item.PhoneNumber.includes(term) ||
+      (item.UserName + '').toLowerCase().indexOf(term) > -1 ||
+      item.PhoneNumber.toString().includes(term) ||
       item.PublicUserId.toString().includes(term)
     );
   }

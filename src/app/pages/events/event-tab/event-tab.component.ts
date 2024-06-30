@@ -21,7 +21,7 @@ export class EventTabComponent implements OnInit {
     this.$subscription = this.activatedRoute.data.subscribe((data) => {
       if (data) {
         if (data.details) {
-          this.eventsData = data.details
+          // this.eventsData = data.details
           this.isUpdate = true;
         }
 
