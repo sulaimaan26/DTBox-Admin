@@ -139,6 +139,13 @@ const routes: Routes = [
             '../../commondisplay/common-display-home/common-display-home.module'
           ).then((m) => m.CommonDisplayHomeModule),
       },
+      {
+        path: 'salesreferralcode',
+        loadChildren: () =>
+          import('../../sales-referral-code/sales-referral-code.module').then(
+            (m) => m.SalesReferralCodeModule
+          ),
+      },
     ],
   },
 ];

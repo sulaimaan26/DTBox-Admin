@@ -1,0 +1,19 @@
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Referral Code Count</mat-label>
+    <input type="number" matInput [(ngModel)]="data.count" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button [disabled]="isGenerating" mat-button (click)="onNoClick()">
+    Cancel
+  </button>
+  <button
+    [disabled]="isGenerating"
+    mat-button
+    (click)="create(data.count)"
+    cdkFocusInitial
+  >
+    {{ isGenerating ? "Generating..." : "Generate" }}
+  </button>
+</div>

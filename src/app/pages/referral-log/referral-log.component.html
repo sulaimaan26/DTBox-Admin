@@ -1,0 +1,94 @@
+<div>
+  <form [formGroup]="referralLogForm">
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">
+                  Referral Analytics for {{ referrerName }} Code:
+                  {{ referrerCode }}
+                </h3>
+              </div>
+
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>Start Date</label>
+                      <input
+                        formControlName="UTCStartDate"
+                        type="datetime-local"
+                        class="form-control"
+                        placeholder="Start Date"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>End Date</label>
+                      <input
+                        formControlName="UTCEndDate"
+                        type="datetime-local"
+                        class="form-control"
+                        placeholder="End Date"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <br />
+                    <br />
+                    <div class="form-group">
+                      <div class="form-check">
+                        <input
+                          formControlName="IsSuccess"
+                          class="form-check-input"
+                          type="checkbox"
+                        />
+                        <label class="form-check-label">Success</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="card-footer">
+                      <div class="float-right">
+                        <button
+                          style="margin-right: 10px"
+                          class="btn"
+                          [routerLink]="'/admin/salesreferralcode/'"
+                        >
+                          Back
+                        </button>
+                        <button (click)="onSubmit()" class="btn btn-primary">
+                          Search
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </form>
+
+  <div>
+    <app-list-input-table
+      *ngIf="logList"
+      [Columns]="columns"
+      [TableData]="logList"
+      tableName="Location"
+      [$makeTableEditInActive]="$tableEditActive"
+      [isDeleteRequired]="true"
+      [sortColumnKey]="'id'"
+      [isDeleteRequired]="false"
+      [$updateTable]="$updateTable"
+      (rowClickEvent)="onRowClicked($event)"
+    ></app-list-input-table>
+  </div>
+</div>
