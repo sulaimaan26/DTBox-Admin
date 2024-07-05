@@ -11,13 +11,29 @@
       (onTableDataChange)="onTableDataChange($event)"
     ></app-list-input-table>
   </div>
-  <div class="col-md-12 mt-5 mb-5 d-flex justify-content-center">
-    <button
-      (click)="onSubmit()"
-      [disabled]="processing"
-      class="btn btn-outline-primary btn-lg btn-block"
-    >
-      {{ processing ? "Generating..." : "Generate" }}
-    </button>
+  <div class="col-md-12">
+    <div class="row mt-5 mb-5 d-flex justify-content-end">
+      <div class="col-md-1">
+        <div class="form-group">
+          <input
+            [(ngModel)]="requiredViews"
+            type="number"
+            class="form-control"
+            placeholder="Required Views"
+          />
+        </div>
+      </div>
+      <div class="col-md-1">
+        <div>
+          <button
+            (click)="onSubmit()"
+            [disabled]="processing"
+            class="btn btn-primary"
+          >
+            {{ processing ? "Generating..." : "Generate" }}
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

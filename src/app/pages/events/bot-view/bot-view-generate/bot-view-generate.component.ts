@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription, Subject, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { BotViewService } from 'src/app/services/bot-view.service';
 import { NotificationService } from 'src/app/services/NotificationService/notification-service.service';
 import { BotInactiveSearchResponse } from 'src/app/_model/bot-view';
@@ -17,10 +18,11 @@ export class BotViewGenerateComponent implements OnInit {
   columns: TableColumn<Partial<BotInactiveSearchResponse>>[] = [];
   $subscription: Subscription;
   @Input() eventId: number;
-  @Input() videoId: number;
+  @Input() videoId: number[];
   $tableEditActive = new Subject<any>();
   ignoredCustomer: number[];
   processing = false;
+  requiredViews = 10;
 
   constructor(
     private router: Router,
@@ -41,7 +43,7 @@ export class BotViewGenerateComponent implements OnInit {
     let rr = $event;
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.processing = true;
     let generateUser = this.tableData.filter((e) => e.isSelected == true);
     if (!generateUser || generateUser.length == 0) {
@@ -50,17 +52,27 @@ export class BotViewGenerateComponent implements OnInit {
       return;
     }
 
-    //generating views
-    generateUser.forEach((user) => {
+    for await (const user of generateUser) {
+      await this.generateView(user);
+    }
+
+    this.processing = false;
+  }
+
+  generateView(user: BotInactiveSearchResponse) {
+    return new Promise((resolve, reject) => {
       let payload = {
         EventId: this.eventId,
         VideoId: this.videoId,
+        VideoIds: this.videoId,
         UserId: user.id,
-        Views: 5,
+        Views: this.requiredViews,
       };
-      this.botViewService.generateView(payload, 5).subscribe(
-        (res) => {
-          this.botViewService.create(payload).subscribe((res) => {
+      this.botViewService
+        .generateView(payload, 5)
+        .pipe(switchMap((value) => this.botViewService.create(payload)))
+        .subscribe(
+          (res) => {
             this.tableData.some((c) => {
               if (c.id == user.id) {
                 c.IsGenerated = true;
@@ -70,12 +82,10 @@ export class BotViewGenerateComponent implements OnInit {
             });
 
             this.inActiveUsers.next(this.tableData);
-          });
-        },
-        (err) => {}
-      );
+            resolve(this.tableData);
+          },
+          (err) => reject
+        );
     });
-
-    this.processing = false;
   }
 }

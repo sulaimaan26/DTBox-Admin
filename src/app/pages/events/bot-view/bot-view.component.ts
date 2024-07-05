@@ -17,7 +17,7 @@ import {
 export class BotViewComponent implements OnInit {
   inActiveUser = new Subject<BotInactiveSearchResponse[]>();
   eventId: number;
-  videoId: number;
+  videoId: number[];
   showTable = false;
 
   constructor(private activatedRoute: ActivatedRoute) {}
@@ -32,11 +32,12 @@ export class BotViewComponent implements OnInit {
 
   getInActiveUser($event: {
     result: BotInactiveSearchResponse[];
-    videoId: number;
+    videoId: number[];
   }) {
     this.videoId = $event.videoId;
     let data = $event.result.map((e) => {
       e.IsGenerated = false;
+      e.isSelected = true;
       return e;
     });
     this.inActiveUser.next(data);

@@ -16,6 +16,7 @@
 
                     <ng-select
                       [placeholder]="'Select Video'"
+                      [multiple]="true"
                       [items]="dropdown.videos"
                       bindLabel="Title"
                       bindValue="id"
@@ -32,6 +33,27 @@
                         let-clear="clear"
                         >{{ item.id ? "#" + item.id : "" }} {{ item.Title }}
                       </ng-template>
+
+                      <ng-template
+                      ng-multi-label-tmp
+                      let-items="items"
+                      let-clear="clear"
+                    >
+                      <div
+                        *ngFor="let item of items | slice : 0 : 2"
+                        class="ng-value"
+                      >
+                        <span class="ng-value-label">
+                          #{{ item["id"] }} {{ item["Title"]| slice : 0 : 3 }}</span
+                        >
+                      </div>
+                      <div *ngIf="items.length > 2" class="ng-value">
+                        <span class="ng-value-label"
+                          >{{ items.length - 2 }} more...</span
+                        >
+                      </div>
+                    </ng-template>
+
                     </ng-select>
 
                     <span

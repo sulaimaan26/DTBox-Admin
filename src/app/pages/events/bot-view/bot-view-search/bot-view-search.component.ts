@@ -21,7 +21,7 @@ export class BotViewSearchComponent implements OnInit {
   processing = false;
   @Output() searchData = new EventEmitter<{
     result: BotInactiveSearchResponse[];
-    videoId: number;
+    videoId: number[];
   }>();
 
   constructor(
@@ -35,14 +35,14 @@ export class BotViewSearchComponent implements OnInit {
       this.salesCodeForm = this.formBuilder.group({
         eventId: [this.eventId, Validators.required],
         VideoId: ['', Validators.required],
-        userCount: [10, Validators.required],
+        userCount: [100, Validators.required],
         lastLogindateInUTC: [this.getDays(30), Validators.required],
         ignoreEvents: [],
       });
 
       this.botViewService.getdropdown(this.eventId).subscribe((res) => {
         this.dropdown = res;
-        this.addAllEventsToIgnore();
+        this.selectAllVideos();
       });
     }
   }
@@ -55,6 +55,15 @@ export class BotViewSearchComponent implements OnInit {
     if (this.dropdown.events.length > 0) {
       this.salesCodeForm.patchValue({
         ignoreEvents: [this.dropdown.events[0].id],
+      });
+    }
+  }
+
+  selectAllVideos() {
+    if (this.dropdown.videos.length > 0) {
+      let allVideos = this.dropdown.videos.map((e) => e.id);
+      this.salesCodeForm.patchValue({
+        VideoId: allVideos,
       });
     }
   }
@@ -78,11 +87,12 @@ export class BotViewSearchComponent implements OnInit {
     this.processing = true;
     this.botViewService.searchInActiveUser(this.salesCodeForm.value).subscribe(
       (res) => {
-        this.processing = false;
         this.searchData.emit({ result: res, videoId: this.f.VideoId.value });
+        this.processing = false;
       },
       (err) => {
         alert(JSON.stringify(err));
+        this.processing = false;
       }
     );
   }
