@@ -1,0 +1,23 @@
+<div class="row m-0" *ngIf="tableData">
+  <div class="col-md-12">
+    <app-list-input-table
+      [Columns]="columns"
+      [TableData]="tableData"
+      tableName="Analytics"
+      [$makeTableEditInActive]="$tableEditActive"
+      [isDeleteRequired]="false"
+      [sortColumnKey]="'totalpoints'"
+      [$updateTable]="inActiveUsers"
+      (onTableDataChange)="onTableDataChange($event)"
+    ></app-list-input-table>
+  </div>
+  <div class="col-md-12 mt-5 mb-5 d-flex justify-content-center">
+    <button
+      (click)="onSubmit()"
+      [disabled]="processing"
+      class="btn btn-outline-primary btn-lg btn-block"
+    >
+      {{ processing ? "Generating..." : "Generate" }}
+    </button>
+  </div>
+</div>

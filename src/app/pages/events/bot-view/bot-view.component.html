@@ -1,0 +1,10 @@
+<app-bot-search-view
+  [eventId]="eventId"
+  (searchData)="getInActiveUser($event)"
+></app-bot-search-view>
+<app-bot-view-generate
+  *ngIf="inActiveUser"
+  [eventId]="eventId"
+  [videoId]="videoId"
+  [inActiveUsers]="inActiveUser"
+></app-bot-view-generate>

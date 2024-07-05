@@ -47,6 +47,7 @@ export class ListInputTableComponent implements OnInit {
   @Output() addRowEvent = new EventEmitter<any>();
   @Input() addRowsAsEvent = false;
   @Output() rowClickEvent = new EventEmitter<EditableTable>();
+  @Output() onTableDataChange = new EventEmitter<EditableTable[]>();
 
   $subscription: Subscription;
   isEditActive = false;
@@ -73,6 +74,7 @@ export class ListInputTableComponent implements OnInit {
   allTableData: allowedServices[] = [];
   activeRow: allowedServices;
   valid: any = {};
+  isAllSelection = false;
 
   //Only If it is used as option selector
   @Input() allowAddingRow = false;
@@ -110,6 +112,7 @@ export class ListInputTableComponent implements OnInit {
     this.$subscription = this.$updateTable.subscribe((tableData) => {
       this.dataSource.data = tableData;
       this.tableData = tableData;
+      this.isAllSelection = false;
     });
   }
 
@@ -214,5 +217,19 @@ export class ListInputTableComponent implements OnInit {
 
   clickedRow($event) {
     this.rowClickEvent.emit($event);
+  }
+
+  checkboxSelection($event) {
+    // $event.isSelected = false
+    let a = $event;
+    this.onTableDataChange.emit(this.tableData);
+  }
+
+  selectAllCheckbox($event) {
+    this.tableData = this.tableData.map((e) => {
+      e.isSelected = this.isAllSelection;
+      return e;
+    });
+    this.onTableDataChange.emit(this.tableData);
   }
 }
