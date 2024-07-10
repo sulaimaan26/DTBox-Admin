@@ -477,7 +477,7 @@ export class EventFormComponent implements OnInit {
 
   deleteAdFile(index) {
     this.files;
-    // this.files.removeAt(index);
+    this.files.removeAt(index);
   }
 
   addControl(fileFormIndex) {

@@ -51,4 +51,5 @@ export interface IBotViewReport {
   UserId: number;
   blid: number;
   Views: number;
+  blcreatedat: string;
 }

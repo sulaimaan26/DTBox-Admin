@@ -113,6 +113,11 @@ export class BotViewService {
         label: 'Views',
         type: 'number',
       },
+      {
+        key: 'blcreatedat',
+        label: 'Generated At',
+        type: 'datetime',
+      },
     ];
   }
 
