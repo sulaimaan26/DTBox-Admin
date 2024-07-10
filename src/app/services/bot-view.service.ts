@@ -6,6 +6,7 @@ import {
   BotInactiveSearchResponse,
   IBotLog,
   IBotViewDropdown,
+  IBotViewReport,
 } from '../_model/bot-view';
 import { ICustomer } from '../_model/customer';
 import { IEvents } from '../_model/events';
@@ -30,10 +31,8 @@ export class BotViewService {
     return this.http.post<IBotLog>(`${this.apiUrl}/botview`, formData);
   }
 
-  getAll() {
-    return this.http.get<ISalesCodeDashboard[]>(
-      `${this.apiUrl}/salesreferralcode`
-    );
+  getBotViewReport(eventId: number) {
+    return this.http.get<IBotViewReport[]>(`${this.apiUrl}/botview/${eventId}`);
   }
 
   get(id): any {
@@ -83,6 +82,36 @@ export class BotViewService {
         label: 'IsGenerated',
         type: 'boolean',
         disabled: true,
+      },
+    ];
+  }
+
+  getReportColumn(): TableColumn<Partial<IBotViewReport>>[] {
+    return [
+      {
+        key: 'VideoId',
+        label: 'VideoId',
+        type: 'number',
+      },
+      {
+        key: 'Title',
+        label: 'Title',
+        type: 'text',
+      },
+      {
+        key: 'PublicUserId',
+        label: 'PublicUserId',
+        type: 'number',
+      },
+      {
+        key: 'UserName',
+        label: 'UserName',
+        type: 'text',
+      },
+      {
+        key: 'Views',
+        label: 'Views',
+        type: 'number',
       },
     ];
   }

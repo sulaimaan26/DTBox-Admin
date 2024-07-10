@@ -1,0 +1,35 @@
+<div *ngIf="eventReport" class="row">
+  <div class="col-lg-3 col-6">
+    <div class="small-box bg-success">
+      <div class="inner">
+        <h3>{{ totalViews }}</h3>
+        <p>Total Views</p>
+      </div>
+      <div class="icon">
+        <i class="ion ion-stats-bars"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-6">
+    <div class="small-box bg-warning">
+      <div class="inner">
+        <h3>{{ totalUsers }}</h3>
+        <p>Total Unique Users</p>
+      </div>
+      <div class="icon">
+        <i class="ion ion-person-add"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <app-list-input-table
+    *ngIf="eventReport"
+    [Columns]="columns"
+    [TableData]="eventReport"
+    tableName="Report"
+    [$makeTableEditInActive]="$tableEditActive"
+    [sortColumnKey]="'id'"
+  ></app-list-input-table>
+</div>

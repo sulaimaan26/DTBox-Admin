@@ -19,7 +19,7 @@ export class BotViewComponent implements OnInit {
   eventId: number;
   videoId: number[];
   showTable = false;
-
+  showReport = false;
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -45,4 +45,8 @@ export class BotViewComponent implements OnInit {
   }
 
   getVideoId() {}
+
+  onClick() {
+    this.showReport = !this.showReport;
+  }
 }

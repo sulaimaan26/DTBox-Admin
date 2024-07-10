@@ -16,6 +16,7 @@ import { BotViewComponent } from '../bot-view/bot-view.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BotViewSearchComponent } from '../bot-view/bot-view-search/bot-view-search.component';
 import { BotViewGenerateComponent } from '../bot-view/bot-view-generate/bot-view-generate.component';
+import { BotViewReportComponent } from '../bot-view/bot-view-report/bot-view-report.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { BotViewGenerateComponent } from '../bot-view/bot-view-generate/bot-view
     BotViewComponent,
     BotViewSearchComponent,
     BotViewGenerateComponent,
+    BotViewReportComponent,
   ],
   imports: [
     CommonModule,
