@@ -1,0 +1,42 @@
+<div class="row m-0" *ngIf="tableData">
+  <div class="col-md-12">
+    <app-list-input-table
+      [Columns]="columns"
+      [TableData]="tableData"
+      tableName="Analytics"
+      [$makeTableEditInActive]="$tableEditActive"
+      [isDeleteRequired]="false"
+      [sortColumnKey]="'totalpoints'"
+      [$updateTable]="inActiveUsers"
+      (onTableDataChange)="onTableDataChange($event)"
+    ></app-list-input-table>
+  </div>
+  <div class="col-md-12">
+    <div class="row mt-5 mb-5 d-flex justify-content-end">
+      <div class="col-md-2 mt-2 d-flex justify-content-end">
+        <label>Required Views</label>
+      </div>
+      <div class="col-md-1">
+        <div class="form-group">
+          <input
+            [(ngModel)]="requiredViews"
+            type="number"
+            class="form-control"
+            placeholder="Required Views"
+          />
+        </div>
+      </div>
+      <div class="col-md-1">
+        <div>
+          <button
+            (click)="onSubmit()"
+            [disabled]="processing"
+            class="btn btn-primary"
+          >
+            {{ processing ? "Generating..." : "Generate" }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

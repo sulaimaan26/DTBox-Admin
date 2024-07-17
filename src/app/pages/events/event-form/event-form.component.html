@@ -294,7 +294,9 @@
         <div class="col-md-6">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Files</h3>
+              <h3 class="card-title">
+                Files {{ isUpdate ? "[ " + eventsData.file.length + " ]" : "" }}
+              </h3>
               <span (click)="addFile($event)" class="btn btn-primary addloc">
                 <i class="fas fa-plus"></i>
               </span>
@@ -307,6 +309,9 @@
                   formArrayName="file"
                 >
                   <div class="file-container" [formGroupName]="i">
+                    <div *ngIf="isUpdate && loc.value.id" class="float-right">
+                      <span class="badge bg-danger">#{{ loc.value.id }}</span>
+                    </div>
                     <div class="row" id="{{ i }}">
                       <div class="col-sm-6">
                         <div class="form-group">
@@ -453,8 +458,8 @@
                           <button
                             style="float: right"
                             (click)="deleteAdFile(i)"
-                            *ngIf="!isUpdate && !loc.value.id"
-                            class="btn btn-danger"
+                            *ngIf=" !loc.value.id"
+                            class="btn btn-danger mr-3"
                           >
                             Delete
                           </button>
@@ -842,8 +847,6 @@
                     >
                   </div>
                 </div>
-
-
               </div>
               <div class="row">
                 <div class="col-md-4">
@@ -904,11 +907,7 @@
   </section>
 </form>
 <div class="card-footer">
-  <button
-    style="margin-right: 10px"
-    class="btn"
-    [routerLink]="'/admin/events'"
-  >
+  <button style="margin-right: 10px" class="btn" [routerLink]="'/admin/events'">
     Back
   </button>
   <button (click)="onSubmit()" class="btn btn-primary">

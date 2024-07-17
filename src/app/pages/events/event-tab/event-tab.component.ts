@@ -27,7 +27,6 @@ export class EventTabComponent implements OnInit {
 
         if (data.dropdown) {
           this.dropdown = data.dropdown
-          this.isUpdate = true;
         }
       }
     });

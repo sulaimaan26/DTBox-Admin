@@ -1,0 +1,21 @@
+<div class="mt-3 mb-3 mr-3 d-flex justify-content-end">
+  <a style="cursor: pointer" (click)="onClick()" class="card-link pe-auto">{{
+    !showReport ? "View Report" : "Generate Views"
+  }}</a>
+</div>
+<div *ngIf="!showReport">
+  <app-bot-search-view
+    [eventId]="eventId"
+    (searchData)="getInActiveUser($event)"
+  ></app-bot-search-view>
+  <app-bot-view-generate
+    *ngIf="inActiveUser"
+    [eventId]="eventId"
+    [videoId]="videoId"
+    [inActiveUsers]="inActiveUser"
+  ></app-bot-view-generate>
+</div>
+
+<div *ngIf="showReport">
+  <app-bot-view-report [eventId]="eventId"></app-bot-view-report>
+</div>

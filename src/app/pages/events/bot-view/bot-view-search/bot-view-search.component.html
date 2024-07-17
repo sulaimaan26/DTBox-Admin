@@ -1,0 +1,162 @@
+<form *ngIf="eventId" [formGroup]="salesCodeForm">
+  <section *ngIf="dropdown" class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary">
+            <!-- <div class="card-header">
+              <h3 class="card-title">Generate Bot View</h3>
+            </div> -->
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label>Video</label>
+
+                    <ng-select
+                      [placeholder]="'Select Video'"
+                      [multiple]="true"
+                      [items]="dropdown.videos"
+                      bindLabel="Title"
+                      bindValue="id"
+                      formControlName="VideoId"
+                    >
+                      <ng-template ng-option-tmp let-item="item">
+                        #{{ item.id }} {{ item.Title }} <br />
+                        <small>{{ item.VideoFileName }}</small>
+                      </ng-template>
+
+                      <ng-template
+                        ng-label-tmp
+                        let-item="item"
+                        let-clear="clear"
+                        >{{ item.id ? "#" + item.id : "" }} {{ item.Title }}
+                      </ng-template>
+
+                      <ng-template
+                      ng-multi-label-tmp
+                      let-items="items"
+                      let-clear="clear"
+                    >
+                      <div
+                        *ngFor="let item of items | slice : 0 : 2"
+                        class="ng-value"
+                      >
+                        <span class="ng-value-label">
+                          #{{ item["id"] }} {{ item["Title"]| slice : 0 : 3 }}</span
+                        >
+                      </div>
+                      <div *ngIf="items.length > 2" class="ng-value">
+                        <span class="ng-value-label"
+                          >{{ items.length - 2 }} more...</span
+                        >
+                      </div>
+                    </ng-template>
+
+                    </ng-select>
+
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.VideoId.errors"
+                      >Video is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label>User Count</label>
+                    <input
+                      formControlName="userCount"
+                      type="number"
+                      class="form-control"
+                      placeholder="count"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.userCount.errors"
+                      >User Count is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label>User Last Login</label>
+                    <input
+                      formControlName="lastLogindateInUTC"
+                      type="date"
+                      class="form-control"
+                      placeholder="count"
+                    />
+                    <span
+                      class="mandatory"
+                      *ngIf="submitted && f.lastLogindateInUTC.errors"
+                      >Last Login is required</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Ignore Events</label>
+                    <ng-select
+                      [items]="dropdown.events"
+                      [multiple]="true"
+                      [closeOnSelect]="false"
+                      [hideSelected]="true"
+                      bindLabel="EventId"
+                      placeholder="Ignore events"
+                      formControlName="ignoreEvents"
+                      bindValue="id"
+                    >
+                      <ng-template ng-option-tmp let-item="item">
+                        #{{ item.id }} {{ item.EventId }} <br />
+                        <small>{{ item.Title }}</small>
+                      </ng-template>
+
+                      <ng-template
+                        ng-multi-label-tmp
+                        let-items="items"
+                        let-clear="clear"
+                      >
+                        <div
+                          *ngFor="let item of items | slice : 0 : 2"
+                          class="ng-value"
+                        >
+                          <span class="ng-value-label">
+                            #{{ item["id"] }} {{ item["EventId"] }}</span
+                          >
+                        </div>
+                        <div *ngIf="items.length > 2" class="ng-value">
+                          <span class="ng-value-label"
+                            >{{ items.length - 2 }} more...</span
+                          >
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="card-footer">
+                    <div class="float-right">
+                      <button
+                        (click)="onSubmit()"
+                        [disabled]="processing"
+                        class="btn btn-primary"
+                      >
+                        {{ processing ? "Searching..." : "Search" }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>

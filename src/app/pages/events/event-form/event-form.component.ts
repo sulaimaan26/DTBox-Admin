@@ -75,7 +75,7 @@ export class EventFormComponent implements OnInit {
       file: this.formBuilder.array([]),
       peakhours: this.formBuilder.array([]),
       BoosterCalculation: [true],
-      BoosterConversion: [200, Validators.required],
+      BoosterConversion: [1000, Validators.required],
       WinnerNotificationTitle: ['', Validators.required],
       WinnerNotificationMessage: ['', Validators.required],
       isPointsConverted: [''],
@@ -84,7 +84,7 @@ export class EventFormComponent implements OnInit {
       EnableShareOptionAt: ['', Validators.required],
       DisableShareOptionAt: ['', Validators.required],
       ShareOptionWatchCount: [5, Validators.required],
-      MinimumPointBalance: [50, Validators.required],
+      MinimumPointBalance: [1000, Validators.required],
       SharePointCount: [100, Validators.required],
     });
 
@@ -477,7 +477,7 @@ export class EventFormComponent implements OnInit {
 
   deleteAdFile(index) {
     this.files;
-    // this.files.removeAt(index);
+    this.files.removeAt(index);
   }
 
   addControl(fileFormIndex) {

@@ -52,13 +52,29 @@
           [matColumnDef]="col.key"
           *ngFor="let col of columnsSchema"
         >
-          <th mat-header-cell mat-sort-header disableClear *matHeaderCellDef>
-            {{ col.label }}
+          <th
+            mat-header-cell
+            mat-sort-header
+            disableClear
+            *matHeaderCellDef
+            [disabled]="col.type == 'isSelected'"
+          >
+            <div *ngIf="col.type != 'isSelected'">
+              {{ col.label }}
+            </div>
+            <div *ngIf="col.type == 'isSelected'">
+              <input
+                type="checkbox"
+                class="check-size"
+                [(ngModel)]="isAllSelection"
+                (change)="selectAllCheckbox($event)"
+              />
+            </div>
           </th>
 
-          <th mat-header-cell mat-sort-header disableClear *matHeaderCellDef>
+          <!-- <th mat-header-cell mat-sort-header disableClear *matHeaderCellDef>
             {{ col.label }}
-          </th>
+          </th> -->
           <td class="table-col" mat-cell *matCellDef="let element">
             <div
               *ngIf="
@@ -69,6 +85,16 @@
               <!-- Edit InActive-->
               <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
                 <!--Action Button-->
+                <div *ngSwitchCase="'isSelected'">
+                  <input
+                    type="checkbox"
+                    class="check-size"
+                    (change)="checkboxSelection(element)"
+                    [checked]="element[col.key]"
+                    [(ngModel)]="element[col.key]"
+                  />
+                </div>
+
                 <div class="btn-edit" *ngSwitchCase="'isEdit'">
                   <!--Edit Button-->
                   <button
@@ -95,7 +121,10 @@
                   {{ element[col.key] | date : "mediumDate" }}
                 </span>
 
-                <span (click)="whenRowClicked(element)" *ngSwitchCase="'datetime'">
+                <span
+                  (click)="whenRowClicked(element)"
+                  *ngSwitchCase="'datetime'"
+                >
                   {{ element[col.key] | date : "medium" }}
                 </span>
 
@@ -198,7 +227,11 @@
                   </button>
                 </div>
 
-                <div class="form-input" class="form-input" *ngSwitchCase="'date'">
+                <div
+                  class="form-input"
+                  class="form-input"
+                  *ngSwitchCase="'date'"
+                >
                   <input
                     [disabled]="col.disabled"
                     type="date"
@@ -208,7 +241,11 @@
                   />
                 </div>
 
-                <div class="form-input" class="form-input" *ngSwitchCase="'datetime'">
+                <div
+                  class="form-input"
+                  class="form-input"
+                  *ngSwitchCase="'datetime'"
+                >
                   <input
                     [disabled]="col.disabled"
                     type="datetime-local"
@@ -259,7 +296,11 @@
                 </div>
 
                 <div class="form-input" *ngSwitchCase="'dropdown'">
-                  <select [disabled]="col.disabled" [(ngModel)]="element[col.key]" class="form-control">
+                  <select
+                    [disabled]="col.disabled"
+                    [(ngModel)]="element[col.key]"
+                    class="form-control"
+                  >
                     <option [value]="''">Select {{ col.label }}</option>
                     <option
                       *ngFor="
@@ -324,7 +365,11 @@
           mat-header-row
           *matHeaderRowDef="displayedColumns; sticky: true"
         ></tr>
-        <tr (click)="clickedRow(row)"  mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr
+          (click)="clickedRow(row)"
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+        ></tr>
       </table>
     </div>
 
