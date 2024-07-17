@@ -66,6 +66,7 @@ export class BotViewGenerateComponent implements OnInit {
     let status = confirm(message);
     if (!status) {
       alert('View generation canceled');
+      this.processing = false;
       return;
     }
 
