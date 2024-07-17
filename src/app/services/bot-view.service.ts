@@ -83,6 +83,12 @@ export class BotViewService {
         type: 'boolean',
         disabled: true,
       },
+      {
+        key: 'IsParticipated',
+        label: 'Participated',
+        type: 'boolean',
+        disabled: true,
+      },
     ];
   }
 

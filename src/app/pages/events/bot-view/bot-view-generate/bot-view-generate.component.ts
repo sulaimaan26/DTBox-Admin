@@ -22,7 +22,7 @@ export class BotViewGenerateComponent implements OnInit {
   $tableEditActive = new Subject<any>();
   ignoredCustomer: number[];
   processing = false;
-  requiredViews = 10;
+  requiredViews = 1;
 
   constructor(
     private router: Router,
@@ -49,6 +49,23 @@ export class BotViewGenerateComponent implements OnInit {
     if (!generateUser || generateUser.length == 0) {
       alert('select atleast one customer');
       this.processing = false;
+      return;
+    }
+
+    let participantCount = generateUser.filter((e) => e.IsParticipated);
+
+    let message = 'Are you sure to proceed?';
+    message += `\n Total Users: ${generateUser.length}`;
+    message += `\n View Count: ${this.requiredViews}`;
+    message += `\n Already Participated Count: ${participantCount.length}`;
+    message += `\n Video Count: ${this.videoId.length}`;
+    message += `\n Total Views which will be genrated: ${
+      generateUser.length * this.requiredViews
+    }`;
+
+    let status = confirm(message);
+    if (!status) {
+      alert('View generation canceled');
       return;
     }
 

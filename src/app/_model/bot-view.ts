@@ -11,6 +11,7 @@ export interface BotInactiveSearchResponse extends ICustomer {
   VideoId: number;
   UserId: number;
   IsGenerated: boolean;
+  IsParticipated: boolean;
 }
 
 export interface IBotLog {
